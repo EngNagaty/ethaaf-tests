@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>المعلم — الترشيح ومتابعة الطلاب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--olive:#555942;--ink:#23251C;--mut:#6B6D5C;--line:#E6E2D4;--bg:#F6F5EF;--card:#fff;--gold:#A88A2B}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,sans-serif}
+[hidden]{display:none!important}
+.x-top{position:sticky;top:0;z-index:9000;background:#fff;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+.x-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.x-brand img{height:34px;width:auto}
+.x-brand b{font-size:15px;font-weight:800;display:block;line-height:1.2}
+.x-brand small{font-size:12px;color:var(--mut)}
+.x-sp{flex:1 1 auto}
+.x-btn{height:36px;padding:0 14px;border-radius:8px;border:1px solid #D9D3BC;background:#fff;color:#3C382E;font:700 13px Cairo,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.x-btn:hover{background:#F5F0E5}
+.x-btn.x-p{background:var(--olive);border-color:var(--olive);color:#fff}
+.x-vt{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+.x-vt b{font-size:15px}
+.x-vt small{font-size:12px;color:var(--mut)}
+#tweaks{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#tweaks:before{content:"الحالة:";font-size:12px;font-weight:700;color:var(--mut)}
+.x-tw select{height:36px;border-radius:8px;border:1px solid #D9D3BC;background:#FBF8F0;font:600 13px Cairo,sans-serif;padding:0 8px;color:var(--ink);max-width:260px}
+.x-tw{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+#stage{padding:16px 0 40px;display:flex;justify-content:center}
+#box.x-fixed{position:relative;overflow:hidden;box-shadow:0 2px 6px rgba(35,37,28,.08),0 18px 40px rgba(35,37,28,.12);border-radius:6px;background:#fff}
+#box.x-fixed #app{position:absolute;top:0;right:0;transform-origin:top right}
+#box.x-fluid{width:100%}
+#stage.x-fl{padding:0}
+.x-hero{padding:40px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px;align-items:center}
+.x-hero img{height:110px;width:auto}
+.x-hero h1{margin:0;font-size:30px;font-weight:800;text-wrap:balance}
+.x-hero p{margin:6px 0 0;color:var(--mut);font-size:15px;line-height:1.9;max-width:62ch}
+.x-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.x-meta span{height:28px;padding:0 12px;border-radius:999px;background:#EEF0E3;color:#3C382E;font-size:12px;font-weight:700;display:inline-flex;align-items:center}
+#groups{max-width:1180px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-right,0px)) 60px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:26px}
+.x-grp h2{margin:0 0 10px;font-size:18px;font-weight:800;display:flex;align-items:center;gap:10px}
+.x-num{width:26px;height:26px;border-radius:8px;background:var(--olive);color:#fff;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+.x-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.x-card{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;background:#fff;border:1px solid #EDE9D5;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s;min-width:0}
+.x-card:hover{border-color:#BAB095;box-shadow:0 6px 18px rgba(35,37,28,.08)}
+.x-card .x-tx{display:flex;flex-direction:column;gap:2px;flex:1 1 auto;min-width:0}
+.x-card b{font-size:15px}
+.x-card small{font-size:12px;color:var(--mut);line-height:1.6}
+.x-card em{font-style:normal;font-size:11px;color:#8A8C78;font-weight:700}
+.x-card .x-go{color:var(--olive);font-weight:800}
+.x-ic{width:44px;height:44px;border-radius:10px;background:#EEF0E3;flex:none;position:relative}
+.x-ic:after{content:"";position:absolute;border:2px solid var(--olive);border-radius:3px}
+.x-ic.x-d:after{inset:12px 9px 14px}
+.x-ic.x-m:after{inset:9px 15px;border-radius:4px}
+.x-ic.x-c:after{inset:13px 8px;border-color:var(--gold);outline:1px solid var(--gold);outline-offset:-5px}
+#view .x-top{position:relative;z-index:1}
+footer.x-f{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:#8A8C78;font-size:12px}
+</style>
+<style id="dc-styles"></style>
+</head>
+<body>
+<div id="gallery">
+  <header class="x-top"><a class="x-brand" href="#/"><span style="width:34px;height:34px;border-radius:10px;background:#555942;color:#ECF6BC;font-weight:800;display:inline-flex;align-items:center;justify-content:center">إ</span><span><b>الاختبارات</b><small>نماذج التصميم التفاعلية</small></span></a></header>
+  <section class="x-hero">
+    <div style="flex:1 1 380px;min-width:0">
+      <h1>المعلم — الترشيح ومتابعة الطلاب</h1>
+      <p>يرشّح المعلم طلابه فرديًا أو جماعيًا، ويتابع حالة كل ترشيح ونتائج طلابه، ويعيد ترشيح من لم يجتز.</p>
+      <div class="x-meta"><span>2 شاشة</span><span>عربي · RTL</span><span>جمعية تحفيظ القرآن بالرياض</span><span>بيانات تجريبية</span></div><div class="x-meta"><a class="x-btn" href="./">→ كل الأدوار</a></div>
+    </div>
+  </section>
+  <div id="groups"></div>
+  <footer class="x-f">تصميم واجهات — بيانات تجريبية للعرض فقط.</footer>
+</div>
+<div id="view" hidden>
+  <header class="x-top">
+    <a class="x-btn" href="#/">→ كل الشاشات</a>
+    <div class="x-vt"><b id="vtitle"></b><small id="vpage"></small></div>
+    <div id="tweaks"></div>
+    <span class="x-sp"></span>
+    <button class="x-btn" id="next" type="button">التالية ←</button>
+    <button class="x-btn" id="prev" type="button">→ السابقة</button>
+  </header>
+  <div id="stage"><div id="box"><div id="app"></div></div></div>
+</div>
+<script>window.__ROLE_OF={"SetupHome": "admin", "SetupForm": "admin", "SetupTracks": "admin", "SetupBranch": "admin", "SetupGroup": "admin", "TestsHome": "admin", "Form": "admin", "Tracks": "admin", "Branch": "admin", "Committees": "admin", "Wizard": "admin", "States": "admin", "Candidates": "supervisor", "Schedule": "supervisor", "Pending": "supervisor", "Results": "supervisor", "Incomplete": "supervisor", "Nominate": "teacher", "MyNoms": "teacher", "ExLogin": "examiner", "ExList": "examiner", "ExSessionStart": "examiner", "Main": "examiner", "ExSessionSummary": "examiner", "ExSessionPortrait": "examiner", "ExSessionPhone": "examiner", "StuNotice": "family", "StuResult": "family", "StuHistory": "family"};window.__DC_BLOBS={};window.__DC_SOURCES={"MyNoms": {"tpl": "\n<div dir=\"rtl\" style=\"width: 390px; height: 1000px; background: #F7F6F2; font-family: Cairo, Tahoma, sans-serif; color: #1C1E14; position: relative; overflow: hidden; display: flex; flex-direction: column\">\n\n  <header style=\"flex: none; position: relative; overflow: hidden; background: linear-gradient(180deg, #484A35, #313425); border-radius: 0 0 28px 28px; padding: 44px 16px 20px\">\n    <svg aria-hidden=\"true\" width=\"100%\" height=\"100%\" style=\"position: absolute; inset: 0\"><defs><pattern id=\"hpMyn\" width=\"56\" height=\"56\" patternUnits=\"userSpaceOnUse\"><path d=\"M28 3l7 17 17 8-17 8-7 17-7-17-17-8 17-8z M0 0l10 10 M56 0l-10 10 M0 56l10-10 M56 56l-10-10\" fill=\"none\" stroke=\"#fff\" stroke-opacity=\".08\" stroke-width=\"1.2\"><\/path><\/pattern><\/defs><rect width=\"100%\" height=\"100%\" fill=\"url(#hpMyn)\"><\/rect><\/svg>\n    <div style=\"position: relative; display: flex; align-items: center; gap: 12px; color: #fff\">\n      <a href=\"Nominate.dc.html\" aria-label=\"رجوع إلى الترشيح\" style=\"width: 44px; height: 44px; flex: none; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; display: flex; align-items: center; justify-content: center\"><svg class=\"i\" viewBox=\"0 0 24 24\"><path d=\"M9 6l6 6-6 6\"><\/path><\/svg><\/a>\n      <div style=\"flex: 1 1 auto; min-width: 0\">\n        <div style=\"font-size: 20px; font-weight: 700\">ترشيحاتي<\/div>\n        <div style=\"font-size: 13px; font-weight: 500; color: #D1C6A8\">حلقة الفاروق · أ. سلمان الدوسري<\/div>\n      <\/div>\n      <a href=\"Nominate.dc.html\" style=\"flex: none; min-height: 44px; padding: 0 14px; border-radius: 999px; background: #ECF6BC; color: #313425; text-decoration: none; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 18px; height: 18px\"><path d=\"M12 5v14M5 12h14\"><\/path><\/svg>ترشيح<\/a>\n    <\/div>\n  <\/header>\n\n  <div role=\"tablist\" aria-label=\"تصفية\" style=\"flex: none; padding: 14px 16px 4px; display: flex; gap: 8px\">\n    <sc-for list=\"{{tabs}}\" as=\"t\" hint-placeholder-count=\"3\">\n      <button onClick=\"{{t.pick}}\" role=\"tab\" aria-selected=\"{{t.on}}\" style=\"min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid {{t.bd}}; background: {{t.bg}}; color: {{t.fg}}; font-size: 14px; font-weight: 700\">{{t.t}} <span style=\"font-weight: 600; opacity: .75\">{{t.c}}<\/span><\/button>\n    <\/sc-for>\n  <\/div>\n\n  <main style=\"flex: 1 1 auto; min-height: 0; overflow: auto; padding: 10px 16px 120px\">\n    <section style=\"background: #fff; border-radius: 22px; box-shadow: 0 1px 3px rgba(28,30,20,.06); padding: 0 14px\">\n      <sc-for list=\"{{rows}}\" as=\"r\" hint-placeholder-count=\"9\">\n        <div style=\"border-top: {{r.line}}; padding: 14px 0; display: flex; flex-direction: column; gap: 8px\">\n          <div style=\"display: flex; align-items: center; gap: 12px\">\n            <span style=\"width: 38px; height: 38px; flex: none; border-radius: 50%; background: #D7E0AB; color: #313425; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center\">{{r.i}}<\/span>\n            <div style=\"flex: 1 1 auto; min-width: 0\">\n              <div style=\"font-size: 15px; font-weight: 700; text-decoration: {{r.deco}}\">{{r.n}}<\/div>\n              <div style=\"font-size: 12px; font-weight: 500; color: #6B7054\">{{r.sub}}<\/div>\n            <\/div>\n            <span style=\"flex: none; height: 28px; padding: 0 10px; border-radius: 999px; border: {{r.c.bd}}; background: {{r.c.bg}}; color: {{r.c.fg}}; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 14px; height: 14px; stroke-width: 2.2\"><path d=\"{{r.c.ic}}\"><\/path><\/svg>{{r.c.t}}<\/span>\n          <\/div>\n          <sc-if value=\"{{r.hasNote}}\" hint-placeholder-val=\"{{false}}\">\n            <div style=\"margin-right: 50px; font-size: 13px; font-weight: 600; color: #464936; line-height: 1.6\">{{r.note}}<\/div>\n          <\/sc-if>\n          <sc-if value=\"{{r.hasScore}}\" hint-placeholder-val=\"{{false}}\">\n            <div style=\"margin-right: 50px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap\">\n              <b style=\"font-size: 18px\">{{r.score}}<\/b>\n              <span style=\"height: 24px; padding: 0 8px; border-radius: 6px; background: {{r.g.bg}}; color: {{r.g.fg}}; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center\">{{r.g.t}}<\/span>\n              <button onClick=\"{{r.toggle}}\" aria-expanded=\"{{r.open}}\" style=\"margin-right: auto; min-height: 44px; padding: 0 4px; border: 0; background: none; color: #555942; font-size: 13px; font-weight: 800; display: inline-flex; align-items: center; gap: 4px\">{{r.detTxt}}<svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 16px; height: 16px; transform: {{r.rot}}\"><path d=\"M6 9l6 6 6-6\"><\/path><\/svg><\/button>\n            <\/div>\n          <\/sc-if>\n          <sc-if value=\"{{r.isOpen}}\" hint-placeholder-val=\"{{false}}\">\n            <div style=\"margin-right: 50px; display: flex; flex-direction: column\">\n              <sc-for list=\"{{r.qs}}\" as=\"q\" hint-placeholder-count=\"5\">\n                <div style=\"display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #EEECE4\">\n                  <span style=\"width: 26px; font-size: 12px; font-weight: 800; color: #6B7054\">س{{q.n}}<\/span>\n                  <span style=\"flex: 1; min-width: 0; font-size: 12px; font-weight: 600; color: #464936\">{{q.d}}<\/span>\n                  <b style=\"font-size: 13px\">{{q.s}}<\/b>\n                <\/div>\n              <\/sc-for>\n            <\/div>\n          <\/sc-if>\n          <sc-if value=\"{{r.canRe}}\" hint-placeholder-val=\"{{false}}\">\n            <a href=\"Nominate.dc.html\" style=\"margin-right: 50px; height: 44px; border-radius: 12px; background: #555942; color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 18px; height: 18px\"><path d=\"M4 12a8 8 0 0114-5.3L20 9M20 4v5h-5\"><\/path><path d=\"M20 12a8 8 0 01-14 5.3L4 15M4 20v-5h5\"><\/path><\/svg>إعادة ترشيح<\/a>\n          <\/sc-if>\n          <sc-if value=\"{{r.hasWait}}\" hint-placeholder-val=\"{{false}}\">\n            <button disabled aria-disabled=\"true\" style=\"margin-right: 50px; height: 44px; border-radius: 12px; border: 1px solid #E4E2D8; background: #fff; color: #6B7054; font-size: 14px; font-weight: 700; cursor: not-allowed\">{{r.wait}}<\/button>\n          <\/sc-if>\n        <\/div>\n      <\/sc-for>\n    <\/section>\n  <\/main>\n\n  <nav aria-label=\"التنقل الرئيسي\" style=\"position: absolute; left: 0; right: 0; bottom: 0; height: 96px; padding-bottom: 18px; background: linear-gradient(180deg, #555942, #393D22); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); color: #D1C6A8\">\n    <a href=\"#\" style=\"display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #D1C6A8; font-size: 13px; font-weight: 600\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 26px; height: 26px\"><path d=\"M12 3l8 5v9l-8 4-8-4V8z\"><\/path><\/svg>الرئيسية<\/a>\n    <a href=\"#\" style=\"display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #D1C6A8; font-size: 13px; font-weight: 600\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 26px; height: 26px\"><rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"><\/rect><path d=\"M9 8h6M9 12h6M9 16h3\"><\/path><\/svg>الزيارات<\/a>\n    <a href=\"#\" aria-current=\"page\" style=\"display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #fff; font-size: 13px; font-weight: 700\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 26px; height: 26px\"><path d=\"M4 4h12v16H4zM8 8h4M8 12h4M18 6v14\"><\/path><\/svg>الاختبارات<\/a>\n    <a href=\"#\" style=\"display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #D1C6A8; font-size: 13px; font-weight: 600\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 26px; height: 26px\"><circle cx=\"12\" cy=\"8\" r=\"4\"><\/circle><path d=\"M4 21v-1a7 7 0 0116 0v1\"><\/path><\/svg>حسابي<\/a>\n  <\/nav>\n<\/div>\n", "code": "\nclass Component extends DCLogic {\n  constructor(p) { super(p); this.state = { tab: 'all', open: {} }; }\n  renderVals() {\n    var self = this, s = this.state;\n    var CHIP = {\n      nominated: { t: 'مرشح', bg: '#F1F1EC', fg: '#464936', ic: 'M12 9a3 3 0 100 6 3 3 0 000-6z' },\n      approved: { t: 'معتمد', bg: '#ECF6BC', fg: '#313425', ic: 'M5 12l5 5 9-10' },\n      scheduled: { t: 'مجدول', bg: '#EAEDFF', fg: '#3B4BC4', ic: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4' },\n      running: { t: 'جارٍ', bg: '#F4E5FC', fg: '#8E44C7', ic: 'M8 5l11 7-11 7z' },\n      pending: { t: 'في انتظار الاعتماد', bg: '#FEF6E4', fg: '#8A4B12', ic: 'M12 7v5l3 2M12 21a9 9 0 110-18 9 9 0 010 18z' },\n      passed: { t: 'مكتمل ناجح', bg: '#E8F5EC', fg: '#1E6B39', ic: 'M8 12l3 3 5-6M12 21a9 9 0 110-18 9 9 0 010 18z' },\n      failed: { t: 'مكتمل راسب', bg: '#FBEDE8', fg: '#9A3A22', ic: 'M6 6l12 12M18 6L6 18' },\n      absent: { t: 'غائب', bg: '#EEEEE9', fg: '#313425', ic: 'M10 12a4 4 0 100-8 4 4 0 000 8zM3 21v-1a7 7 0 0111.5-5.4M16 16l5 5M21 16l-5 5' },\n      cancelled: { t: 'ملغى', bg: '#F5F0E5', fg: '#6B7054', ic: 'M12 21a9 9 0 110-18 9 9 0 010 18zM5.6 5.6l12.8 12.8' },\n      withdrawn: { t: 'مسحوب', bg: '#fff', fg: '#6B7054', bd: '1px solid #D1C6A8', ic: 'M14 7l5 5-5 5M19 12H8a4 4 0 01-4-4V6' }\n    };\n    var grade = function (v) {\n      if (v >= 90) return { t: 'ممتاز', bg: '#313425', fg: '#ECF6BC' };\n      if (v >= 80) return { t: 'جيد جدًا', bg: '#555942', fg: '#fff' };\n      if (v >= 70) return { t: 'جيد', bg: '#D7E0AB', fg: '#313425' };\n      if (v >= 60) return { t: 'مقبول', bg: '#EADFC4', fg: '#464936' };\n      return { t: 'راسب', bg: '#FBEDE8', fg: '#9A3A22' };\n    };\n    var DATA = [\n      { n: 'عمر خالد العتيبي', sub: 'جزء عم · المحاولة 2', k: 'scheduled', note: 'الأحد 5 جمادى الآخرة · 15 نوفمبر · 07:30 م مع د. عادل الشهري · المحاولة الأولى راسب 58.5%' },\n      { n: 'خالد الشمري', sub: 'جزء عم', k: 'running', note: 'يُختبر الآن مع د. عادل الشهري' },\n      { n: 'عبدالله الحربي', sub: 'جزء عم', k: 'approved', note: 'اعتمده المشرف فيصل الزهراني · بانتظار الموعد' },\n      { n: 'تركي المطيري', sub: 'جزء عم', k: 'nominated', note: 'رُشّح أمس 4 جمادى الآخرة · ينتظر اعتماد المشرف' },\n      { n: 'محمد العتيبي', sub: 'جزء عم · 3 جمادى الآخرة 1448', k: 'passed', score: 91, qs: [['تردد', 9.75], ['تنبيه', 9.5], ['خطأ', 9], ['3 تجويد', 9.25], ['خطأان', 8]] },\n      { n: 'يوسف القحطاني', sub: 'جزء عم · 2 جمادى الآخرة 1448', k: 'failed', score: 54.5, re: true, qs: [['5 أخطاء — أُلغي', 0], ['3 أخطاء · تنبيه', 6.5], ['خطأ · تردد', 8.75], ['4 أخطاء', 6], ['3 أخطاء · تنبيهان', 6]] },\n      { n: 'سعد الغامدي', sub: 'جزء عم · منتصف الفصل · 20 جمادى الأولى', k: 'failed', score: 56, re: true, qs: [['4 أخطاء', 6], ['3 أخطاء · تنبيهان', 6], ['4 أخطاء · تنبيه', 5.5], ['3 أخطاء · تنبيهان', 6], ['4 أخطاء · 3 تنبيهات', 4.5]] },\n      { n: 'عبدالعزيز الشهري', sub: 'جزء قد سمع · 3 جمادى الآخرة 1448', k: 'absent', note: 'لم يحضر موعده · لا نتيجة له', re: true },\n      { n: 'ماجد السبيعي', sub: 'جزء عم', k: 'cancelled', note: 'ألغاه المشرف · السبب: انتقل مؤقتًا إلى حلقة أخرى' },\n      { n: 'نواف العنزي', sub: 'جزء تبارك', k: 'withdrawn', note: 'سحبتَ الترشيح قبل الاعتماد' }\n    ];\n    var DONE = { passed: 1, failed: 1, absent: 1, cancelled: 1, withdrawn: 1 };\n    var match = function (d, k) { return k === 'all' || (k === 'done' ? DONE[d.k] : !DONE[d.k]); };\n    var filt = DATA.filter(function (d) { return match(d, s.tab); });\n    var rows = filt.map(function (d, idx) {\n      var c = Object.assign({ bd: '0' }, CHIP[d.k]);\n      var open = !!s.open[d.n];\n      return {\n        n: d.n, i: d.n.charAt(0), sub: d.sub, c: c, line: idx ? '1px solid #EEECE4' : '0',\n        deco: d.k === 'cancelled' ? 'line-through' : 'none',\n        hasNote: !!d.note, note: d.note || '',\n        hasScore: d.score != null, score: d.score != null ? d.score + '%' : '', g: grade(d.score || 0),\n        open: open ? 'true' : 'false', isOpen: open && !!d.qs, rot: open ? 'rotate(180deg)' : 'none',\n        detTxt: open ? 'إخفاء الأخطاء' : 'تفاصيل الأخطاء',\n        qs: (d.qs || []).map(function (q, i) { return { n: i + 1, d: q[0], s: q[1] }; }),\n        canRe: !!d.re, hasWait: !!d.wait, wait: d.wait || '',\n        toggle: function () { var o = Object.assign({}, s.open); o[d.n] = !open; self.setState({ open: o }); }\n      };\n    });\n    return {\n      tabs: [{ k: 'all', t: 'الكل' }, { k: 'open', t: 'جارية' }, { k: 'done', t: 'مكتملة' }].map(function (t) {\n        var on = s.tab === t.k;\n        return { t: t.t, c: DATA.filter(function (d) { return match(d, t.k); }).length, on: on ? 'true' : 'false', bd: on ? '#313425' : '#E4E2D8', bg: on ? '#313425' : '#fff', fg: on ? '#fff' : '#313425',\n          pick: function () { self.setState({ tab: t.k }); } };\n      }),\n      rows: rows\n    };\n  }\n}\n", "props": {"$preview": {"width": 390, "height": 1000}}, "links": ["https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"], "styles": ["\nbody{margin:0;background:#F7F6F2}\n*{box-sizing:border-box}\nbutton{font-family:inherit;cursor:pointer}\nbutton:focus-visible,a:focus-visible{outline:3px solid #9BA27B;outline-offset:2px}\nsvg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}\n"], "imports": []}, "Nominate": {"tpl": "\n<div dir=\"rtl\" style=\"width: 390px; height: 1000px; background: #F7F6F2; font-family: Cairo, Tahoma, sans-serif; color: #1C1E14; position: relative; overflow: hidden; display: flex; flex-direction: column\">\n\n  <header style=\"flex: none; position: relative; overflow: hidden; background: linear-gradient(180deg, #484A35, #313425); border-radius: 0 0 28px 28px; padding: 44px 16px 20px\">\n    <svg aria-hidden=\"true\" width=\"100%\" height=\"100%\" style=\"position: absolute; inset: 0\"><defs><pattern id=\"hpNom\" width=\"56\" height=\"56\" patternUnits=\"userSpaceOnUse\"><path d=\"M28 3l7 17 17 8-17 8-7 17-7-17-17-8 17-8z M0 0l10 10 M56 0l-10 10 M0 56l10-10 M56 56l-10-10\" fill=\"none\" stroke=\"#fff\" stroke-opacity=\".08\" stroke-width=\"1.2\"><\/path><\/pattern><\/defs><rect width=\"100%\" height=\"100%\" fill=\"url(#hpNom)\"><\/rect><\/svg>\n    <div style=\"position: relative; display: flex; align-items: center; gap: 12px; color: #fff\">\n      <a href=\"MyNoms.dc.html\" aria-label=\"رجوع إلى ترشيحاتي\" style=\"width: 44px; height: 44px; flex: none; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; display: flex; align-items: center; justify-content: center\"><svg class=\"i\" viewBox=\"0 0 24 24\"><path d=\"M9 6l6 6-6 6\"><\/path><\/svg><\/a>\n      <div style=\"min-width: 0\">\n        <div style=\"font-size: 20px; font-weight: 700\">ترشيح للاختبار<\/div>\n        <div style=\"font-size: 13px; font-weight: 500; color: #D1C6A8\">أ. سلمان الدوسري · حلقة الفاروق · 10 طلاب<\/div>\n      <\/div>\n    <\/div>\n  <\/header>\n\n  <main style=\"flex: 1 1 auto; min-height: 0; overflow: auto; padding: 16px 16px 190px; display: flex; flex-direction: column; gap: 14px\">\n    <div role=\"radiogroup\" aria-label=\"نوع الترشيح\" style=\"display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 14px; background: #ECEAE2\">\n      <sc-for list=\"{{modes}}\" as=\"m\" hint-placeholder-count=\"2\">\n        <button onClick=\"{{m.pick}}\" role=\"radio\" aria-checked=\"{{m.on}}\" style=\"height: 44px; border: 0; border-radius: 11px; background: {{m.bg}}; color: #1C1E14; font-size: 15px; font-weight: {{m.fw}}; box-shadow: {{m.sh}}\">{{m.t}}<\/button>\n      <\/sc-for>\n    <\/div>\n\n    <label style=\"display: flex; flex-direction: column; gap: 4px\">\n      <span style=\"font-size: 13px; font-weight: 700; color: #464936\">مجموعة الاختبار<\/span>\n      <span style=\"position: relative; display: block\">\n        <select value=\"{{group}}\" onChange=\"{{onGroup}}\" style=\"width: 100%; height: 48px; border: 1px solid #E4E2D8; border-radius: 14px; background: #fff; padding: 0 14px 0 40px; font-size: 15px; font-weight: 600; color: #1C1E14\">\n          <option value=\"g1\">اختبارات الفصل الأول 1448<\/option>\n          <option value=\"g2\">اختبارات المتون — تحفة الأطفال<\/option>\n        <\/select>\n        <svg class=\"i\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" style=\"position: absolute; left: 12px; top: 14px; width: 18px; height: 18px; color: #6B7054\"><path d=\"M6 9l6 6 6-6\"><\/path><\/svg>\n      <\/span>\n      <span style=\"font-size: 12px; font-weight: 500; color: #6B7054\">{{groupDates}}<\/span>\n    <\/label>\n\n    <sc-if value=\"{{bulk}}\" hint-placeholder-val=\"{{false}}\">\n      <div style=\"display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px\">\n        <label style=\"display: flex; flex-direction: column; gap: 4px; min-width: 0\">\n          <span style=\"font-size: 13px; font-weight: 700; color: #464936\">المسار للجميع<\/span>\n          <select value=\"{{allTrack}}\" onChange=\"{{onAllTrack}}\" style=\"width: 100%; height: 48px; border: 1px solid #E4E2D8; border-radius: 14px; background: #fff; padding: 0 12px; font-size: 14px; font-weight: 600; color: #1C1E14\">\n            <option value=\"t10\">مسار القرآن الكريم<\/option>\n            <option value=\"tuhfa\">مسار تعليم الصغار<\/option>\n          <\/select>\n        <\/label>\n        <label style=\"display: flex; flex-direction: column; gap: 4px; min-width: 0\">\n          <span style=\"font-size: 13px; font-weight: 700; color: #464936\">الفرع للجميع<\/span>\n          <select value=\"{{allBranch}}\" onChange=\"{{onAllBranch}}\" style=\"width: 100%; height: 48px; border: 1px solid #E4E2D8; border-radius: 14px; background: #fff; padding: 0 12px; font-size: 14px; font-weight: 600; color: #1C1E14\">\n            <sc-for list=\"{{allBranchOpts}}\" as=\"o\" hint-placeholder-count=\"3\"><option value=\"{{o.v}}\">{{o.t}}<\/option><\/sc-for>\n          <\/select>\n        <\/label>\n      <\/div>\n    <\/sc-if>\n\n    <section aria-label=\"طلاب الحلقة\" style=\"background: #fff; border-radius: 22px; box-shadow: 0 1px 3px rgba(28,30,20,.06); padding: 4px 14px\">\n      <div style=\"display: flex; align-items: center; justify-content: space-between; padding: 12px 0 8px\">\n        <span style=\"font-size: 15px; font-weight: 800\">طلاب الحلقة<\/span>\n        <span style=\"font-size: 13px; font-weight: 600; color: #6B7054\">{{pickedTxt}}<\/span>\n      <\/div>\n      <sc-for list=\"{{students}}\" as=\"s\" hint-placeholder-count=\"10\">\n        <div style=\"border-top: 1px solid #EEECE4; padding: 10px 0; display: flex; flex-direction: column; gap: 8px\">\n          <button onClick=\"{{s.toggle}}\" role=\"{{s.role}}\" aria-checked=\"{{s.on}}\" aria-disabled=\"{{s.dis}}\" style=\"min-height: 48px; border: 0; background: none; padding: 0; display: flex; align-items: center; gap: 12px; text-align: right; color: inherit; cursor: {{s.cursor}}\">\n            <span style=\"width: 24px; height: 24px; flex: none; border-radius: {{s.radius}}; border: 1.5px solid {{s.boxBd}}; background: {{s.boxBg}}; color: #fff; display: flex; align-items: center; justify-content: center\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 15px; height: 15px; stroke-width: 2.6; opacity: {{s.tick}}\"><path d=\"M5 12l5 5 9-10\"><\/path><\/svg><\/span>\n            <span style=\"width: 36px; height: 36px; flex: none; border-radius: 50%; background: {{s.avBg}}; color: #313425; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center\">{{s.i}}<\/span>\n            <span style=\"flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column\">\n              <span style=\"font-size: 15px; font-weight: 700; color: {{s.nameFg}}\">{{s.n}}<\/span>\n              <span style=\"font-size: 12px; font-weight: 500; color: #6B7054\">{{s.sub}}<\/span>\n            <\/span>\n          <\/button>\n          <sc-if value=\"{{s.blocked}}\" hint-placeholder-val=\"{{false}}\">\n            <div style=\"margin-right: 36px; display: flex; align-items: flex-start; gap: 8px; font-size: 13px; font-weight: 600; color: #464936\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 17px; height: 17px; color: #8F8872; margin-top: 2px\"><rect x=\"5\" y=\"11\" width=\"14\" height=\"10\" rx=\"2\"><\/rect><path d=\"M8 11V7a4 4 0 018 0v4\"><\/path><\/svg><span>{{s.block}}<\/span><\/div>\n          <\/sc-if>\n          <sc-if value=\"{{s.showFields}}\" hint-placeholder-val=\"{{false}}\">\n            <div style=\"margin-right: 36px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px\">\n              <label style=\"display: flex; flex-direction: column; gap: 2px; min-width: 0\"><span style=\"font-size: 12px; font-weight: 700; color: #6B7054\">المسار<\/span>\n                <select value=\"{{s.track}}\" onChange=\"{{s.onTrack}}\" style=\"width: 100%; height: 44px; border: 1px solid #E4E2D8; border-radius: 12px; background: #FAFAF7; padding: 0 10px; font-size: 13px; font-weight: 600; color: #1C1E14\">\n                  <option value=\"t10\">مسار القرآن الكريم<\/option>\n                  <option value=\"tuhfa\">مسار تعليم الصغار<\/option>\n                <\/select>\n              <\/label>\n                <label style=\"display: flex; flex-direction: column; gap: 2px; min-width: 0\"><span style=\"font-size: 12px; font-weight: 700; color: #6B7054\">الفرع<\/span>\n                  <select value=\"{{s.branch}}\" onChange=\"{{s.onBranch}}\" style=\"width: 100%; height: 44px; border: 1px solid #E4E2D8; border-radius: 12px; background: #FAFAF7; padding: 0 10px; font-size: 13px; font-weight: 600; color: #1C1E14\">\n                    <sc-for list=\"{{s.branchOpts}}\" as=\"o\" hint-placeholder-count=\"3\"><option value=\"{{o.v}}\">{{o.t}}<\/option><\/sc-for>\n                  <\/select>\n                <\/label>\n            <\/div>\n          <\/sc-if>\n          <sc-if value=\"{{s.warn}}\" hint-placeholder-val=\"{{false}}\">\n            <div role=\"alert\" style=\"margin-right: 36px; border-radius: 14px; background: #FEF6E4; color: #8A4B12; padding: 10px 12px; display: flex; align-items: center; gap: 10px\">\n              <svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 18px; height: 18px\"><path d=\"M12 3l9.5 17h-19z\"><\/path><path d=\"M12 10v4M12 17h.01\"><\/path><\/svg>\n              <span style=\"flex: 1; font-size: 13px; font-weight: 700\">النطاق يتجاوز محفوظ الطالب (محفوظه حتى الانفطار)<\/span>\n              <button onClick=\"{{s.ack}}\" style=\"min-height: 40px; padding: 0 12px; border: 1px solid #F0CFAE; border-radius: 10px; background: #fff; color: #8A4B12; font-size: 13px; font-weight: 800\">متابعة<\/button>\n            <\/div>\n          <\/sc-if>\n          <sc-if value=\"{{s.acked}}\" hint-placeholder-val=\"{{false}}\">\n            <div style=\"margin-right: 36px; font-size: 12px; font-weight: 600; color: #6B7054\">سيُرشَّح رغم تجاوز النطاق<\/div>\n          <\/sc-if>\n        <\/div>\n      <\/sc-for>\n    <\/section>\n  <\/main>\n\n  <div style=\"position: absolute; left: 0; right: 0; bottom: 96px; padding: 12px 16px; background: rgba(247,246,242,.96); border-top: 1px solid #ECEAE2; display: flex; flex-direction: column; gap: 6px\">\n    <sc-if value=\"{{hint}}\" hint-placeholder-val=\"{{false}}\"><span style=\"font-size: 12px; font-weight: 600; color: #8A4B12; text-align: center\">{{hint}}<\/span><\/sc-if>\n    <button onClick=\"{{submit}}\" aria-disabled=\"{{notReady}}\" style=\"height: 54px; border: 0; border-radius: 14px; background: {{submitBg}}; color: #fff; font-size: 17px; font-weight: 700\">{{submitTxt}}<\/button>\n  <\/div>\n\n  <nav aria-label=\"التنقل الرئيسي\" style=\"position: absolute; left: 0; right: 0; bottom: 0; height: 96px; padding-bottom: 18px; background: linear-gradient(180deg, #555942, #393D22); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); color: #D1C6A8\">\n    <a href=\"#\" style=\"display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #D1C6A8; font-size: 13px; font-weight: 600\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 26px; height: 26px\"><path d=\"M12 3l8 5v9l-8 4-8-4V8z\"><\/path><\/svg>الرئيسية<\/a>\n    <a href=\"#\" style=\"display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #D1C6A8; font-size: 13px; font-weight: 600\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 26px; height: 26px\"><rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"><\/rect><path d=\"M9 8h6M9 12h6M9 16h3\"><\/path><\/svg>الزيارات<\/a>\n    <a href=\"MyNoms.dc.html\" aria-current=\"page\" style=\"display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #fff; font-size: 13px; font-weight: 700\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 26px; height: 26px\"><path d=\"M4 4h12v16H4zM8 8h4M8 12h4M18 6v14\"><\/path><\/svg>الاختبارات<\/a>\n    <a href=\"#\" style=\"display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #D1C6A8; font-size: 13px; font-weight: 600\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 26px; height: 26px\"><circle cx=\"12\" cy=\"8\" r=\"4\"><\/circle><path d=\"M4 21v-1a7 7 0 0116 0v1\"><\/path><\/svg>حسابي<\/a>\n  <\/nav>\n\n  <sc-if value=\"{{done}}\" hint-placeholder-val=\"{{false}}\">\n    <div style=\"position: absolute; inset: 0; background: rgba(28,30,20,.42); display: flex; align-items: flex-end\">\n      <div role=\"dialog\" aria-label=\"أُرسل الترشيح\" style=\"width: 100%; background: #fff; border-radius: 28px 28px 0 0; padding: 28px 20px 36px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center\">\n        <span aria-hidden=\"true\" style=\"width: 72px; height: 72px; border-radius: 24px; background: #E8F5EC; color: #1E6B39; display: flex; align-items: center; justify-content: center\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 36px; height: 36px; stroke-width: 2.2\"><path d=\"M5 12l5 5 9-10\"><\/path><\/svg><\/span>\n        <h2 style=\"margin: 0; font-size: 22px; font-weight: 800\">{{doneTitle}}<\/h2>\n        <p style=\"margin: 0; font-size: 15px; color: #464936; line-height: 1.7\">يعتمده المشرف فيصل الزهراني ويحدد الموعد، ثم يصلك إشعار.<\/p>\n        <a href=\"MyNoms.dc.html\" style=\"margin-top: 8px; width: 100%; height: 54px; border-radius: 14px; background: linear-gradient(90deg, #555942, #2D3118, #555942); color: #fff; text-decoration: none; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center\">ترشيحاتي<\/a>\n        <button onClick=\"{{closeDone}}\" style=\"width: 100%; height: 48px; border: 0; background: none; color: #555942; font-size: 15px; font-weight: 700\">ترشيح طلاب آخرين<\/button>\n      <\/div>\n    <\/div>\n  <\/sc-if>\n<\/div>\n", "code": "\nclass Component extends DCLogic {\n  constructor(p) {\n    super(p);\n    this.state = {\n      mode: 'one', group: 'g1', picked: { 'فيصل الدوسري': true },\n      track: { 'محمد العتيبي': 't10' }, branch: { 'محمد العتيبي': 'tabarak' }, acked: {},\n      allTrack: 't10', allBranch: 'amma', done: false, sentCount: 0\n    };\n  }\n  renderVals() {\n    var self = this, s = this.state;\n    var set = function (p) { self.setState(p); };\n    var bulk = s.mode === 'bulk';\n    var BR = {\n      t10: [{ v: 'amma', t: 'جزء عم' }, { v: 'tabarak', t: 'جزء تبارك' }, { v: 'qad', t: 'جزء قد سمع' }],\n      tuhfa: [{ v: 'b1', t: 'تحفة الأطفال: البيت 1–30' }, { v: 'b2', t: 'تحفة الأطفال: البيت 31–61' }]\n    };\n    var STUDENTS = [\n      { n: 'فيصل الدوسري', sub: 'محفوظه حتى الناس' },\n      { n: 'محمد العتيبي', sub: 'اجتاز جزء عم · ممتاز 91%' },\n      { n: 'سعد الغامدي', sub: 'راسب سابقًا · متاح لإعادة الترشيح' },\n      { n: 'ماجد السبيعي', sub: 'محفوظه حتى الانفطار', warn: true },\n      { n: 'عمر خالد العتيبي', sub: 'جزء عم · المحاولة 2', block: 'مرشح بالفعل في هذا الفرع · موعده الأحد 5 جمادى الآخرة 07:30 م' },\n      { n: 'عبدالله الحربي', sub: 'جزء عم', block: 'مرشح بالفعل في هذا الفرع' },\n      { n: 'يوسف القحطاني', sub: 'راسب في جزء عم · 2 جمادى الآخرة' },\n      { n: 'نواف العنزي', sub: 'جزء قد سمع', block: 'يجب اجتياز الفرع السابق أولًا (جزء تبارك)' },\n      { n: 'عبدالعزيز الشهري', sub: 'غائب في جزء قد سمع · 3 جمادى الآخرة' },\n      { n: 'خالد الشمري', sub: 'جزء عم', block: 'يُختبر الآن مع د. عادل الشهري' }\n    ];\n    var pickedNames = STUDENTS.filter(function (x) { return !x.block && s.picked[x.n]; }).map(function (x) { return x.n; });\n    var students = STUDENTS.map(function (x) {\n      var dis = !!x.block, on = !dis && !!s.picked[x.n];\n      var tr = bulk ? s.allTrack : (s.track[x.n] || 't10');\n      var br = bulk ? s.allBranch : (s.branch[x.n] || BR[tr][0].v);\n      var mp = function (key, val) { var o = Object.assign({}, s[key]); o[x.n] = val; var p = {}; p[key] = o; return p; };\n      return {\n        n: x.n, i: x.n.charAt(0), sub: x.sub, blocked: dis, block: x.block || '',\n        on: on ? 'true' : 'false', dis: dis ? 'true' : 'false', role: bulk ? 'checkbox' : 'radio',\n        radius: bulk ? '7px' : '50%', cursor: dis ? 'not-allowed' : 'pointer',\n        boxBd: dis ? '#E4E2D8' : on ? '#555942' : '#BAB095', boxBg: dis ? '#F3F2EE' : on ? '#555942' : '#fff', tick: on ? 1 : 0,\n        avBg: dis ? '#ECEAE2' : '#D7E0AB', nameFg: dis ? '#6B7054' : '#1C1E14',\n        showFields: on && !bulk, track: tr, branch: br,\n        branchOpts: BR[tr],\n        warn: on && x.warn && br === 'amma' && !s.acked[x.n], acked: on && x.warn && br === 'amma' && !!s.acked[x.n],\n        toggle: function () {\n          if (dis) return;\n          if (bulk) { set(mp('picked', !on)); }\n          else { var o = {}; o[x.n] = true; set({ picked: on ? {} : o }); }\n        },\n        onTrack: function (e) { var p = mp('track', e.target.value); var b = Object.assign({}, s.branch); delete b[x.n]; p.branch = b; set(p); },\n        onBranch: function (e) { set(mp('branch', e.target.value)); },\n        ack: function () { set(mp('acked', true)); }\n      };\n    });\n    var pendingWarn = STUDENTS.filter(function (x) {\n      var br = bulk ? s.allBranch : (s.branch[x.n] || 'amma');\n      return x.warn && s.picked[x.n] && br === 'amma' && !s.acked[x.n];\n    })[0];\n    var count = pickedNames.length;\n    var ready = count > 0 && !pendingWarn;\n    var word = function (n) { return n === 1 ? 'طالب واحد' : n === 2 ? 'طالبان' : n + ' طلاب'; };\n    return {\n      modes: [{ k: 'one', t: 'فردي' }, { k: 'bulk', t: 'جماعي' }].map(function (m) {\n        var on = s.mode === m.k;\n        return { t: m.t, on: on ? 'true' : 'false', bg: on ? '#fff' : 'transparent', fw: on ? 800 : 600, sh: on ? '0 1px 4px rgba(28,30,20,.12)' : 'none',\n          pick: function () { set({ mode: m.k, picked: m.k === 'one' ? { 'فيصل الدوسري': true } : s.picked }); } };\n      }),\n      bulk: bulk, group: s.group, onGroup: function (e) { set({ group: e.target.value }); },\n      groupDates: s.group === 'g2' ? '10–25 جمادى الآخرة 1448 · 20 نوفمبر – 5 ديسمبر 2026' : '1–30 جمادى الآخرة 1448 · 11 نوفمبر – 10 ديسمبر 2026',\n      allTrack: s.allTrack, allBranch: s.allBranch, allBranchOpts: BR[s.allTrack],\n      onAllTrack: function (e) { set({ allTrack: e.target.value, allBranch: BR[e.target.value][0].v }); },\n      onAllBranch: function (e) { set({ allBranch: e.target.value }); },\n      students: students,\n      pickedTxt: count ? 'محدد: ' + word(count) : (bulk ? 'اختر الطلاب' : 'اختر طالبًا'),\n      hint: pendingWarn ? 'اضغط «متابعة» لتأكيد ترشيح ' + pendingWarn.n.split(' ')[0] : (count ? '' : 'اختر طالبًا متاحًا للترشيح'),\n      notReady: ready ? 'false' : 'true',\n      submitBg: ready ? 'linear-gradient(90deg, #555942, #2D3118, #555942)' : '#BAB095',\n      submitTxt: count > 1 ? 'إرسال الترشيح · ' + word(count) : 'إرسال الترشيح',\n      submit: function () { if (ready) set({ done: true, sentCount: count }); },\n      done: s.done, doneTitle: 'أُرسل ترشيح ' + word(s.sentCount || 1),\n      closeDone: function () { set({ done: false, picked: {} }); }\n    };\n  }\n}\n", "props": {"$preview": {"width": 390, "height": 1000}}, "links": ["https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"], "styles": ["\nbody{margin:0;background:#F7F6F2}\n*{box-sizing:border-box}\nbutton,select,input{font-family:inherit}\nbutton{cursor:pointer}\nbutton:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #9BA27B;outline-offset:2px}\nsvg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}\nselect{appearance:none;-webkit-appearance:none}\n"], "imports": []}};window.__DC_BOARDS={"order": ["Nominate.dc.html", "MyNoms.dc.html"], "pages": [{"id": "r1", "name": "1 · تجهيز الاختبارات — المدير، أول مرة · 3 خطوات قبل أي مجموعة"}, {"id": "r2", "name": "2 · بعد التجهيز — لوحة الاختبارات والإدارة"}, {"id": "r3", "name": "3 · الترشيح — المعلم"}, {"id": "r4", "name": "4 · الاعتماد والإسناد والموعد — المشرف، ثم يصل الإشعار للأسرة"}, {"id": "r5", "name": "5 · الاختبار — المختبِر عبر الويب برابط خاص"}, {"id": "r6", "name": "6 · اعتماد النتيجة — المشرف"}, {"id": "r7", "name": "7 · النتيجة — الطالب وولي الأمر"}, {"id": "r8", "name": "الحالات العامة والمكوّنات"}], "boards": {"Main.dc.html": {"x": 3018, "y": 7420, "w": 1194, "h": 834, "title": "5.4 الجلسة · لوحي أفقي (جرّب الخصم والتراجع)", "is_interactive": true, "radius": 28, "page": "r5"}, "ExSessionPortrait.dc.html": {"x": 5566, "y": 7420, "w": 834, "h": 1194, "title": "5.4 الجلسة · لوحي عمودي", "is_interactive": true, "radius": 28, "page": "r5"}, "ExSessionPhone.dc.html": {"x": 6480, "y": 7420, "w": 390, "h": 844, "title": "5.4 الجلسة · جوال", "is_interactive": true, "radius": 44, "page": "r5"}, "ExLogin.dc.html": {"x": 0, "y": 7420, "w": 390, "h": 844, "title": "5.1 فتح الرابط الخاص — بلا رمز ← طلابي", "is_interactive": true, "radius": 44, "page": "r5"}, "ExList.dc.html": {"x": 470, "y": 7420, "w": 1194, "h": 834, "title": "5.2 قائمة طلابي ← عمر", "is_interactive": true, "radius": 28, "page": "r5"}, "Candidates.dc.html": {"x": 0, "y": 5700, "w": 1440, "h": 1300, "title": "4.1 المرشحون ← متابعة إلى الجدولة", "is_interactive": true, "expand": "fill", "page": "r4"}, "Schedule.dc.html": {"x": 1520, "y": 5700, "w": 1440, "h": 980, "title": "4.2 الجدولة ← تأكيد المواعيد وإشعار الأسر", "is_interactive": true, "expand": "fill", "page": "r4"}, "Pending.dc.html": {"x": 0, "y": 9034, "w": 1440, "h": 980, "title": "6.1 في انتظار الاعتماد (عند الرصد على مراحل)", "is_interactive": true, "expand": "fill", "page": "r6"}, "Results.dc.html": {"x": 1520, "y": 9034, "w": 1440, "h": 1040, "title": "6.2 المختبَرون · السجل الكامل", "is_interactive": true, "expand": "fill", "page": "r6"}, "Incomplete.dc.html": {"x": 3040, "y": 9034, "w": 1440, "h": 820, "title": "6.3 غير مكتملة · الاستثناءات", "is_interactive": true, "expand": "fill", "page": "r6"}, "TestsHome.dc.html": {"x": 0, "y": 2140, "w": 1440, "h": 960, "title": "2.1 لوحة الاختبارات", "is_interactive": true, "expand": "fill", "page": "r2"}, "Wizard.dc.html": {"x": 7600, "y": 2140, "w": 1440, "h": 980, "title": "2.6 مجموعة اختبار جديدة", "is_interactive": true, "expand": "fill", "page": "r2"}, "Form.dc.html": {"x": 1520, "y": 2140, "w": 1440, "h": 1720, "title": "2.2 استمارات التقييم", "is_interactive": true, "expand": "fill", "page": "r2"}, "Tracks.dc.html": {"x": 3040, "y": 2140, "w": 1440, "h": 1000, "title": "2.3 المسارات والفروع", "is_interactive": true, "expand": "fill", "page": "r2"}, "Branch.dc.html": {"x": 4560, "y": 2140, "w": 1440, "h": 1080, "title": "2.4 نموذج الفرع", "is_interactive": true, "expand": "fill", "page": "r2"}, "Committees.dc.html": {"x": 6080, "y": 2140, "w": 1440, "h": 980, "title": "2.5 اللجان (تُنشأ داخل المجموعات)", "is_interactive": true, "expand": "fill", "page": "r2"}, "Nominate.dc.html": {"x": 0, "y": 4280, "w": 390, "h": 1000, "title": "3.1 الترشيح ← إرسال", "is_interactive": true, "radius": 44, "page": "r3"}, "MyNoms.dc.html": {"x": 470, "y": 4280, "w": 390, "h": 1000, "title": "3.2 ترشيحاتي ونتائج طلابي", "is_interactive": true, "radius": 44, "page": "r3"}, "StuNotice.dc.html": {"x": 3040, "y": 5700, "w": 390, "h": 844, "title": "4.3 الأسرة: إشعار الموعد", "radius": 44, "page": "r4"}, "StuResult.dc.html": {"x": 0, "y": 10494, "w": 390, "h": 1100, "title": "7.1 صفحة النتيجة", "is_interactive": true, "radius": 44, "page": "r7"}, "StuHistory.dc.html": {"x": 470, "y": 10494, "w": 390, "h": 900, "title": "7.2 سجل الاختبارات", "radius": 44, "page": "r7"}, "States.dc.html": {"x": 0, "y": 12014, "w": 1440, "h": 1300, "title": "الحالات: فارغة · تحميل · خطأ · لا صلاحية · انتهاء الدخول", "expand": "fill", "page": "r8"}, "Sidebar.dc.html": {"x": 1520, "y": 12014, "w": 264, "h": 980, "title": "مكوّن: القائمة الجانبية", "page": "r8"}, "ExSessionStart.dc.html": {"x": 1744, "y": 7420, "w": 1194, "h": 834, "title": "5.3 قبل البدء · غائب أو بدء", "is_interactive": true, "radius": 28, "page": "r5"}, "ExSessionSummary.dc.html": {"x": 4292, "y": 7420, "w": 1194, "h": 834, "title": "5.5 الملخص ← اعتماد النتيجة", "is_interactive": true, "radius": 28, "page": "r5"}, "SetupHome.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 960, "is_interactive": true, "expand": "fill", "title": "1.0 البداية: لنجهّز الاختبارات", "page": "r1"}, "SetupForm.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 1720, "is_interactive": true, "expand": "fill", "title": "1.1 استمارة التقييم: التقدير والنقاط والخصم والاعتماد ← المسارات", "page": "r1"}, "SetupTracks.dc.html": {"x": 3040, "y": 0, "w": 1440, "h": 1000, "is_interactive": true, "expand": "fill", "title": "1.2 المسارات والفروع: قالبان ← مجموعات الاختبار", "page": "r1"}, "SetupBranch.dc.html": {"x": 4560, "y": 0, "w": 1440, "h": 1120, "is_interactive": true, "expand": "fill", "title": "1.2أ نموذج الفرع ← يعود للمسارات", "page": "r1"}, "SetupGroup.dc.html": {"x": 6080, "y": 0, "w": 1440, "h": 1060, "is_interactive": true, "expand": "fill", "title": "1.3 مجموعات الاختبار: الأساسيات، ثم الاستمارة والمسارات واللجنة، ثم النشر", "page": "r1"}, "SetupSteps.dc.html": {"x": 1864, "y": 12014, "w": 1100, "h": 96, "title": "مكوّن: خطوات التجهيز", "page": "r8"}}};</script>
+<script>/* Ethaaf certificates — standalone viewer runtime (template engine + router) */
+(function () {
+  'use strict';
+  var SRC = window.__DC_SOURCES;   // { Name: { tpl, code, props, links:[], styles:[] } }
+  var BOARDS = window.__DC_BOARDS; // { order:[], pages:[], boards:{} }
+  var BOOL = { disabled: 1, checked: 1, selected: 1, hidden: 1, readonly: 1, required: 1, multiple: 1, open: 1, autofocus: 1 };
+  var EVT = { onclick: 'click', oninput: 'input', onchange: 'change', onsubmit: 'submit', onkeydown: 'keydown', onkeyup: 'keyup', onfocus: 'focus', onblur: 'blur', onmouseenter: 'mouseenter', onmouseleave: 'mouseleave', ondblclick: 'dblclick' };
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var renderQueued = false, rootInst = null;
+
+  function DCLogic(props) { this.props = props || {}; this.state = null; }
+  DCLogic.prototype.setState = function (p) {
+    if (typeof p === 'function') p = p(this.state, this.props);
+    this.state = Object.assign({}, this.state || {}, p || {});
+    queue();
+  };
+  DCLogic.prototype.renderVals = function () { return {}; };
+  window.DCLogic = DCLogic;
+
+  var compiled = {};
+  function klass(name) {
+    if (compiled[name]) return compiled[name];
+    var s = SRC[name]; if (!s) throw new Error('Unknown component ' + name);
+    var C = new Function('DCLogic', s.code + '\n;return Component;')(DCLogic);
+    var tpl = parseTpl(s.tpl);
+    compiled[name] = { C: C, tpl: tpl };
+    return compiled[name];
+  }
+
+  /* minimal HTML parser — keeps custom tags exactly where they are written (no table/select foster-parenting) */
+  var VOID = { area: 1, base: 1, br: 1, col: 1, embed: 1, hr: 1, img: 1, input: 1, link: 1, meta: 1, source: 1, track: 1, wbr: 1 };
+  var decEl = document.createElement('textarea');
+  function dec(x) { if (x.indexOf('&') < 0) return x; decEl.innerHTML = x; return decEl.value; }
+  function parseTpl(src) {
+    var root = { tag: '#root', attrs: [], kids: [] }, stack = [root], i = 0, L = src.length;
+    var reAttr = /([^\s=\/>"']+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g;
+    while (i < L) {
+      var lt = src.indexOf('<', i);
+      if (lt < 0) lt = L;
+      if (lt > i) stack[stack.length - 1].kids.push({ text: dec(src.slice(i, lt)) });
+      if (lt >= L) break;
+      if (src.startsWith('<!--', lt)) { var ce = src.indexOf('-->', lt); i = ce < 0 ? L : ce + 3; continue; }
+      if (src.charAt(lt + 1) === '/') {
+        var gt = src.indexOf('>', lt); var name = src.slice(lt + 2, gt).trim().toLowerCase();
+        for (var k = stack.length - 1; k > 0; k--) { if (stack[k].lname === name) { stack.length = k; break; } }
+        i = gt + 1; continue;
+      }
+      if (src.charAt(lt + 1) === '!') { i = src.indexOf('>', lt) + 1; continue; }
+      // find end of tag respecting quotes
+      var j = lt + 1, q = null;
+      while (j < L) { var ch = src.charAt(j); if (q) { if (ch === q) q = null; } else if (ch === '"' || ch === "'") q = ch; else if (ch === '>') break; j++; }
+      var body = src.slice(lt + 1, j); var selfc = /\/\s*$/.test(body); if (selfc) body = body.replace(/\/\s*$/, '');
+      var m = /^([^\s\/>]+)/.exec(body); var tag = m[1]; var rest = body.slice(tag.length);
+      var node = { tag: tag, lname: tag.toLowerCase(), attrs: [], kids: [] }; var am;
+      reAttr.lastIndex = 0;
+      while ((am = reAttr.exec(rest))) node.attrs.push({ name: am[1], value: dec(am[2] !== undefined ? am[2] : am[3] !== undefined ? am[3] : am[4] !== undefined ? am[4] : '') });
+      stack[stack.length - 1].kids.push(node);
+      i = j + 1;
+      if (node.lname === 'style' || node.lname === 'script' || node.lname === 'textarea') {
+        var end = src.toLowerCase().indexOf('</' + node.lname, i); if (end < 0) end = L;
+        var raw = src.slice(i, end); if (raw) node.kids.push({ text: node.lname === 'textarea' ? dec(raw) : raw });
+        i = src.indexOf('>', end) + 1 || L; continue;
+      }
+      if (!VOID[node.lname] && !selfc) stack.push(node);
+    }
+    return root;
+  }
+  function getA(node, n) { for (var i = 0; i < node.attrs.length; i++) if (node.attrs[i].name === n) return node.attrs[i].value; return null; }
+
+  function resolve(path, scope) {
+    path = path.trim();
+    if (path === 'true') return true; if (path === 'false') return false; if (path === 'null') return null;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var parts = path.split('.'); var v = scope[parts[0]];
+    for (var i = 1; i < parts.length && v != null; i++) v = v[parts[i]];
+    return v;
+  }
+  var BLOBS = window.__DC_BLOBS || {};
+  function fixUrl(v) { return v.indexOf('/_blob/') < 0 ? v : v.replace(/\/_blob\/([0-9a-f]{32})/g, function (m, id) { return BLOBS[id] || m; }); }
+  function whole(str) { var m = /^\s*\{\{([^}]+)\}\}\s*$/.exec(str); return m ? m[1] : null; }
+  function interp(str, scope) { return str.replace(/\{\{([^}]+)\}\}/g, function (_, p) { var v = resolve(p, scope); return v == null ? '' : String(v); }); }
+
+  /* ---------- instances ---------- */
+  function Inst(name, props) {
+    var k = klass(name);
+    this.name = name; this.tpl = k.tpl; this.kids = {};
+    this.comp = new k.C(props); this.comp.props = props; this.mounted = false;
+  }
+  Inst.prototype.setProps = function (props) {
+    var prev = this.comp.props;
+    var same = Object.keys(props).length === Object.keys(prev).length && Object.keys(props).every(function (k) { return props[k] === prev[k]; });
+    if (same) return;
+    this.comp.props = props;
+    if (this.comp.componentDidUpdate) { try { this.comp.componentDidUpdate(prev, this.comp.state); } catch (e) { console.error(e); } }
+  };
+  Inst.prototype.build = function () {
+    var vals;
+    try { vals = this.comp.renderVals() || {}; } catch (e) { console.error(this.name, e); vals = {}; }
+    this.seen = {}; this.counter = 0;
+    var frag = document.createElement('div');
+    buildKids(this.tpl, vals, frag, this, false);
+    var self = this;
+    Object.keys(this.kids).forEach(function (k) { if (!self.seen[k]) { var c = self.kids[k]; if (c.comp.componentWillUnmount) c.comp.componentWillUnmount(); delete self.kids[k]; } });
+    return frag;
+  };
+  Inst.prototype.mountAll = function () {
+    if (!this.mounted) { this.mounted = true; if (this.comp.componentDidMount) { try { this.comp.componentDidMount(); } catch (e) { console.error(e); } } }
+    var k = this.kids; Object.keys(k).forEach(function (x) { k[x].mountAll(); });
+  };
+  Inst.prototype.unmount = function () {
+    var k = this.kids; Object.keys(k).forEach(function (x) { k[x].unmount(); });
+    if (this.comp.componentWillUnmount) { try { this.comp.componentWillUnmount(); } catch (e) { } }
+  };
+
+  function buildKids(node, scope, parent, inst, svg) {
+    for (var c = 0; c < node.kids.length; c++) buildNode(node.kids[c], scope, parent, inst, svg);
+  }
+  function buildNode(node, scope, parent, inst, svg) {
+    if (node.text !== undefined) { var t = node.text; parent.appendChild(document.createTextNode(t.indexOf('{{') >= 0 ? interp(t, scope) : t)); return; }
+    var tag = node.lname;
+    if (tag === 'sc-for') {
+      var list = resolve(whole(getA(node, 'list') || '') || '', scope) || [];
+      var as = getA(node, 'as') || 'item';
+      for (var i = 0; i < list.length; i++) { var s = Object.create(scope); s[as] = list[i]; s.$index = i; buildKids(node, s, parent, inst, svg); }
+      return;
+    }
+    if (tag === 'sc-if') { if (resolve(whole(getA(node, 'value') || '') || '', scope)) buildKids(node, scope, parent, inst, svg); return; }
+    if (tag === 'dc-import') {
+      var name = getA(node, 'name'); var props = {};
+      for (var a = 0; a < node.attrs.length; a++) {
+        var at = node.attrs[a]; if (at.name === 'name' || at.name.indexOf('hint-') === 0) continue;
+        var w = whole(at.value); props[camel(at.name)] = w ? resolve(w, scope) : interp(at.value, scope);
+      }
+      var key = name + '#' + (inst.counter++);
+      inst.seen[key] = true;
+      var child = inst.kids[key];
+      if (!child) child = inst.kids[key] = new Inst(name, props); else child.setProps(props);
+      var host = document.createElement('div'); host.setAttribute('data-dc', name); host.style.display = 'contents';
+      var built = child.build();
+      while (built.firstChild) host.appendChild(built.firstChild);
+      parent.appendChild(host); return;
+    }
+    var isSvg = svg || tag === 'svg';
+    var el = isSvg ? document.createElementNS(SVGNS, node.tag) : document.createElement(tag);
+    el.__h = {}; el.__p = {};
+    for (var j = 0; j < node.attrs.length; j++) {
+      var at2 = node.attrs[j]; var n = at2.name; var v = at2.value;
+      if (n.indexOf('hint-') === 0) continue;
+      var ln = n.toLowerCase();
+      if (EVT[ln]) { var fn = resolve(whole(v) || '', scope); if (typeof fn === 'function') el.__h[EVT[ln]] = fn; continue; }
+      var wh = whole(v);
+      if (wh !== null) {
+        var val = resolve(wh, scope);
+        if (ln === 'value' && (tag === 'input' || tag === 'textarea' || tag === 'select')) { el.__p.value = val == null ? '' : String(val); if (tag !== 'select') el.setAttribute('value', el.__p.value); continue; }
+        if (BOOL[ln] && !isSvg) { if (val && val !== 'false') { el.setAttribute(n, ''); el.__p[ln] = true; } else el.__p[ln] = false; continue; }
+        if (val === false || val == null) { if (ln.indexOf('aria-') === 0 && val === false) el.setAttribute(n, 'false'); continue; }
+        if (val === true) { el.setAttribute(n, ln.indexOf('aria-') === 0 ? 'true' : ''); continue; }
+        el.setAttribute(n, fixUrl(String(val)));
+      } else {
+        var sv = v.indexOf('{{') >= 0 ? interp(v, scope) : v;
+        if (ln === 'value' && (tag === 'input' || tag === 'textarea' || tag === 'select')) el.__p.value = sv;
+        el.setAttribute(n, fixUrl(sv));
+      }
+    }
+    if (tag === 'template') { parent.appendChild(el); return; }
+    if (tag === 'textarea') { if (el.__p.value === undefined && node.kids[0]) el.__p.value = node.kids[0].text; }
+    else buildKids(node, scope, el, inst, isSvg && tag !== 'foreignobject');
+    if (tag === 'textarea' && el.__p.value !== undefined) el.textContent = el.__p.value;
+    parent.appendChild(el);
+  }
+  function camel(n) { return n.replace(/-([a-z])/g, function (_, c) { return c.toUpperCase(); }); }
+
+  /* ---------- morph ---------- */
+  function morph(o, n) {
+    if (o.nodeType !== n.nodeType || o.nodeName !== n.nodeName || (o.nodeType === 1 && o.namespaceURI !== n.namespaceURI)) { o.parentNode.replaceChild(n, o); return n; }
+    if (o.nodeType === 3) { if (o.nodeValue !== n.nodeValue) o.nodeValue = n.nodeValue; return o; }
+    if (o.nodeType !== 1) return o;
+    var i, a;
+    for (i = o.attributes.length - 1; i >= 0; i--) { a = o.attributes[i].name; if (!n.hasAttribute(a)) o.removeAttribute(a); }
+    for (i = 0; i < n.attributes.length; i++) { a = n.attributes[i]; if (o.getAttribute(a.name) !== a.value) o.setAttribute(a.name, a.value); }
+    o.__h = n.__h; o.__p = n.__p;
+    morphKids(o, n);
+    applyProps(o);
+    return o;
+  }
+  function morphKids(o, n) {
+    var oc = o.firstChild, nc = n.firstChild;
+    while (nc) {
+      var next = nc.nextSibling;
+      if (oc) { var on = oc.nextSibling; morph(oc, nc); oc = on; }
+      else o.appendChild(nc);
+      nc = next;
+    }
+    while (oc) { var r = oc.nextSibling; o.removeChild(oc); oc = r; }
+  }
+  function applyProps(el) {
+    var p = el.__p; if (!p) return;
+    if (p.value !== undefined && el.value !== p.value) { if (document.activeElement !== el || el.tagName === 'SELECT') el.value = p.value; else if (el.value !== p.value) { var ss = el.selectionStart; el.value = p.value; try { el.setSelectionRange(ss, ss); } catch (e) { } } }
+    if (p.checked !== undefined && el.checked !== p.checked) el.checked = p.checked;
+    if (p.selected !== undefined && el.selected !== p.selected) el.selected = p.selected;
+    if (p.disabled !== undefined) el.disabled = p.disabled;
+  }
+  function applyAll(root) { var all = root.querySelectorAll('*'); for (var i = 0; i < all.length; i++) applyProps(all[i]); }
+
+  /* ---------- events (delegated) ---------- */
+  ['click', 'input', 'change', 'submit', 'keydown', 'keyup', 'dblclick'].forEach(function (type) {
+    document.addEventListener(type, function (e) {
+      var app = document.getElementById('app'); if (!app || !app.contains(e.target)) return;
+      if (type === 'click') {
+        var a = e.target.closest('a[href]');
+        if (a && app.contains(a)) {
+          var href = a.getAttribute('href');
+          var m = /^([A-Za-z0-9_]+)\.dc\.html(#.*)?$/.exec(href || '');
+          if (m && SRC[m[1]]) { e.preventDefault(); location.hash = '#/' + m[1]; } else if (m && window.__ROLE_OF && __ROLE_OF[m[1]]) { e.preventDefault(); location.href = './' + __ROLE_OF[m[1]] + '.html#/' + m[1]; }
+          else if (!href || href.charAt(0) === '#') e.preventDefault();
+        }
+      }
+      var el = e.target;
+      while (el && el !== app) {
+        if (el.__h && el.__h[type]) {
+          if (type === 'submit') e.preventDefault();
+          if (el.disabled) return;
+          try { el.__h[type].call(null, e); } catch (err) { console.error(err); }
+          if (type !== 'submit') return; else return;
+        }
+        el = el.parentNode;
+      }
+    }, type === 'submit');
+  });
+  ['mouseenter', 'mouseleave', 'focus', 'blur'].forEach(function (type) {
+    document.addEventListener(type, function (e) { var el = e.target; if (el && el.__h && el.__h[type]) { try { el.__h[type](e); } catch (err) { console.error(err); } } }, true);
+  });
+
+  function queue() { if (renderQueued) return; renderQueued = true; requestAnimationFrame(function () { renderQueued = false; paint(); }); }
+  function paint() {
+    if (!rootInst) return;
+    var app = document.getElementById('app');
+    var fresh = rootInst.build();
+    if (!app.firstChild) { while (fresh.firstChild) app.appendChild(fresh.firstChild); applyAll(app); }
+    else morphKids(app, fresh);
+    rootInst.mountAll();
+    fit();
+  }
+
+  /* ---------- viewer shell ---------- */
+  var styleTag = document.getElementById('dc-styles');
+  var loadedLinks = {};
+  function useStyles(name, acc) {
+    acc = acc || {}; if (acc[name]) return acc; acc[name] = true;
+    var s = SRC[name];
+    (s.imports || []).forEach(function (i) { useStyles(i, acc); });
+    return acc;
+  }
+  function setStyles(name) {
+    var acc = useStyles(name); var css = '';
+    Object.keys(acc).forEach(function (n) {
+      var s = SRC[n];
+      s.links.forEach(function (href) { if (!loadedLinks[href]) { loadedLinks[href] = 1; var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); } });
+      css += s.styles.join('\n') + '\n';
+    });
+    styleTag.textContent = css.replace(/(^|\})\s*body\s*\{/g, '$1 #app{');
+  }
+
+  var view = document.getElementById('view'), gal = document.getElementById('gallery');
+  var cur = null;
+  function boardOf(name) { return BOARDS.boards[name + '.dc.html'] || null; }
+  function pageName(id) { var p = BOARDS.pages.filter(function (x) { return x.id === id; })[0]; return p ? p.name : ''; }
+  function ordered() { return BOARDS.order.map(function (f) { return f.replace('.dc.html', ''); }).filter(function (n) { return SRC[n]; }); }
+
+  function parseHash() {
+    var h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
+    if (!h) return null;
+    var q = h.split('?'); var props = {};
+    if (q[1]) q[1].split('&').forEach(function (kv) { var i = kv.indexOf('='); if (i > 0) props[kv.slice(0, i)] = kv.slice(i + 1); });
+    return { name: q[0], props: props };
+  }
+  function schema(name) { var p = SRC[name].props || {}; var o = {}; Object.keys(p).forEach(function (k) { if (k.charAt(0) !== '$' && p[k] && p[k].editor) o[k] = p[k]; }); return o; }
+  function defaults(name, given) {
+    var sc = schema(name), o = {};
+    Object.keys(sc).forEach(function (k) { var d = sc[k].default; var g = given[k]; if (g !== undefined) o[k] = sc[k].editor === 'boolean' ? g === 'true' : g; else if (d !== undefined) o[k] = d; });
+    return o;
+  }
+
+  function route() {
+    var r = parseHash();
+    if (!r || !SRC[r.name]) { showGallery(); return; }
+    var props = defaults(r.name, r.props);
+    if (cur && cur.name === r.name && rootInst) {
+      document.title = titleOf(r.name) + ' — شهادات إتحاف';
+      rootInst.setProps(props); renderTweaks(r.name, props); queue(); return;
+    }
+    if (rootInst) rootInst.unmount();
+    cur = { name: r.name };
+    gal.hidden = true; view.hidden = false;
+    var app = document.getElementById('app'); app.innerHTML = '';
+    setStyles(r.name);
+    rootInst = new Inst(r.name, props);
+    var b = boardOf(r.name) || {}; var pv = (SRC[r.name].props || {}).$preview || {};
+    var w = b.w || pv.width || 1440, h = b.h || pv.height || 900;
+    cur.w = w; cur.h = h; cur.fluid = b.expand === 'fill';
+    document.getElementById('vtitle').textContent = titleOf(r.name);
+    document.getElementById('vpage').textContent = pageName(b.page) + ' · ' + w + '×' + h;
+    document.title = titleOf(r.name) + ' — شهادات إتحاف';
+    var list = ordered(); var i = list.indexOf(r.name);
+    document.getElementById('prev').onclick = function () { location.hash = '#/' + list[(i - 1 + list.length) % list.length]; };
+    document.getElementById('next').onclick = function () { location.hash = '#/' + list[(i + 1) % list.length]; };
+    renderTweaks(r.name, props);
+    window.scrollTo(0, 0);
+    paint();
+  }
+  function titleOf(name) { var b = boardOf(name); return (b && b.title) ? b.title.split(' — ')[0] : name; }
+
+  function renderTweaks(name, props) {
+    var box = document.getElementById('tweaks'); box.innerHTML = '';
+    var sc = schema(name);
+    Object.keys(sc).forEach(function (k) {
+      var d = sc[k];
+      var lab = document.createElement('label'); lab.className = 'x-tw';
+      if (d.editor === 'enum') {
+        var sel = document.createElement('select'); sel.setAttribute('aria-label', k);
+        d.options.forEach(function (o) { var op = document.createElement('option'); op.value = o; op.textContent = o; if (String(props[k]) === o) op.selected = true; sel.appendChild(op); });
+        sel.onchange = function () { setTweak(name, k, sel.value); };
+        lab.appendChild(sel);
+      } else if (d.editor === 'boolean') {
+        var cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !!props[k];
+        cb.onchange = function () { setTweak(name, k, cb.checked ? 'true' : 'false'); };
+        var sp = document.createElement('span'); sp.textContent = ({ sheet: 'إظهار اللوحة السفلية', savedSignature: 'يوجد توقيع محفوظ' })[k] || k;
+        lab.appendChild(cb); lab.appendChild(sp);
+      }
+      box.appendChild(lab);
+    });
+    box.hidden = !Object.keys(sc).length;
+  }
+  function setTweak(name, k, v) {
+    var r = parseHash() || { props: {} }; r.props[k] = v;
+    location.hash = '#/' + name + '?' + Object.keys(r.props).map(function (x) { return x + '=' + encodeURIComponent(r.props[x]); }).join('&');
+  }
+
+  function fit() {
+    if (!cur) return;
+    var stage = document.getElementById('stage'), box = document.getElementById('box'), app = document.getElementById('app');
+    var avail = stage.clientWidth - 32; stage.className = cur.fluid ? 'x-fl' : '';
+    if (cur.fluid) { box.style.width = '100%'; box.style.height = ''; app.style.transform = ''; app.style.width = '100%'; box.className = 'x-fluid'; return; }
+    box.className = 'x-fixed';
+    var s = Math.min(1, avail / cur.w);
+    app.style.width = cur.w + 'px'; app.style.transform = s < 1 ? 'scale(' + s + ')' : '';
+    var h = Math.max(cur.h, app.scrollHeight);
+    box.style.width = Math.round(cur.w * s) + 'px'; box.style.height = Math.round(h * s) + 'px';
+  }
+  window.addEventListener('resize', fit);
+
+  function showGallery() {
+    if (rootInst) { rootInst.unmount(); rootInst = null; }
+    cur = null; view.hidden = true; gal.hidden = false; document.title = 'الاختبارات — إتحاف';
+    var wrap = document.getElementById('groups'); if (wrap.childNodes.length) return;
+    var byPage = {};
+    ordered().forEach(function (n) { var b = boardOf(n) || {}; (byPage[b.page] = byPage[b.page] || []).push(n); });
+    var pageOrder = [];
+    BOARDS.pages.forEach(function (p) { if (pageOrder.indexOf(p.id) < 0) pageOrder.push(p.id); });
+    pageOrder.forEach(function (pid, gi) {
+      var items = byPage[pid]; if (!items) return;
+      var sec = document.createElement('section'); sec.className = 'x-grp';
+      var h = document.createElement('h2'); h.innerHTML = pageName(pid); sec.appendChild(h);
+      var grid = document.createElement('div'); grid.className = 'x-cards';
+      items.forEach(function (n) {
+        var b = boardOf(n) || {}; var a = document.createElement('a'); a.className = 'x-card'; a.href = '#/' + n;
+        var mobile = (b.w || 0) <= 500;
+        var parts = (b.title || n).split(' — ');
+        a.innerHTML = '<span class="x-ic x-' + (mobile ? 'm' : (b.w === 1123 ? 'c' : 'd')) + '" aria-hidden="true"></span><span class="x-tx"><b></b><small></small><em></em></span><span class="x-go" aria-hidden="true">←</span>';
+        a.querySelector('b').textContent = parts[0];
+        a.querySelector('small').textContent = parts.slice(1).join(' — ');
+        a.querySelector('em').textContent = (mobile ? 'جوال' : ((b.w === 1194 || b.w === 834) ? 'لوحي' : 'ويب')) + ' · ' + b.w + '×' + b.h + (b.is_interactive ? ' · تفاعلي' : '');
+        grid.appendChild(a);
+      });
+      sec.appendChild(grid); wrap.appendChild(sec);
+    });
+  }
+
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>

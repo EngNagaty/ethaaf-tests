@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>المختبِر — عبر الويب برابط خاص</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--olive:#555942;--ink:#23251C;--mut:#6B6D5C;--line:#E6E2D4;--bg:#F6F5EF;--card:#fff;--gold:#A88A2B}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,sans-serif}
+[hidden]{display:none!important}
+.x-top{position:sticky;top:0;z-index:9000;background:#fff;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+.x-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.x-brand img{height:34px;width:auto}
+.x-brand b{font-size:15px;font-weight:800;display:block;line-height:1.2}
+.x-brand small{font-size:12px;color:var(--mut)}
+.x-sp{flex:1 1 auto}
+.x-btn{height:36px;padding:0 14px;border-radius:8px;border:1px solid #D9D3BC;background:#fff;color:#3C382E;font:700 13px Cairo,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.x-btn:hover{background:#F5F0E5}
+.x-btn.x-p{background:var(--olive);border-color:var(--olive);color:#fff}
+.x-vt{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+.x-vt b{font-size:15px}
+.x-vt small{font-size:12px;color:var(--mut)}
+#tweaks{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#tweaks:before{content:"الحالة:";font-size:12px;font-weight:700;color:var(--mut)}
+.x-tw select{height:36px;border-radius:8px;border:1px solid #D9D3BC;background:#FBF8F0;font:600 13px Cairo,sans-serif;padding:0 8px;color:var(--ink);max-width:260px}
+.x-tw{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+#stage{padding:16px 0 40px;display:flex;justify-content:center}
+#box.x-fixed{position:relative;overflow:hidden;box-shadow:0 2px 6px rgba(35,37,28,.08),0 18px 40px rgba(35,37,28,.12);border-radius:6px;background:#fff}
+#box.x-fixed #app{position:absolute;top:0;right:0;transform-origin:top right}
+#box.x-fluid{width:100%}
+#stage.x-fl{padding:0}
+.x-hero{padding:40px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px;align-items:center}
+.x-hero img{height:110px;width:auto}
+.x-hero h1{margin:0;font-size:30px;font-weight:800;text-wrap:balance}
+.x-hero p{margin:6px 0 0;color:var(--mut);font-size:15px;line-height:1.9;max-width:62ch}
+.x-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.x-meta span{height:28px;padding:0 12px;border-radius:999px;background:#EEF0E3;color:#3C382E;font-size:12px;font-weight:700;display:inline-flex;align-items:center}
+#groups{max-width:1180px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-right,0px)) 60px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:26px}
+.x-grp h2{margin:0 0 10px;font-size:18px;font-weight:800;display:flex;align-items:center;gap:10px}
+.x-num{width:26px;height:26px;border-radius:8px;background:var(--olive);color:#fff;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+.x-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.x-card{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;background:#fff;border:1px solid #EDE9D5;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s;min-width:0}
+.x-card:hover{border-color:#BAB095;box-shadow:0 6px 18px rgba(35,37,28,.08)}
+.x-card .x-tx{display:flex;flex-direction:column;gap:2px;flex:1 1 auto;min-width:0}
+.x-card b{font-size:15px}
+.x-card small{font-size:12px;color:var(--mut);line-height:1.6}
+.x-card em{font-style:normal;font-size:11px;color:#8A8C78;font-weight:700}
+.x-card .x-go{color:var(--olive);font-weight:800}
+.x-ic{width:44px;height:44px;border-radius:10px;background:#EEF0E3;flex:none;position:relative}
+.x-ic:after{content:"";position:absolute;border:2px solid var(--olive);border-radius:3px}
+.x-ic.x-d:after{inset:12px 9px 14px}
+.x-ic.x-m:after{inset:9px 15px;border-radius:4px}
+.x-ic.x-c:after{inset:13px 8px;border-color:var(--gold);outline:1px solid var(--gold);outline-offset:-5px}
+#view .x-top{position:relative;z-index:1}
+footer.x-f{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:#8A8C78;font-size:12px}
+</style>
+<style id="dc-styles"></style>
+</head>
+<body>
+<div id="gallery">
+  <header class="x-top"><a class="x-brand" href="#/"><span style="width:34px;height:34px;border-radius:10px;background:#555942;color:#ECF6BC;font-weight:800;display:inline-flex;align-items:center;justify-content:center">إ</span><span><b>الاختبارات</b><small>نماذج التصميم التفاعلية</small></span></a></header>
+  <section class="x-hero">
+    <div style="flex:1 1 380px;min-width:0">
+      <h1>المختبِر — عبر الويب برابط خاص</h1>
+      <p>يصل المختبِر رابط خاص على جواله، يفتحه في المتصفح مباشرة بلا كلمة مرور ولا رمز، فيرى طلابه ويُجري الاختبار بأزرار الخصم على اللوحي أو الجوال.</p>
+      <div class="x-meta"><span>7 شاشة</span><span>عربي · RTL</span><span>جمعية تحفيظ القرآن بالرياض</span><span>بيانات تجريبية</span></div><div class="x-meta"><a class="x-btn" href="./">→ كل الأدوار</a></div>
+    </div>
+  </section>
+  <div id="groups"></div>
+  <footer class="x-f">تصميم واجهات — بيانات تجريبية للعرض فقط.</footer>
+</div>
+<div id="view" hidden>
+  <header class="x-top">
+    <a class="x-btn" href="#/">→ كل الشاشات</a>
+    <div class="x-vt"><b id="vtitle"></b><small id="vpage"></small></div>
+    <div id="tweaks"></div>
+    <span class="x-sp"></span>
+    <button class="x-btn" id="next" type="button">التالية ←</button>
+    <button class="x-btn" id="prev" type="button">→ السابقة</button>
+  </header>
+  <div id="stage"><div id="box"><div id="app"></div></div></div>
+</div>
+<script>window.__ROLE_OF={"SetupHome": "admin", "SetupForm": "admin", "SetupTracks": "admin", "SetupBranch": "admin", "SetupGroup": "admin", "TestsHome": "admin", "Form": "admin", "Tracks": "admin", "Branch": "admin", "Committees": "admin", "Wizard": "admin", "States": "admin", "Candidates": "supervisor", "Schedule": "supervisor", "Pending": "supervisor", "Results": "supervisor", "Incomplete": "supervisor", "Nominate": "teacher", "MyNoms": "teacher", "ExLogin": "examiner", "ExList": "examiner", "ExSessionStart": "examiner", "Main": "examiner", "ExSessionSummary": "examiner", "ExSessionPortrait": "examiner", "ExSessionPhone": "examiner", "StuNotice": "family", "StuResult": "family", "StuHistory": "family"};window.__DC_BLOBS={};window.__DC_SOURCES={"ExList": {"tpl": "\n<div dir=\"rtl\" style=\"width: 1194px; height: 834px; background: #F7F6F2; font-family: Cairo, Tahoma, sans-serif; color: #1C1E14; position: relative; overflow: hidden; display: flex; flex-direction: column\">\n  <header style=\"flex: none; position: relative; overflow: hidden; background: linear-gradient(180deg, #484A35, #313425); border-radius: 0 0 28px 28px; color: #fff; padding: 22px 32px 26px\">\n    <svg aria-hidden=\"true\" width=\"100%\" height=\"100%\" style=\"position: absolute; inset: 0\"><defs><pattern id=\"hp\" width=\"56\" height=\"56\" patternUnits=\"userSpaceOnUse\"><path d=\"M28 3l7 17 17 8-17 8-7 17-7-17-17-8 17-8z M0 0l10 10 M56 0l-10 10 M0 56l10-10 M56 56l-10-10\" fill=\"none\" stroke=\"#fff\" stroke-opacity=\".08\" stroke-width=\"1.2\"><\/path><\/pattern><\/defs><rect width=\"100%\" height=\"100%\" fill=\"url(#hp)\"><\/rect><\/svg>\n    <div style=\"position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px\">\n      <div>\n        <div style=\"font-size: 14px; color: #D1C6A8; font-weight: 600\">د. عادل الشهري · لجنة الجمعية الخارجية · اختبارات الفصل الأول 1448<\/div>\n        <h1 style=\"margin: 2px 0 0; font-size: 30px; font-weight: 800\">طلابي<\/h1>\n        <div style=\"font-size: 14px; color: #EADFC4; margin-top: 2px\">الأحد 5 جمادى الآخرة 1448 · 15 نوفمبر 2026<\/div>\n      <\/div>\n      <div role=\"tablist\" aria-label=\"تصفية الطلاب\" style=\"display: flex; gap: 4px; padding: 4px; border-radius: 16px; background: rgba(0,0,0,.25)\">\n        <sc-for list=\"{{tabs}}\" as=\"t\" hint-placeholder-count=\"3\">\n          <button role=\"tab\" aria-selected=\"{{t.sel}}\" onClick=\"{{t.pick}}\" style=\"min-height: 44px; padding: 0 20px; border: 0; border-radius: 12px; background: {{t.bg}}; color: {{t.fg}}; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px\">{{t.label}}<span style=\"min-width: 24px; height: 22px; padding: 0 6px; border-radius: 999px; background: {{t.cbg}}; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center\">{{t.n}}<\/span><\/button>\n        <\/sc-for>\n      <\/div>\n    <\/div>\n  <\/header>\n\n  <main style=\"flex: 1 1 auto; min-height: 0; overflow: auto; padding: 22px 32px 28px; display: flex; flex-direction: column; gap: 14px\">\n    <div style=\"display: flex; justify-content: space-between; align-items: baseline\">\n      <h2 style=\"margin: 0; font-size: 18px; font-weight: 800\">{{heading}}<\/h2>\n      <span style=\"font-size: 13px; color: #6B7054; font-weight: 600\">مرتبة حسب الموعد<\/span>\n    <\/div>\n    <div style=\"display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px\">\n      <sc-for list=\"{{cards}}\" as=\"c\" hint-placeholder-count=\"6\">\n        <a href=\"{{c.href}}\" aria-label=\"{{c.aria}}\" style=\"text-decoration: none; color: inherit; background: #fff; border-radius: 22px; padding: 18px; box-shadow: 0 1px 3px rgba(28,30,20,.06); display: flex; flex-direction: column; gap: 12px; border: 2px solid {{c.ring}}\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; gap: 8px\">\n            <span style=\"display: flex; flex-direction: column\"><span style=\"font-size: 22px; font-weight: 800; letter-spacing: -.3px\">{{c.time}}<\/span><sc-if value=\"{{c.hasDay}}\" hint-placeholder-val=\"{{false}}\"><span style=\"font-size: 12px; font-weight: 600; color: #6B7054\">{{c.day}}<\/span><\/sc-if><\/span>\n            <span style=\"height: 28px; padding: 0 10px; border-radius: 999px; background: {{c.st.bg}}; color: {{c.st.fg}}; border: 1px solid {{c.st.bd}}; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px\">\n              <svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 14px; height: 14px; stroke-width: 2.2\"><path d=\"{{c.st.icon}}\"><\/path><\/svg>{{c.st.t}}\n            <\/span>\n          <\/div>\n          <div>\n            <div style=\"font-size: 18px; font-weight: 800\">{{c.name}}<\/div>\n            <div style=\"font-size: 13px; font-weight: 600; color: #6B7054\">{{c.halaqa}}<\/div>\n          <\/div>\n          <div style=\"display: flex; flex-wrap: wrap; gap: 6px; align-items: center; border-top: 1px solid #EEECE4; padding-top: 12px\">\n            <span style=\"font-size: 13px; font-weight: 700; color: #313425\">{{c.track}}<\/span>\n            <span aria-hidden=\"true\" style=\"color: #BAB095\">·<\/span>\n            <span style=\"font-size: 13px; font-weight: 700; color: #313425\">{{c.branch}}<\/span>\n            <sc-if value=\"{{c.retry}}\" hint-placeholder-val=\"{{false}}\"><span style=\"height: 24px; padding: 0 8px; border-radius: 8px; background: #EADFC4; color: #313425; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center\">المحاولة 2 · الأولى راسب 58.5%<\/span><\/sc-if>\n          <\/div>\n          <sc-if value=\"{{c.hasCta}}\" hint-placeholder-val=\"{{false}}\">\n            <span style=\"height: 48px; border-radius: 14px; background: {{c.ctaBg}}; color: {{c.ctaFg}}; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center\">{{c.cta}}<\/span>\n          <\/sc-if>\n          <sc-if value=\"{{c.hasScore}}\" hint-placeholder-val=\"{{false}}\">\n            <span style=\"font-size: 14px; font-weight: 700; color: #464936\">{{c.score}}<\/span>\n          <\/sc-if>\n        <\/a>\n      <\/sc-for>\n    <\/div>\n  <\/main>\n<\/div>\n", "code": "\nclass Component extends DCLogic {\n  constructor(p) { super(p); this.state = { tab: 'today' }; }\n  renderVals() {\n    var self = this, s = this.state;\n    var ST = {\n      ready: { t: 'التالي الآن', bg: '#EAEDFF', fg: '#3B4BC4', bd: '#EAEDFF', icon: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4' },\n      sched: { t: 'مجدول', bg: '#EAEDFF', fg: '#3B4BC4', bd: '#EAEDFF', icon: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4' },\n      pass: { t: 'ناجح', bg: '#E8F5EC', fg: '#1E6B39', bd: '#E8F5EC', icon: 'M5 12l5 5 9-10' },\n      fail: { t: 'راسب', bg: '#FBEDE8', fg: '#9A3A22', bd: '#FBEDE8', icon: 'M6 6l12 12M18 6L6 18' },\n      absent: { t: 'غائب', bg: '#EEEEE9', fg: '#313425', bd: '#EEEEE9', icon: 'M10 4a4 4 0 110 8 4 4 0 010-8zM3 21v-1a7 7 0 0111.5-5.4M16 16l5 5M21 16l-5 5' },\n      pend: { t: 'في انتظار الاعتماد', bg: '#FEF6E4', fg: '#8A4B12', bd: '#FEF6E4', icon: 'M12 3a9 9 0 100 18 9 9 0 000-18zM12 8v4M12 16h.01' }\n    };\n    var D = {\n      today: [\n        { time: '07:30 م', name: 'عمر خالد العتيبي', halaqa: 'حلقة الفاروق · جامع الراجحي', track: 'القرآن الكريم', branch: 'جزء عم', st: 'ready', retry: true, href: 'ExSessionStart.dc.html', cta: 'بدء الاختبار', primary: true },\n        { time: '07:45 م', name: 'يزن فهد القحطاني', halaqa: 'حلقة الفاروق · جامع الراجحي', track: 'القرآن الكريم', branch: 'جزء عم', st: 'sched', cta: 'بعد عمر' }\n      ],\n      next: [\n        { time: '08:00 م', day: 'الاثنين 6 جمادى الآخرة · 16 نوفمبر', name: 'خالد سعيد القرني', halaqa: 'حلقة الفاروق · جامع الراجحي', track: 'القرآن الكريم', branch: 'جزء تبارك', st: 'sched' },\n        { time: '07:30 م', day: 'الثلاثاء 7 جمادى الآخرة · 17 نوفمبر', name: 'فارس عبدالله السبيعي', halaqa: 'حلقة الفاروق · جامع الراجحي', track: 'القرآن الكريم', branch: 'جزء عم', st: 'sched' }\n      ],\n      done: [\n        { time: '07:00 م', day: 'اليوم · 5 جمادى الآخرة', name: 'سلمان راشد العتيبي', halaqa: 'حلقة الفاروق · جامع الراجحي', track: 'القرآن الكريم', branch: 'جزء عم', st: 'pass', score: '91.5% · ممتاز — اعتُمدت' },\n        { time: '07:30 م', day: 'الخميس 2 جمادى الآخرة · 12 نوفمبر', name: 'عبدالملك سعد العتيبي', halaqa: 'حلقة الفاروق · جامع الراجحي', track: 'القرآن الكريم', branch: 'جزء تبارك', st: 'absent', score: 'لم يحضر — لا نتيجة ولا تقدير' },\n        { time: '07:45 م', day: 'الأربعاء 1 جمادى الآخرة · 11 نوفمبر', name: 'مشاري خالد القحطاني', halaqa: 'حلقة الفاروق · جامع الراجحي', track: 'القرآن الكريم', branch: 'جزء تبارك', st: 'fail', score: '54% · راسب — اعتُمدت' }\n      ]\n    };\n    var labels = { today: 'اليوم', next: 'القادمة', done: 'المكتملة' };\n    var tabs = ['today', 'next', 'done'].map(function (k) {\n      var on = s.tab === k;\n      return { label: labels[k], n: D[k].length, sel: on ? 'true' : 'false', bg: on ? '#fff' : 'transparent', fg: on ? '#313425' : '#EADFC4', cbg: on ? '#EADFC4' : 'rgba(255,255,255,.14)', pick: function () { self.setState({ tab: k }); } };\n    });\n    var cards = D[s.tab].map(function (c) {\n      var st = ST[c.st];\n      return {\n        time: c.time, day: c.day || '', hasDay: !!c.day, name: c.name, halaqa: c.halaqa, track: c.track, branch: c.branch, st: st, retry: !!c.retry,\n        href: c.href || '#', aria: c.name + '، ' + c.time + '، ' + st.t,\n        hasCta: !!c.cta, cta: c.cta, ctaBg: c.primary ? '#555942' : '#F5F0E5', ctaFg: c.primary ? '#fff' : '#6B7054',\n        ring: c.primary ? '#9BA27B' : 'transparent', hasScore: !!c.score, score: c.score\n      };\n    });\n    return { tabs: tabs, cards: cards, heading: { today: 'بقي طالبان اليوم', next: 'المواعيد القادمة', done: 'الجلسات المكتملة' }[s.tab] };\n  }\n}\n", "props": {"$preview": {"width": 1194, "height": 834}}, "links": ["https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"], "styles": ["\nbody{margin:0;background:#F7F6F2}\n*{box-sizing:border-box}\nbutton{font-family:inherit;cursor:pointer}\nbutton:focus-visible,a:focus-visible{outline:3px solid #9BA27B;outline-offset:2px}\nsvg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}\n"], "imports": []}, "ExLogin": {"tpl": "\n<div dir=\"rtl\" style=\"width: 390px; height: 844px; background: #F7F6F2; font-family: Cairo, Tahoma, sans-serif; color: #1C1E14; position: relative; overflow: hidden; display: flex; flex-direction: column\">\n  <header style=\"flex: none; position: relative; overflow: hidden; height: 196px; background: linear-gradient(180deg, #484A35, #313425); border-radius: 0 0 28px 28px; color: #fff; padding: 48px 24px 0\">\n    <svg aria-hidden=\"true\" width=\"100%\" height=\"100%\" style=\"position: absolute; inset: 0\"><defs><pattern id=\"hpx\" width=\"56\" height=\"56\" patternUnits=\"userSpaceOnUse\"><path d=\"M28 3l7 17 17 8-17 8-7 17-7-17-17-8 17-8z M0 0l10 10 M56 0l-10 10 M0 56l10-10 M56 56l-10-10\" fill=\"none\" stroke=\"#fff\" stroke-opacity=\".08\" stroke-width=\"1.2\"><\/path><\/pattern><\/defs><rect width=\"100%\" height=\"100%\" fill=\"url(#hpx)\"><\/rect><\/svg>\n    <div style=\"position: relative; display: flex; align-items: center; gap: 10px\">\n      <span aria-hidden=\"true\" style=\"width: 40px; height: 40px; border-radius: 12px; background: #ECF6BC; color: #313425; font-size: 20px; font-weight: 800; display: flex; align-items: center; justify-content: center\">إ<\/span>\n      <span style=\"font-size: 18px; font-weight: 800\">إتحاف<\/span>\n    <\/div>\n    <h1 style=\"position: relative; margin: 22px 0 0; font-size: 26px; font-weight: 800\">أهلًا د. عادل الشهري<\/h1>\n    <p style=\"position: relative; margin: 2px 0 0; font-size: 14px; color: #D1C6A8\">فُتح من رابطك الخاص · بلا كلمة مرور ولا رمز<\/p>\n  <\/header>\n\n  <main style=\"flex: 1 1 auto; padding: 24px 20px 0; display: flex; flex-direction: column; gap: 20px\">\n    <div style=\"display: flex; flex-direction: column; gap: 4px\">\n      <span style=\"font-size: 13px; font-weight: 700; color: #6B7054\">دُعيت مختبِرًا في<\/span>\n      <span style=\"font-size: 20px; font-weight: 800\">اختبارات الفصل الأول 1448<\/span>\n      <span style=\"font-size: 14px; color: #464936\">جمعية تحفيظ القرآن بالرياض · لجنة الجمعية الخارجية<\/span>\n    <\/div>\n\n    <dl style=\"margin: 0; display: flex; flex-direction: column\">\n      <div style=\"display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-top: 1px solid #E8E6DD\"><dt style=\"font-size: 14px; color: #6B7054; font-weight: 600\">اليوم<\/dt><dd style=\"margin: 0; font-size: 14px; font-weight: 700\">طالبان · التالي عمر 07:30 م<\/dd><\/div>\n      <div style=\"display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-top: 1px solid #E8E6DD\"><dt style=\"font-size: 14px; color: #6B7054; font-weight: 600\">صلاحية الرابط<\/dt><dd style=\"margin: 0; font-size: 14px; font-weight: 700\">حتى 30 جمادى الآخرة 1448<\/dd><\/div>\n      <div style=\"display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-top: 1px solid #E8E6DD; border-bottom: 1px solid #E8E6DD\"><dt style=\"font-size: 14px; color: #6B7054; font-weight: 600\">المشرف<\/dt><dd style=\"margin: 0; font-size: 14px; font-weight: 700\">فيصل الزهراني<\/dd><\/div>\n    <\/dl>\n\n    <div style=\"display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: #464936; line-height: 1.8\">\n      <svg class=\"i\" viewBox=\"0 0 24 24\" style=\"color: #6B7054; margin-top: 3px\"><rect x=\"5\" y=\"11\" width=\"14\" height=\"10\" rx=\"2\"><\/rect><path d=\"M8 11V8a4 4 0 018 0v3\"><\/path><\/svg>\n      <span>الرابط خاص بك فلا تشاركه. افتحه من أي متصفح على الجهاز اللوحي أو الجوال، والنتائج تُحفظ حتى لو انقطع الاتصال.<\/span>\n    <\/div>\n  <\/main>\n\n  <div style=\"flex: none; padding: 0 20px 28px\">\n    <a href=\"ExList.dc.html\" style=\"height: 56px; border-radius: 16px; background: linear-gradient(90deg, #555942, #2D3118, #555942); color: #fff; text-decoration: none; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px\">عرض طلابي<svg class=\"i\" viewBox=\"0 0 24 24\"><path d=\"M15 6l-6 6 6 6\"><\/path><\/svg><\/a>\n  <\/div>\n<\/div>\n", "code": "\nclass Component extends DCLogic { renderVals() { return {}; } }\n", "props": {"$preview": {"width": 390, "height": 844}}, "links": ["https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"], "styles": ["\nbody{margin:0;background:#F7F6F2}\n*{box-sizing:border-box}\na:focus-visible{outline:3px solid #9BA27B;outline-offset:2px}\nsvg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}\n"], "imports": []}, "ExSessionPhone": {"tpl": "\n<dc-import name=\"Main\" layout=\"phone\" phase=\"q\" hint-size=\"390px,844px\"><\/dc-import>\n", "code": "\nclass Component extends DCLogic { renderVals() { return {}; } }\n", "props": {"$preview": {"width": 390, "height": 844}}, "links": ["https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"], "styles": ["body{margin:0;background:#F7F6F2}\nsvg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}\n*{box-sizing:border-box}\nbutton,input{font-family:inherit}\nbutton{cursor:pointer}\nbutton:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #9BA27B;outline-offset:2px}\na{color:#555942}\n"], "imports": ["Main"]}, "ExSessionPortrait": {"tpl": "\n<dc-import name=\"Main\" layout=\"port\" phase=\"q\" hint-size=\"834px,1194px\"><\/dc-import>\n", "code": "\nclass Component extends DCLogic { renderVals() { return {}; } }\n", "props": {"$preview": {"width": 834, "height": 1194}}, "links": ["https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"], "styles": ["body{margin:0;background:#F7F6F2}\nsvg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}\n*{box-sizing:border-box}\nbutton,input{font-family:inherit}\nbutton{cursor:pointer}\nbutton:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #9BA27B;outline-offset:2px}\na{color:#555942}\n"], "imports": ["Main"]}, "ExSessionStart": {"tpl": "\n<dc-import name=\"Main\" layout=\"land\" phase=\"pre\" hint-size=\"1194px,834px\"><\/dc-import>\n", "code": "\nclass Component extends DCLogic { renderVals() { return {}; } }\n", "props": {"$preview": {"width": 1194, "height": 834}}, "links": ["https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"], "styles": ["body{margin:0;background:#F7F6F2}\nsvg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}\n*{box-sizing:border-box}\nbutton,input{font-family:inherit}\nbutton{cursor:pointer}\nbutton:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #9BA27B;outline-offset:2px}\na{color:#555942}\n"], "imports": ["Main"]}, "ExSessionSummary": {"tpl": "\n<dc-import name=\"Main\" layout=\"land\" phase=\"sum\" hint-size=\"1194px,834px\"><\/dc-import>\n", "code": "\nclass Component extends DCLogic { renderVals() { return {}; } }\n", "props": {"$preview": {"width": 1194, "height": 834}}, "links": ["https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"], "styles": ["body{margin:0;background:#F7F6F2}\nsvg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}\n*{box-sizing:border-box}\nbutton,input{font-family:inherit}\nbutton{cursor:pointer}\nbutton:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #9BA27B;outline-offset:2px}\na{color:#555942}\n"], "imports": ["Main"]}, "Main": {"tpl": "\n<div dir=\"rtl\" style=\"width: {{S.w}}px; height: {{S.h}}px; background: #F7F6F2; font-family: Cairo, Tahoma, sans-serif; color: #1C1E14; position: relative; overflow: hidden; display: flex; flex-direction: column\">\n\n  <header style=\"flex: none; position: relative; overflow: hidden; background: linear-gradient(180deg, #484A35, #313425); color: #fff; padding: {{S.hpad}}; display: flex; align-items: center; gap: 12px\">\n    <svg aria-hidden=\"true\" width=\"100%\" height=\"100%\" style=\"position: absolute; inset: 0\"><defs><pattern id=\"hp\" width=\"56\" height=\"56\" patternUnits=\"userSpaceOnUse\"><path d=\"M28 3l7 17 17 8-17 8-7 17-7-17-17-8 17-8z M0 0l10 10 M56 0l-10 10 M0 56l10-10 M56 56l-10-10\" fill=\"none\" stroke=\"#fff\" stroke-opacity=\".08\" stroke-width=\"1.2\"><\/path><\/pattern><\/defs><rect width=\"100%\" height=\"100%\" fill=\"url(#hp)\"><\/rect><\/svg>\n    <a href=\"ExList.dc.html\" aria-label=\"رجوع إلى قائمة طلابي\" style=\"position: relative; width: 44px; height: 44px; flex: none; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; display: flex; align-items: center; justify-content: center\"><svg class=\"i\" viewBox=\"0 0 24 24\"><path d=\"M9 6l6 6-6 6\"><\/path><\/svg><\/a>\n    <div style=\"position: relative; flex: 1 1 auto; min-width: 0\">\n      <div style=\"font-size: {{S.nameFs}}px; font-weight: 800; line-height: 1.3\">عمر خالد العتيبي<\/div>\n      <div style=\"font-size: 13px; font-weight: 500; color: #D1C6A8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis\">{{meta}}<\/div>\n    <\/div>\n    <sc-if value=\"{{retry}}\" hint-placeholder-val=\"{{false}}\">\n      <span style=\"position: relative; flex: none; height: 30px; padding: 0 12px; border-radius: 999px; background: #EADFC4; color: #313425; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center\">المحاولة {{attempt}}<\/span>\n    <\/sc-if>\n    <button onClick=\"{{toggleNet}}\" aria-label=\"حالة الاتصال: {{netLabel}}\" style=\"position: relative; flex: none; min-height: 44px; padding: 0 14px; border: 0; border-radius: 999px; background: {{netBg}}; color: {{netFg}}; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px\"><span style=\"width: 8px; height: 8px; border-radius: 50%; background: currentColor\"><\/span>{{netLabel}}<\/button>\n  <\/header>\n\n  <sc-if value=\"{{offline}}\" hint-placeholder-val=\"{{false}}\">\n    <div role=\"status\" style=\"flex: none; background: #FEF6E4; border-bottom: 1px solid #F0CFAE; color: #8A4B12; padding: 10px 20px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 10px\"><svg class=\"i\" viewBox=\"0 0 24 24\"><path d=\"M2 8.8a15 15 0 0120 0M5 12.5a10 10 0 0114 0M8.5 16a5 5 0 017 0M12 20h.01\"><\/path><path d=\"M3 3l18 18\"><\/path><\/svg>محفوظ على الجهاز – سيُرفع عند عودة الاتصال<\/div>\n  <\/sc-if>\n\n  <!-- ============ قبل البدء ============ -->\n  <sc-if value=\"{{isPre}}\" hint-placeholder-val=\"{{false}}\">\n    <div style=\"flex: 1 1 auto; padding: {{S.pad}}px; display: flex; align-items: center; justify-content: center\">\n      <section style=\"width: 100%; max-width: 720px; background: #fff; border-radius: 28px; padding: {{S.cardPad}}px; box-shadow: 0 2px 14px rgba(28,30,20,.06); display: flex; flex-direction: column; gap: 22px\">\n        <div style=\"display: flex; align-items: center; gap: 16px\">\n          <span aria-hidden=\"true\" style=\"width: 64px; height: 64px; flex: none; border-radius: 20px; background: #ECF6BC; color: #313425; font-size: 26px; font-weight: 800; display: flex; align-items: center; justify-content: center\">ع<\/span>\n          <div style=\"min-width: 0\">\n            <div style=\"font-size: 13px; font-weight: 700; color: #6B7054\">اختبارات الفصل الأول 1448<\/div>\n            <h1 style=\"margin: 0; font-size: 26px; font-weight: 800\">عمر خالد العتيبي<\/h1>\n          <\/div>\n        <\/div>\n        <dl style=\"margin: 0; display: grid; grid-template-columns: {{S.preCols}}; gap: 14px 20px\">\n          <sc-for list=\"{{preFacts}}\" as=\"f\" hint-placeholder-count=\"6\">\n            <div style=\"display: flex; flex-direction: column; gap: 2px; border-top: 1px solid #EEECE4; padding-top: 10px\"><dt style=\"font-size: 12px; font-weight: 600; color: #6B7054\">{{f.k}}<\/dt><dd style=\"margin: 0; font-size: 16px; font-weight: 700\">{{f.v}}<\/dd><\/div>\n          <\/sc-for>\n        <\/dl>\n        <div style=\"background: #F5F0E5; border-radius: 16px; padding: 12px 16px; font-size: 14px; font-weight: 600; color: #464936\">5 أسئلة · 5 أسطر لكل سؤال<\/div>\n        <sc-if value=\"{{absentAsk}}\" hint-placeholder-val=\"{{false}}\">\n          <div role=\"alertdialog\" aria-label=\"تأكيد الغياب\" style=\"border: 1.5px solid #D1C6A8; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px\">\n            <b style=\"font-size: 16px\">تسجيل عمر غائبًا؟<\/b>\n            <span style=\"font-size: 14px; color: #464936\">لن تُحسب له نتيجة، ويمكن لمعلمه إعادة ترشيحه.<\/span>\n            <div style=\"display: flex; gap: 10px\">\n              <button onClick=\"{{confirmAbsent}}\" style=\"height: 52px; flex: 1; border: 0; border-radius: 14px; background: #464936; color: #fff; font-size: 16px; font-weight: 700\">تأكيد الغياب<\/button>\n              <button onClick=\"{{cancelAbsent}}\" style=\"height: 52px; flex: 1; border: 1.5px solid #D1C6A8; border-radius: 14px; background: #fff; color: #313425; font-size: 16px; font-weight: 700\">تراجع<\/button>\n            <\/div>\n          <\/div>\n        <\/sc-if>\n        <sc-if value=\"{{noAbsentAsk}}\" hint-placeholder-val=\"{{true}}\">\n          <div style=\"display: flex; gap: 14px\">\n            <button onClick=\"{{askAbsent}}\" style=\"height: 60px; flex: 0 0 34%; border: 1.5px solid #BAB095; border-radius: 16px; background: #fff; color: #464936; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px\"><svg class=\"i\" viewBox=\"0 0 24 24\"><circle cx=\"10\" cy=\"8\" r=\"4\"><\/circle><path d=\"M3 21v-1a7 7 0 0111.5-5.4M16 16l5 5M21 16l-5 5\"><\/path><\/svg>غائب<\/button>\n            <button onClick=\"{{begin}}\" style=\"height: 60px; flex: 1; border: 0; border-radius: 16px; background: linear-gradient(90deg, #555942, #2D3118, #555942); color: #fff; font-size: 19px; font-weight: 700\">بدء الاختبار<\/button>\n          <\/div>\n        <\/sc-if>\n      <\/section>\n    <\/div>\n  <\/sc-if>\n\n  <!-- ============ الأسئلة ============ -->\n  <sc-if value=\"{{isQ}}\" hint-placeholder-val=\"{{true}}\">\n    <nav aria-label=\"الأسئلة\" style=\"flex: none; padding: 12px {{S.pad}}px 0; display: flex; gap: 8px\">\n      <sc-for list=\"{{pills}}\" as=\"p\" hint-placeholder-count=\"5\">\n        <button onClick=\"{{p.go}}\" aria-label=\"السؤال {{p.n}}\" aria-current=\"{{p.cur}}\" style=\"flex: 1 1 0; min-width: 0; height: {{S.pillH}}px; border-radius: 14px; border: 2px solid {{p.bd}}; background: {{p.bg}}; color: {{p.fg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2\">\n          <span style=\"font-size: 13px; font-weight: 800\">س{{p.n}}<\/span>\n          <span style=\"font-size: 12px; font-weight: 600\">{{p.sc}}<\/span>\n        <\/button>\n      <\/sc-for>\n    <\/nav>\n\n    <div style=\"flex: 1 1 auto; min-height: 0; padding: 12px {{S.pad}}px; display: grid; grid-template-columns: {{S.cols}}; grid-template-rows: {{S.rows}}; gap: {{S.gap}}px\">\n      <section aria-label=\"السؤال الحالي\" style=\"min-width: 0; background: #fff; border-radius: 24px; padding: {{S.cardPad}}px; box-shadow: 0 2px 14px rgba(28,30,20,.06); display: flex; flex-direction: column; gap: {{S.inGap}}px\">\n        <div style=\"display: flex; align-items: center; justify-content: space-between; gap: 8px\">\n          <span style=\"font-size: 15px; font-weight: 700; color: #6B7054\">السؤال <b style=\"color: #1C1E14; font-size: 18px\">{{qNum}} / 5<\/b><\/span>\n          <span style=\"font-size: 13px; font-weight: 600; color: #6B7054\">جزء عم · 5 أسطر<\/span>\n        <\/div>\n        <sc-if value=\"{{manual}}\" hint-placeholder-val=\"{{false}}\">\n          <label style=\"display: flex; flex-direction: column; gap: 4px\"><span style=\"font-size: 13px; font-weight: 700; color: #464936\">موضع البداية<\/span><input value=\"{{manualPos}}\" onInput=\"{{onManual}}\" placeholder=\"مثال: عبس 11\" style=\"height: 50px; border: 1px solid #D1C6A8; border-radius: 14px; padding: 0 14px; font-size: 18px; background: #FAFAF7; color: #1C1E14\"><\/label>\n        <\/sc-if>\n        <sc-if value=\"{{auto}}\" hint-placeholder-val=\"{{true}}\">\n          <div style=\"font-size: {{S.posFs}}px; font-weight: 700; color: #313425; line-height: 1.5\">من {{pos.a}} <span style=\"color: #8F8872; font-weight: 600\">إلى<\/span> {{pos.b}}<\/div>\n        <\/sc-if>\n        <div aria-live=\"polite\" style=\"flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 0\">\n          <div style=\"display: flex; align-items: baseline; gap: 8px; color: {{qColor}}\"><span style=\"font-size: {{S.scoreFs}}px; font-weight: 800; line-height: 1; letter-spacing: -2px\">{{qScoreTxt}}<\/span><span style=\"font-size: {{S.ofFs}}px; font-weight: 700; color: #9BA27B\">/ 10<\/span><\/div>\n          <div style=\"font-size: 14px; font-weight: 600; color: #6B7054; margin-top: 6px\">درجة السؤال · الخصم {{qDedTxt}}<\/div>\n        <\/div>\n        <sc-if value=\"{{cancelled}}\" hint-placeholder-val=\"{{false}}\">\n          <div role=\"alert\" style=\"border-radius: 14px; background: #FBEDE8; color: #9A3A22; padding: 12px 14px; font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 10px\"><svg class=\"i\" viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"9\"><\/circle><path d=\"M5.6 5.6l12.8 12.8\"><\/path><\/svg>أُلغيت درجة هذا السؤال ({{cancelAtTxt}})<\/div>\n        <\/sc-if>\n        <sc-if value=\"{{nearCancel}}\" hint-placeholder-val=\"{{false}}\">\n          <div style=\"border-radius: 14px; background: #FEF6E4; color: #8A4B12; padding: 10px 14px; font-size: 14px; font-weight: 700\">خطأ واحد ويُلغى السؤال<\/div>\n        <\/sc-if>\n        <div style=\"display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid #EEECE4; padding-top: 12px\">\n          <span style=\"font-size: 14px; font-weight: 600; color: #464936\">النتيجة حتى الآن<\/span>\n          <span style=\"display: flex; align-items: center; gap: 8px\"><b style=\"font-size: 20px\">{{cumTxt}}<\/b><span style=\"height: 28px; padding: 0 10px; border-radius: 8px; background: {{cumG.bg}}; color: {{cumG.fg}}; font-size: 13px; font-weight: 800; display: inline-flex; align-items: center\">{{cumG.t}}<\/span><\/span>\n        <\/div>\n        <sc-if value=\"{{notesInline}}\" hint-placeholder-val=\"{{true}}\">\n          <div style=\"display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #EEECE4; padding-top: 12px\">\n            <span style=\"font-size: 13px; font-weight: 700; color: #464936\">ملاحظات على السؤال<\/span>\n            <div style=\"display: flex; flex-wrap: wrap; gap: 6px\">\n              <sc-for list=\"{{noteChips}}\" as=\"c\" hint-placeholder-count=\"5\">\n                <button onClick=\"{{c.toggle}}\" aria-pressed=\"{{c.on}}\" style=\"min-height: 40px; padding: 0 12px; border-radius: 999px; border: 1.5px solid {{c.bd}}; background: {{c.bg}}; color: {{c.fg}}; font-size: 13px; font-weight: 600\">{{c.t}}<\/button>\n              <\/sc-for>\n            <\/div>\n            <input value=\"{{freeNote}}\" onInput=\"{{onFree}}\" aria-label=\"ملاحظة حرة\" placeholder=\"أو اكتب ملاحظة…\" style=\"height: 44px; border: 1px solid #E4E2D8; border-radius: 12px; padding: 0 12px; font-size: 14px; background: #FAFAF7; color: #1C1E14\">\n          <\/div>\n        <\/sc-if>\n      <\/section>\n\n      <section aria-label=\"أزرار الخصم\" style=\"min-width: 0; display: flex; flex-direction: column; gap: {{S.gap}}px\">\n        <sc-for list=\"{{groups}}\" as=\"g\" hint-placeholder-count=\"2\">\n          <div style=\"display: flex; flex-direction: column; gap: 8px\">\n            <span style=\"font-size: 14px; font-weight: 800; color: #464936\">{{g.name}}<\/span>\n            <div style=\"display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: {{S.tileGap}}px\">\n              <sc-for list=\"{{g.items}}\" as=\"it\" hint-placeholder-count=\"3\">\n                <button onClick=\"{{it.press}}\" aria-label=\"{{it.aria}}\" style=\"position: relative; height: {{S.tileH}}px; border-radius: 22px; border: 0; background: {{it.bg}}; color: {{it.fg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; box-shadow: 0 3px 0 {{it.sh}}\">\n                  <span style=\"font-size: {{S.tileFs}}px; font-weight: 800; line-height: 1.2\">{{it.label}}<\/span>\n                  <span style=\"font-size: 15px; font-weight: 700; opacity: .85\" dir=\"ltr\">−{{it.vTxt}}<\/span>\n                  <sc-if value=\"{{it.has}}\" hint-placeholder-val=\"{{false}}\">\n                    <span style=\"position: absolute; top: 8px; left: 8px; min-width: 32px; height: 32px; padding: 0 8px; border-radius: 999px; background: #fff; color: #1C1E14; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center\">{{it.n}}<\/span>\n                  <\/sc-if>\n                <\/button>\n              <\/sc-for>\n            <\/div>\n          <\/div>\n        <\/sc-for>\n        <button onClick=\"{{undo}}\" style=\"height: {{S.undoH}}px; border-radius: 16px; border: 1.5px solid {{undoBd}}; background: #fff; color: {{undoFg}}; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px\"><svg class=\"i\" viewBox=\"0 0 24 24\"><path d=\"M14 7h-4a6 6 0 000 12h7\"><\/path><path d=\"M10 3l4 4-4 4\" transform=\"matrix(-1 0 0 1 24 0)\"><\/path><\/svg>{{undoTxt}}<\/button>\n        <sc-if value=\"{{notesBtn}}\" hint-placeholder-val=\"{{false}}\">\n          <button onClick=\"{{openNotes}}\" style=\"height: 48px; border-radius: 14px; border: 0; background: #F1ECE0; color: #313425; font-size: 15px; font-weight: 700\">ملاحظات ({{noteCount}})<\/button>\n        <\/sc-if>\n      <\/section>\n    <\/div>\n\n    <footer style=\"flex: none; padding: 0 {{S.pad}}px {{S.footPad}}px; display: flex; gap: 12px; align-items: center\">\n      <button onClick=\"{{prev}}\" style=\"height: {{S.navH}}px; flex: 0 0 auto; padding: 0 22px; border-radius: 16px; border: 1.5px solid #D1C6A8; background: #fff; color: {{prevFg}}; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px\"><svg class=\"i\" viewBox=\"0 0 24 24\"><path d=\"M9 6l6 6-6 6\"><\/path><\/svg>السابق<\/button>\n      <span style=\"flex: 1; text-align: center; font-size: 13px; font-weight: 600; color: #6B7054\">{{elapsed}}<\/span>\n      <button onClick=\"{{next}}\" style=\"height: {{S.navH}}px; flex: 0 0 auto; padding: 0 26px; border-radius: 16px; border: 0; background: linear-gradient(90deg, #555942, #2D3118, #555942); color: #fff; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px\">{{nextLabel}}<svg class=\"i\" viewBox=\"0 0 24 24\"><path d=\"M15 6l-6 6 6 6\"><\/path><\/svg><\/button>\n    <\/footer>\n\n    <sc-if value=\"{{notesSheet}}\" hint-placeholder-val=\"{{false}}\">\n      <div style=\"position: absolute; inset: 0; background: rgba(28,30,20,.4); display: flex; align-items: flex-end\">\n        <div role=\"dialog\" aria-label=\"ملاحظات على السؤال\" style=\"width: 100%; background: #fff; border-radius: 26px 26px 0 0; padding: 20px 16px 28px; display: flex; flex-direction: column; gap: 12px\">\n          <b style=\"font-size: 17px\">ملاحظات على السؤال {{qNum}}<\/b>\n          <div style=\"display: flex; flex-wrap: wrap; gap: 8px\">\n            <sc-for list=\"{{noteChips}}\" as=\"c\" hint-placeholder-count=\"5\">\n              <button onClick=\"{{c.toggle}}\" aria-pressed=\"{{c.on}}\" style=\"min-height: 44px; padding: 0 14px; border-radius: 999px; border: 1.5px solid {{c.bd}}; background: {{c.bg}}; color: {{c.fg}}; font-size: 14px; font-weight: 600\">{{c.t}}<\/button>\n            <\/sc-for>\n          <\/div>\n          <input value=\"{{freeNote}}\" onInput=\"{{onFree}}\" aria-label=\"ملاحظة حرة\" placeholder=\"أو اكتب ملاحظة…\" style=\"height: 48px; border: 1px solid #E4E2D8; border-radius: 12px; padding: 0 12px; font-size: 15px; background: #FAFAF7; color: #1C1E14\">\n          <button onClick=\"{{closeNotes}}\" style=\"height: 52px; border: 0; border-radius: 14px; background: #313425; color: #fff; font-size: 16px; font-weight: 700\">تم<\/button>\n        <\/div>\n      <\/div>\n    <\/sc-if>\n  <\/sc-if>\n\n  <!-- ============ التقييم العام ============ -->\n  <sc-if value=\"{{isGe}}\" hint-placeholder-val=\"{{false}}\">\n    <div style=\"flex: 1 1 auto; padding: {{S.pad}}px; display: flex; align-items: center; justify-content: center\">\n      <section style=\"width: 100%; max-width: 760px; background: #fff; border-radius: 28px; padding: {{S.cardPad}}px; box-shadow: 0 2px 14px rgba(28,30,20,.06); display: flex; flex-direction: column; gap: 18px\">\n        <div>\n          <h2 style=\"margin: 0; font-size: 24px; font-weight: 800\">التقييم العام<\/h2>\n          <p style=\"margin: 4px 0 0; font-size: 15px; color: #6B7054\">درجة من 10 لأداء عمر في الاختبار كله · وزنها {{weight}}% من النتيجة<\/p>\n        <\/div>\n        <div style=\"display: grid; grid-template-columns: repeat({{S.geCols}}, minmax(0, 1fr)); gap: 10px\">\n          <sc-for list=\"{{geOpts}}\" as=\"o\" hint-placeholder-count=\"11\">\n            <button onClick=\"{{o.pick}}\" aria-pressed=\"{{o.on}}\" style=\"height: {{S.geH}}px; border-radius: 16px; border: 2px solid {{o.bd}}; background: {{o.bg}}; color: {{o.fg}}; font-size: 22px; font-weight: 800\">{{o.v}}<\/button>\n          <\/sc-for>\n        <\/div>\n        <div style=\"display: flex; justify-content: space-between; align-items: center; background: #F5F0E5; border-radius: 16px; padding: 14px 16px\">\n          <span style=\"font-size: 15px; font-weight: 600; color: #464936\">النتيجة بعد التقييم العام<\/span>\n          <b style=\"font-size: 22px\">{{resTxt}}<\/b>\n        <\/div>\n        <div style=\"display: flex; gap: 12px\">\n          <button onClick=\"{{backToQ}}\" style=\"height: 56px; flex: 0 0 auto; padding: 0 22px; border-radius: 16px; border: 1.5px solid #D1C6A8; background: #fff; color: #313425; font-size: 16px; font-weight: 700\">رجوع للأسئلة<\/button>\n          <button onClick=\"{{toSum}}\" style=\"height: 56px; flex: 1; border-radius: 16px; border: 0; background: linear-gradient(90deg, #555942, #2D3118, #555942); color: #fff; font-size: 17px; font-weight: 700\">عرض الملخص<\/button>\n        <\/div>\n      <\/section>\n    <\/div>\n  <\/sc-if>\n\n  <!-- ============ الملخص ============ -->\n  <sc-if value=\"{{isSum}}\" hint-placeholder-val=\"{{false}}\">\n    <div style=\"flex: 1 1 auto; min-height: 0; overflow: auto; padding: {{S.pad}}px; display: grid; grid-template-columns: {{S.sumCols}}; gap: {{S.gap}}px; align-content: start\">\n      <section style=\"min-width: 0; background: #fff; border-radius: 24px; padding: {{S.cardPad}}px; box-shadow: 0 2px 14px rgba(28,30,20,.06); display: flex; flex-direction: column; gap: 12px\">\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 800\">ملخص الأسئلة<\/h2>\n        <div style=\"display: flex; flex-direction: column\">\n          <sc-for list=\"{{sumRows}}\" as=\"r\" hint-placeholder-count=\"5\">\n            <div style=\"display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #EEECE4\">\n              <span style=\"width: 36px; height: 36px; flex: none; border-radius: 10px; background: #F5F0E5; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center\">{{r.n}}<\/span>\n              <div style=\"flex: 1 1 auto; min-width: 0\">\n                <div style=\"font-size: 14px; font-weight: 700\">{{r.pos}}<\/div>\n                <div style=\"font-size: 12px; font-weight: 600; color: #6B7054\">{{r.ded}}<\/div>\n              <\/div>\n              <sc-if value=\"{{r.cancel}}\" hint-placeholder-val=\"{{false}}\"><span style=\"height: 24px; padding: 0 8px; border-radius: 6px; background: #FBEDE8; color: #9A3A22; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center\">ملغى<\/span><\/sc-if>\n              <b style=\"font-size: 18px; min-width: 48px; text-align: left\">{{r.sc}}<\/b>\n            <\/div>\n          <\/sc-for>\n        <\/div>\n        <div style=\"display: flex; flex-wrap: wrap; gap: 8px\">\n          <sc-for list=\"{{catTotals}}\" as=\"c\" hint-placeholder-count=\"2\">\n            <span style=\"height: 34px; padding: 0 12px; border-radius: 10px; background: #F5F6F3; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px\">خصم {{c.name}} <span dir=\"ltr\">−{{c.v}}<\/span><\/span>\n          <\/sc-for>\n        <\/div>\n        <sc-if value=\"{{hasNotes}}\" hint-placeholder-val=\"{{false}}\">\n          <div style=\"font-size: 13px; color: #464936; line-height: 1.8\"><b>الملاحظات:<\/b> {{notesSummary}}<\/div>\n        <\/sc-if>\n      <\/section>\n\n      <section style=\"min-width: 0; background: #fff; border-radius: 24px; padding: {{S.cardPad}}px; box-shadow: 0 2px 14px rgba(28,30,20,.06); display: flex; flex-direction: column; gap: 14px\">\n        <span style=\"font-size: 14px; font-weight: 700; color: #6B7054\">النتيجة<\/span>\n        <div style=\"display: flex; align-items: center; gap: 14px; flex-wrap: wrap\">\n          <b style=\"font-size: 64px; line-height: 1; letter-spacing: -1px\">{{resTxt}}<\/b>\n          <span style=\"height: 40px; padding: 0 16px; border-radius: 12px; background: {{resG.bg}}; color: {{resG.fg}}; font-size: 18px; font-weight: 800; display: inline-flex; align-items: center\">{{resG.t}}<\/span>\n        <\/div>\n        <sc-if value=\"{{autoFailed}}\" hint-placeholder-val=\"{{false}}\">\n          <div role=\"alert\" style=\"border-radius: 12px; background: #FBEDE8; color: #9A3A22; padding: 10px 12px; font-size: 14px; font-weight: 700\">راسب تلقائيًا: أُلغي {{cancelCount}} أسئلة<\/div>\n        <\/sc-if>\n        <dl style=\"margin: 0; display: flex; flex-direction: column; gap: 8px\">\n          <sc-for list=\"{{resLines}}\" as=\"l\" hint-placeholder-count=\"3\">\n            <div style=\"display: flex; justify-content: space-between; font-size: 14px; border-top: 1px solid #EEECE4; padding-top: 8px\"><dt style=\"color: #6B7054; font-weight: 600\">{{l.k}}<\/dt><dd style=\"margin: 0; font-weight: 800\">{{l.v}}<\/dd><\/div>\n          <\/sc-for>\n        <\/dl>\n        <button onClick=\"{{approve}}\" style=\"height: 58px; border: 0; border-radius: 16px; background: linear-gradient(90deg, #555942, #2D3118, #555942); color: #fff; font-size: 18px; font-weight: 700\">{{approveLabel}}<\/button>\n        <button onClick=\"{{backToQ}}\" style=\"height: 50px; border: 1.5px solid #D1C6A8; border-radius: 16px; background: #fff; color: #313425; font-size: 15px; font-weight: 700\">تعديل الأسئلة<\/button>\n      <\/section>\n    <\/div>\n  <\/sc-if>\n\n  <!-- ============ تم ============ -->\n  <sc-if value=\"{{isDone}}\" hint-placeholder-val=\"{{false}}\">\n    <div style=\"flex: 1 1 auto; padding: {{S.pad}}px; display: flex; align-items: center; justify-content: center\">\n      <section style=\"width: 100%; max-width: 560px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px\">\n        <span aria-hidden=\"true\" style=\"width: 88px; height: 88px; border-radius: 28px; background: #E8F5EC; color: #1E6B39; display: flex; align-items: center; justify-content: center\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 44px; height: 44px; stroke-width: 2.2\"><path d=\"M5 12l5 5 9-10\"><\/path><\/svg><\/span>\n        <h2 style=\"margin: 0; font-size: 26px; font-weight: 800\">{{doneTitle}}<\/h2>\n        <div style=\"display: flex; align-items: center; gap: 10px\"><b style=\"font-size: 34px\">{{resTxt}}<\/b><span style=\"height: 34px; padding: 0 14px; border-radius: 10px; background: {{resG.bg}}; color: {{resG.fg}}; font-size: 16px; font-weight: 800; display: inline-flex; align-items: center\">{{resG.t}}<\/span><\/div>\n        <p style=\"margin: 0; font-size: 15px; color: #464936; line-height: 1.8\">{{doneText}}<\/p>\n        <a href=\"ExList.dc.html\" style=\"margin-top: 8px; width: 100%; height: 56px; border-radius: 16px; background: #313425; color: #fff; text-decoration: none; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center\">الطالب التالي<\/a>\n      <\/section>\n    <\/div>\n  <\/sc-if>\n\n  <!-- ============ غائب ============ -->\n  <sc-if value=\"{{isAbsent}}\" hint-placeholder-val=\"{{false}}\">\n    <div style=\"flex: 1 1 auto; padding: {{S.pad}}px; display: flex; align-items: center; justify-content: center\">\n      <section style=\"width: 100%; max-width: 520px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px\">\n        <span aria-hidden=\"true\" style=\"width: 88px; height: 88px; border-radius: 28px; background: #EEEEE9; color: #464936; display: flex; align-items: center; justify-content: center\"><svg class=\"i\" viewBox=\"0 0 24 24\" style=\"width: 42px; height: 42px\"><circle cx=\"10\" cy=\"8\" r=\"4\"><\/circle><path d=\"M3 21v-1a7 7 0 0111.5-5.4M16 16l5 5M21 16l-5 5\"><\/path><\/svg><\/span>\n        <span style=\"height: 32px; padding: 0 14px; border-radius: 999px; background: #EEEEE9; color: #313425; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center\">غائب<\/span>\n        <h2 style=\"margin: 0; font-size: 24px; font-weight: 800\">سُجّل عمر غائبًا<\/h2>\n        <p style=\"margin: 0; font-size: 15px; color: #464936\">لا نتيجة ولا تقدير. يمكن لمعلمه إعادة ترشيحه.<\/p>\n        <a href=\"ExList.dc.html\" style=\"margin-top: 8px; width: 100%; height: 56px; border-radius: 16px; background: #313425; color: #fff; text-decoration: none; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center\">الطالب التالي<\/a>\n      <\/section>\n    <\/div>\n  <\/sc-if>\n<\/div>\n", "code": "\nclass Component extends DCLogic {\n  constructor(p) {\n    super(p);\n    var ph = (p && p.phase) || 'q';\n    var ex = [['err', 'err', 'tan'], ['tar'], [], ['err', 'err', 'err', 'err', 'tan', 'tan', 'tan'], ['tan']];\n    var logs = ph === 'sum' ? ex : ph === 'q' ? [ex[0], ex[1], [], [], []] : [[], [], [], [], []];\n    this.state = {\n      phase: ph, cur: ph === 'q' ? 2 : 0, logs: logs,\n      notes: ph === 'sum' ? [['تردد في بدايات الآيات'], [], [], ['يحتاج مراجعة المتشابهات'], []] : [[], [], [], [], []],\n      free: ['', '', '', '', ''], manual: ['', '', '', '', ''],\n      ge: ph === 'sum' ? 8 : null, net: null, absentAsk: false, notesSheet: false\n    };\n  }\n  renderVals() {\n    var self = this, s = this.state, P = this.props || {};\n    var layout = P.layout || 'land';\n    var cancelAt = P.cancelAt == null ? 5 : P.cancelAt;\n    var autoFailAt = P.autoFailAt == null ? 2 : P.autoFailAt;\n    var weight = P.weight == null ? 20 : P.weight;\n    var attempt = P.attempt || 2;\n    var offline = s.net == null ? !!P.offline : s.net === 'off';\n    var ITEMS = [\n      { id: 'err', label: 'خطأ', v: 1, cat: 'حفظ' },\n      { id: 'tan', label: 'تنبيه', v: 0.5, cat: 'حفظ' },\n      { id: 'tar', label: 'تردد', v: 0.25, cat: 'حفظ' },\n      { id: 'taj', label: 'تجويد', v: 0.25, cat: 'أداء / تجويد' }\n    ];\n    var byId = {}; ITEMS.forEach(function (i) { byId[i.id] = i; });\n    var POS = [['النبأ 1', 'النبأ 11'], ['عبس 11', 'عبس 24'], ['التكوير 1', 'التكوير 10'], ['المطففين 18', 'المطففين 28'], ['البروج 1', 'البروج 9']];\n    var NOTES = ['يحتاج مراجعة المتشابهات', 'تردد في بدايات الآيات', 'ضعف في المدود', 'أداء متقن', 'يُنصح بالتكرار'];\n    var fmt = function (n) { var r = Math.round(n * 100) / 100; return String(r); };\n    var one = function (n) { return (Math.round(n * 10) / 10).toFixed(1).replace(/\\.0$/, ''); };\n    var grade = function (v) {\n      if (v >= 90) return { t: 'ممتاز', bg: '#313425', fg: '#ECF6BC' };\n      if (v >= 80) return { t: 'جيد جدًا', bg: '#555942', fg: '#fff' };\n      if (v >= 70) return { t: 'جيد', bg: '#D7E0AB', fg: '#313425' };\n      if (v >= 60) return { t: 'مقبول', bg: '#EADFC4', fg: '#464936' };\n      return { t: 'راسب', bg: '#FBEDE8', fg: '#9A3A22' };\n    };\n    var count = function (log) { var c = {}; log.forEach(function (id) { c[id] = (c[id] || 0) + 1; }); return c; };\n    var qOf = function (log) {\n      var c = count(log), ded = 0;\n      log.forEach(function (id) { ded += byId[id].v; });\n      var canc = cancelAt > 0 && (c.err || 0) >= cancelAt;\n      return { c: c, ded: ded, cancelled: canc, score: canc ? 0 : Math.max(0, 10 - ded) };\n    };\n    var qs = s.logs.map(qOf);\n    var visited = qs.slice(0, Math.max(s.cur + 1, 1));\n    var avg = function (arr) { return arr.reduce(function (a, q) { return a + q.score; }, 0) / arr.length; };\n    var cum = avg(visited) * 10;\n    var pct = avg(qs) * 10;\n    var ge = s.ge == null ? 0 : s.ge;\n    var res = weight > 0 ? pct * (100 - weight) / 100 + ge * weight / 10 : pct;\n    var cancelCount = qs.filter(function (q) { return q.cancelled; }).length;\n    var autoFailed = autoFailAt > 0 && cancelCount >= autoFailAt;\n    var resG = autoFailed ? grade(0) : grade(res);\n    var q = qs[s.cur];\n    var cur = s.cur;\n\n    var S = {\n      land: { w: 1194, h: 834, hpad: '14px 24px', nameFs: 22, pad: 24, cols: 'minmax(0, 1fr) minmax(0, 1.15fr)', rows: 'minmax(0, 1fr)', gap: 16, cardPad: 22, inGap: 12, scoreFs: 128, ofFs: 30, posFs: 22, tileH: 124, tileFs: 30, tileGap: 14, undoH: 60, navH: 60, footPad: 18, pillH: 52, preCols: 'repeat(3, minmax(0, 1fr))', geCols: 11, geH: 64, sumCols: 'minmax(0, 1.3fr) minmax(0, 1fr)' },\n      port: { w: 834, h: 1194, hpad: '18px 24px', nameFs: 22, pad: 24, cols: 'minmax(0, 1fr)', rows: 'minmax(0, 1fr) auto', gap: 16, cardPad: 22, inGap: 12, scoreFs: 140, ofFs: 32, posFs: 24, tileH: 128, tileFs: 30, tileGap: 14, undoH: 60, navH: 64, footPad: 24, pillH: 56, preCols: 'repeat(2, minmax(0, 1fr))', geCols: 6, geH: 72, sumCols: 'minmax(0, 1fr)' },\n      phone: { w: 390, h: 844, hpad: '12px 14px', nameFs: 17, pad: 12, cols: 'minmax(0, 1fr)', rows: 'minmax(0, 1fr) auto', gap: 10, cardPad: 14, inGap: 8, scoreFs: 76, ofFs: 20, posFs: 17, tileH: 88, tileFs: 22, tileGap: 8, undoH: 48, navH: 52, footPad: 16, pillH: 44, preCols: 'repeat(2, minmax(0, 1fr))', geCols: 6, geH: 52, sumCols: 'minmax(0, 1fr)' }\n    }[layout];\n\n    var set = function (patch) { self.setState(patch); };\n    var setArr = function (key, val) { var a = s[key].slice(); a[cur] = val; var p = {}; p[key] = a; set(p); };\n\n    var groups = [];\n    ITEMS.forEach(function (it) {\n      var g = groups.filter(function (x) { return x.name === it.cat; })[0];\n      if (!g) { g = { name: it.cat, items: [] }; groups.push(g); }\n      var n = q.c[it.id] || 0, hifz = it.cat === 'حفظ';\n      g.items.push({\n        label: it.label, vTxt: fmt(it.v), n: n, has: n > 0,\n        aria: it.label + ' — خصم ' + fmt(it.v) + (n ? '، ضُغط ' + n : ''),\n        bg: hifz ? '#555942' : '#EADFC4', fg: hifz ? '#fff' : '#313425', sh: hifz ? '#313425' : '#BAB095',\n        press: function () { setArr('logs', s.logs[cur].concat([it.id])); }\n      });\n    });\n\n    var lastId = s.logs[cur][s.logs[cur].length - 1];\n    var curNotes = s.notes[cur];\n    var noteChips = NOTES.map(function (t) {\n      var on = curNotes.indexOf(t) > -1;\n      return { t: t, on: on ? 'true' : 'false', bd: on ? '#555942' : '#E4E2D8', bg: on ? '#555942' : '#fff', fg: on ? '#fff' : '#313425',\n        toggle: function () { setArr('notes', on ? curNotes.filter(function (x) { return x !== t; }) : curNotes.concat([t])); } };\n    });\n    var pills = qs.map(function (x, i) {\n      var isCur = i === cur, seen = i <= cur || s.logs[i].length > 0;\n      return { n: i + 1, sc: seen ? one(x.score) : '—', cur: isCur ? 'step' : 'false',\n        bd: isCur ? '#313425' : x.cancelled ? '#E7B9A9' : '#E4E2D8', bg: isCur ? '#313425' : x.cancelled ? '#FBEDE8' : '#fff', fg: isCur ? '#fff' : x.cancelled ? '#9A3A22' : '#313425',\n        go: function () { set({ cur: i }); } };\n    });\n    var dedTxt = function (c) {\n      var parts = [];\n      ITEMS.forEach(function (it) { if (c[it.id]) parts.push((c[it.id] === 1 ? '' : c[it.id] + ' ') + it.label); });\n      return parts.length ? parts.join(' · ') : 'بلا خصم';\n    };\n    var catTotals = groups.map(function (g) {\n      var v = 0; qs.forEach(function (x) { ITEMS.forEach(function (it) { if (it.cat === g.name) v += (x.c[it.id] || 0) * it.v; }); });\n      return { name: g.name, v: fmt(v) };\n    });\n    var allNotes = [];\n    s.notes.forEach(function (arr, i) { var f = s.free[i]; var a = arr.concat(f ? [f] : []); if (a.length) allNotes.push('س' + (i + 1) + ': ' + a.join('، ')); });\n    var finishQs = function () { set({ phase: weight > 0 ? 'ge' : 'sum' }); };\n    var isLast = cur === 4;\n    var staged = !!P.staged;\n    var pts = { 'ممتاز': 50, 'جيد جدًا': 30, 'جيد': 20, 'مقبول': 10, 'راسب': 0 }[resG.t];\n\n    return {\n      S: S, meta: 'حلقة الفاروق · مسار القرآن الكريم · جزء عم · النبأ 1 – الناس 6',\n      retry: attempt > 1, attempt: attempt,\n      offline: offline, netLabel: offline ? 'غير متصل' : 'متصل', netBg: offline ? '#FEF6E4' : 'rgba(255,255,255,.14)', netFg: offline ? '#8A4B12' : '#fff',\n      toggleNet: function () { set({ net: offline ? 'on' : 'off' }); },\n      isPre: s.phase === 'pre', isQ: s.phase === 'q', isGe: s.phase === 'ge', isSum: s.phase === 'sum', isDone: s.phase === 'done', isAbsent: s.phase === 'absent',\n      preFacts: [{ k: 'الحلقة', v: 'حلقة الفاروق — جامع الراجحي' }, { k: 'المسار', v: 'مسار القرآن الكريم' }, { k: 'الفرع', v: 'جزء عم' }, { k: 'النطاق', v: 'النبأ 1 – الناس 6' }, { k: 'الموعد', v: 'الأحد 5 جمادى الآخرة 1448 · 15 نوفمبر 2026 · 07:30 مساءً' }, { k: 'المحاولة', v: attempt > 1 ? 'المحاولة ' + attempt + ' · الأولى راسب 58.5%' : 'الأولى' }],\n      absentAsk: s.absentAsk, noAbsentAsk: !s.absentAsk,\n      askAbsent: function () { set({ absentAsk: true }); }, cancelAbsent: function () { set({ absentAsk: false }); },\n      confirmAbsent: function () { set({ phase: 'absent', absentAsk: false }); },\n      begin: function () { set({ phase: 'q', cur: 0 }); },\n      pills: pills, qNum: cur + 1,\n      manual: P.generation === 'manual', auto: P.generation !== 'manual', manualPos: s.manual[cur],\n      onManual: function (e) { setArr('manual', e.target.value); },\n      pos: { a: POS[cur][0], b: POS[cur][1] },\n      qScoreTxt: one(q.score), qColor: q.cancelled ? '#9A3A22' : q.score >= 9 ? '#313425' : q.score >= 6 ? '#464936' : '#9A3A22',\n      qDedTxt: fmt(q.ded), cancelled: q.cancelled, cancelAtTxt: cancelAt + ' أخطاء',\n      nearCancel: !q.cancelled && cancelAt > 1 && (q.c.err || 0) === cancelAt - 1,\n      cumTxt: one(cum) + '%', cumG: grade(cum),\n      notesInline: layout !== 'phone', notesBtn: layout === 'phone', notesSheet: s.notesSheet,\n      noteCount: curNotes.length + (s.free[cur] ? 1 : 0),\n      openNotes: function () { set({ notesSheet: true }); }, closeNotes: function () { set({ notesSheet: false }); },\n      noteChips: noteChips, freeNote: s.free[cur], onFree: function (e) { setArr('free', e.target.value); },\n      groups: groups,\n      undo: function () { if (s.logs[cur].length) setArr('logs', s.logs[cur].slice(0, -1)); },\n      undoTxt: lastId ? 'تراجع عن آخر خصم (' + byId[lastId].label + ')' : 'تراجع',\n      undoBd: lastId ? '#9BA27B' : '#E4E2D8', undoFg: lastId ? '#313425' : '#A9AB9C',\n      prev: function () { if (cur > 0) set({ cur: cur - 1 }); }, prevFg: cur > 0 ? '#313425' : '#A9AB9C',\n      next: function () { if (isLast) finishQs(); else set({ cur: cur + 1 }); },\n      nextLabel: isLast ? 'إنهاء الأسئلة' : 'التالي', elapsed: 'الوقت 06:12',\n      weight: weight,\n      geOpts: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (v) { var on = s.ge === v; return { v: v, on: on ? 'true' : 'false', bd: on ? '#313425' : '#E4E2D8', bg: on ? '#313425' : '#fff', fg: on ? '#fff' : '#313425', pick: function () { set({ ge: v }); } }; }),\n      backToQ: function () { set({ phase: 'q', cur: 4 }); },\n      toSum: function () { set({ phase: 'sum' }); },\n      resTxt: one(res) + '%', resG: resG, autoFailed: autoFailed, cancelCount: cancelCount,\n      sumRows: qs.map(function (x, i) { return { n: i + 1, pos: POS[i][0] + ' – ' + POS[i][1], ded: dedTxt(x.c), sc: one(x.score), cancel: x.cancelled }; }),\n      catTotals: catTotals, hasNotes: allNotes.length > 0, notesSummary: allNotes.join(' · '),\n      resLines: [{ k: 'نسبة الأسئلة', v: one(pct) + '%' }].concat(weight > 0 ? [{ k: 'التقييم العام (وزن ' + weight + '%)', v: (s.ge == null ? '—' : s.ge) + ' / 10' }] : []).concat([{ k: 'أسئلة ملغاة', v: String(cancelCount) }, { k: 'النقاط', v: '+' + pts }]),\n      approveLabel: staged ? 'إرسال للاعتماد' : 'اعتماد النتيجة',\n      approve: function () { set({ phase: 'done' }); },\n      doneTitle: staged ? 'أُرسلت النتيجة للاعتماد' : 'اعتُمدت النتيجة',\n      doneText: staged ? 'تظهر للأسرة بعد اعتماد المشرف.' : (resG.t === 'راسب' ? 'أُرسل إشعار للأسرة، ويمكن لمعلمه إعادة ترشيحه.' : 'أُرسل إشعار للأسرة، وأُضيفت ' + pts + ' نقطة، والشهادة جاهزة.')\n    };\n  }\n}\n", "props": {"layout": {"editor": "enum", "options": ["land", "port", "phone"], "default": "land", "section": "العرض"}, "phase": {"editor": "enum", "options": ["pre", "q", "sum"], "default": "q", "section": "العرض"}, "generation": {"editor": "enum", "options": ["auto", "manual"], "default": "auto", "section": "الفرع"}, "attempt": {"editor": "int", "min": 1, "max": 5, "default": 2, "section": "الفرع"}, "cancelAt": {"editor": "int", "min": 0, "max": 10, "default": 5, "section": "الاستمارة"}, "autoFailAt": {"editor": "int", "min": 0, "max": 5, "default": 2, "section": "الاستمارة"}, "weight": {"editor": "range", "min": 0, "max": 50, "step": 5, "unit": "%", "default": 20, "section": "الاستمارة"}, "staged": {"editor": "boolean", "default": false, "section": "الاستمارة"}, "offline": {"editor": "boolean", "default": false, "section": "العرض"}, "$preview": {"width": 1194, "height": 834}}, "links": ["https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"], "styles": ["\nbody{margin:0;background:#F7F6F2}\n*{box-sizing:border-box}\nbutton,input{font-family:inherit}\nbutton{cursor:pointer}\nbutton:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #9BA27B;outline-offset:2px}\na{color:#555942}\nsvg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}\n"], "imports": []}};window.__DC_BOARDS={"order": ["ExLogin.dc.html", "ExList.dc.html", "ExSessionStart.dc.html", "Main.dc.html", "ExSessionSummary.dc.html", "ExSessionPortrait.dc.html", "ExSessionPhone.dc.html"], "pages": [{"id": "r1", "name": "1 · تجهيز الاختبارات — المدير، أول مرة · 3 خطوات قبل أي مجموعة"}, {"id": "r2", "name": "2 · بعد التجهيز — لوحة الاختبارات والإدارة"}, {"id": "r3", "name": "3 · الترشيح — المعلم"}, {"id": "r4", "name": "4 · الاعتماد والإسناد والموعد — المشرف، ثم يصل الإشعار للأسرة"}, {"id": "r5", "name": "5 · الاختبار — المختبِر عبر الويب برابط خاص"}, {"id": "r6", "name": "6 · اعتماد النتيجة — المشرف"}, {"id": "r7", "name": "7 · النتيجة — الطالب وولي الأمر"}, {"id": "r8", "name": "الحالات العامة والمكوّنات"}], "boards": {"Main.dc.html": {"x": 3018, "y": 7420, "w": 1194, "h": 834, "title": "5.4 الجلسة · لوحي أفقي (جرّب الخصم والتراجع)", "is_interactive": true, "radius": 28, "page": "r5"}, "ExSessionPortrait.dc.html": {"x": 5566, "y": 7420, "w": 834, "h": 1194, "title": "5.4 الجلسة · لوحي عمودي", "is_interactive": true, "radius": 28, "page": "r5"}, "ExSessionPhone.dc.html": {"x": 6480, "y": 7420, "w": 390, "h": 844, "title": "5.4 الجلسة · جوال", "is_interactive": true, "radius": 44, "page": "r5"}, "ExLogin.dc.html": {"x": 0, "y": 7420, "w": 390, "h": 844, "title": "5.1 فتح الرابط الخاص — بلا رمز ← طلابي", "is_interactive": true, "radius": 44, "page": "r5"}, "ExList.dc.html": {"x": 470, "y": 7420, "w": 1194, "h": 834, "title": "5.2 قائمة طلابي ← عمر", "is_interactive": true, "radius": 28, "page": "r5"}, "Candidates.dc.html": {"x": 0, "y": 5700, "w": 1440, "h": 1300, "title": "4.1 المرشحون ← متابعة إلى الجدولة", "is_interactive": true, "expand": "fill", "page": "r4"}, "Schedule.dc.html": {"x": 1520, "y": 5700, "w": 1440, "h": 980, "title": "4.2 الجدولة ← تأكيد المواعيد وإشعار الأسر", "is_interactive": true, "expand": "fill", "page": "r4"}, "Pending.dc.html": {"x": 0, "y": 9034, "w": 1440, "h": 980, "title": "6.1 في انتظار الاعتماد (عند الرصد على مراحل)", "is_interactive": true, "expand": "fill", "page": "r6"}, "Results.dc.html": {"x": 1520, "y": 9034, "w": 1440, "h": 1040, "title": "6.2 المختبَرون · السجل الكامل", "is_interactive": true, "expand": "fill", "page": "r6"}, "Incomplete.dc.html": {"x": 3040, "y": 9034, "w": 1440, "h": 820, "title": "6.3 غير مكتملة · الاستثناءات", "is_interactive": true, "expand": "fill", "page": "r6"}, "TestsHome.dc.html": {"x": 0, "y": 2140, "w": 1440, "h": 960, "title": "2.1 لوحة الاختبارات", "is_interactive": true, "expand": "fill", "page": "r2"}, "Wizard.dc.html": {"x": 7600, "y": 2140, "w": 1440, "h": 980, "title": "2.6 مجموعة اختبار جديدة", "is_interactive": true, "expand": "fill", "page": "r2"}, "Form.dc.html": {"x": 1520, "y": 2140, "w": 1440, "h": 1720, "title": "2.2 استمارات التقييم", "is_interactive": true, "expand": "fill", "page": "r2"}, "Tracks.dc.html": {"x": 3040, "y": 2140, "w": 1440, "h": 1000, "title": "2.3 المسارات والفروع", "is_interactive": true, "expand": "fill", "page": "r2"}, "Branch.dc.html": {"x": 4560, "y": 2140, "w": 1440, "h": 1080, "title": "2.4 نموذج الفرع", "is_interactive": true, "expand": "fill", "page": "r2"}, "Committees.dc.html": {"x": 6080, "y": 2140, "w": 1440, "h": 980, "title": "2.5 اللجان (تُنشأ داخل المجموعات)", "is_interactive": true, "expand": "fill", "page": "r2"}, "Nominate.dc.html": {"x": 0, "y": 4280, "w": 390, "h": 1000, "title": "3.1 الترشيح ← إرسال", "is_interactive": true, "radius": 44, "page": "r3"}, "MyNoms.dc.html": {"x": 470, "y": 4280, "w": 390, "h": 1000, "title": "3.2 ترشيحاتي ونتائج طلابي", "is_interactive": true, "radius": 44, "page": "r3"}, "StuNotice.dc.html": {"x": 3040, "y": 5700, "w": 390, "h": 844, "title": "4.3 الأسرة: إشعار الموعد", "radius": 44, "page": "r4"}, "StuResult.dc.html": {"x": 0, "y": 10494, "w": 390, "h": 1100, "title": "7.1 صفحة النتيجة", "is_interactive": true, "radius": 44, "page": "r7"}, "StuHistory.dc.html": {"x": 470, "y": 10494, "w": 390, "h": 900, "title": "7.2 سجل الاختبارات", "radius": 44, "page": "r7"}, "States.dc.html": {"x": 0, "y": 12014, "w": 1440, "h": 1300, "title": "الحالات: فارغة · تحميل · خطأ · لا صلاحية · انتهاء الدخول", "expand": "fill", "page": "r8"}, "Sidebar.dc.html": {"x": 1520, "y": 12014, "w": 264, "h": 980, "title": "مكوّن: القائمة الجانبية", "page": "r8"}, "ExSessionStart.dc.html": {"x": 1744, "y": 7420, "w": 1194, "h": 834, "title": "5.3 قبل البدء · غائب أو بدء", "is_interactive": true, "radius": 28, "page": "r5"}, "ExSessionSummary.dc.html": {"x": 4292, "y": 7420, "w": 1194, "h": 834, "title": "5.5 الملخص ← اعتماد النتيجة", "is_interactive": true, "radius": 28, "page": "r5"}, "SetupHome.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 960, "is_interactive": true, "expand": "fill", "title": "1.0 البداية: لنجهّز الاختبارات", "page": "r1"}, "SetupForm.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 1720, "is_interactive": true, "expand": "fill", "title": "1.1 استمارة التقييم: التقدير والنقاط والخصم والاعتماد ← المسارات", "page": "r1"}, "SetupTracks.dc.html": {"x": 3040, "y": 0, "w": 1440, "h": 1000, "is_interactive": true, "expand": "fill", "title": "1.2 المسارات والفروع: قالبان ← مجموعات الاختبار", "page": "r1"}, "SetupBranch.dc.html": {"x": 4560, "y": 0, "w": 1440, "h": 1120, "is_interactive": true, "expand": "fill", "title": "1.2أ نموذج الفرع ← يعود للمسارات", "page": "r1"}, "SetupGroup.dc.html": {"x": 6080, "y": 0, "w": 1440, "h": 1060, "is_interactive": true, "expand": "fill", "title": "1.3 مجموعات الاختبار: الأساسيات، ثم الاستمارة والمسارات واللجنة، ثم النشر", "page": "r1"}, "SetupSteps.dc.html": {"x": 1864, "y": 12014, "w": 1100, "h": 96, "title": "مكوّن: خطوات التجهيز", "page": "r8"}}};</script>
+<script>/* Ethaaf certificates — standalone viewer runtime (template engine + router) */
+(function () {
+  'use strict';
+  var SRC = window.__DC_SOURCES;   // { Name: { tpl, code, props, links:[], styles:[] } }
+  var BOARDS = window.__DC_BOARDS; // { order:[], pages:[], boards:{} }
+  var BOOL = { disabled: 1, checked: 1, selected: 1, hidden: 1, readonly: 1, required: 1, multiple: 1, open: 1, autofocus: 1 };
+  var EVT = { onclick: 'click', oninput: 'input', onchange: 'change', onsubmit: 'submit', onkeydown: 'keydown', onkeyup: 'keyup', onfocus: 'focus', onblur: 'blur', onmouseenter: 'mouseenter', onmouseleave: 'mouseleave', ondblclick: 'dblclick' };
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var renderQueued = false, rootInst = null;
+
+  function DCLogic(props) { this.props = props || {}; this.state = null; }
+  DCLogic.prototype.setState = function (p) {
+    if (typeof p === 'function') p = p(this.state, this.props);
+    this.state = Object.assign({}, this.state || {}, p || {});
+    queue();
+  };
+  DCLogic.prototype.renderVals = function () { return {}; };
+  window.DCLogic = DCLogic;
+
+  var compiled = {};
+  function klass(name) {
+    if (compiled[name]) return compiled[name];
+    var s = SRC[name]; if (!s) throw new Error('Unknown component ' + name);
+    var C = new Function('DCLogic', s.code + '\n;return Component;')(DCLogic);
+    var tpl = parseTpl(s.tpl);
+    compiled[name] = { C: C, tpl: tpl };
+    return compiled[name];
+  }
+
+  /* minimal HTML parser — keeps custom tags exactly where they are written (no table/select foster-parenting) */
+  var VOID = { area: 1, base: 1, br: 1, col: 1, embed: 1, hr: 1, img: 1, input: 1, link: 1, meta: 1, source: 1, track: 1, wbr: 1 };
+  var decEl = document.createElement('textarea');
+  function dec(x) { if (x.indexOf('&') < 0) return x; decEl.innerHTML = x; return decEl.value; }
+  function parseTpl(src) {
+    var root = { tag: '#root', attrs: [], kids: [] }, stack = [root], i = 0, L = src.length;
+    var reAttr = /([^\s=\/>"']+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g;
+    while (i < L) {
+      var lt = src.indexOf('<', i);
+      if (lt < 0) lt = L;
+      if (lt > i) stack[stack.length - 1].kids.push({ text: dec(src.slice(i, lt)) });
+      if (lt >= L) break;
+      if (src.startsWith('<!--', lt)) { var ce = src.indexOf('-->', lt); i = ce < 0 ? L : ce + 3; continue; }
+      if (src.charAt(lt + 1) === '/') {
+        var gt = src.indexOf('>', lt); var name = src.slice(lt + 2, gt).trim().toLowerCase();
+        for (var k = stack.length - 1; k > 0; k--) { if (stack[k].lname === name) { stack.length = k; break; } }
+        i = gt + 1; continue;
+      }
+      if (src.charAt(lt + 1) === '!') { i = src.indexOf('>', lt) + 1; continue; }
+      // find end of tag respecting quotes
+      var j = lt + 1, q = null;
+      while (j < L) { var ch = src.charAt(j); if (q) { if (ch === q) q = null; } else if (ch === '"' || ch === "'") q = ch; else if (ch === '>') break; j++; }
+      var body = src.slice(lt + 1, j); var selfc = /\/\s*$/.test(body); if (selfc) body = body.replace(/\/\s*$/, '');
+      var m = /^([^\s\/>]+)/.exec(body); var tag = m[1]; var rest = body.slice(tag.length);
+      var node = { tag: tag, lname: tag.toLowerCase(), attrs: [], kids: [] }; var am;
+      reAttr.lastIndex = 0;
+      while ((am = reAttr.exec(rest))) node.attrs.push({ name: am[1], value: dec(am[2] !== undefined ? am[2] : am[3] !== undefined ? am[3] : am[4] !== undefined ? am[4] : '') });
+      stack[stack.length - 1].kids.push(node);
+      i = j + 1;
+      if (node.lname === 'style' || node.lname === 'script' || node.lname === 'textarea') {
+        var end = src.toLowerCase().indexOf('</' + node.lname, i); if (end < 0) end = L;
+        var raw = src.slice(i, end); if (raw) node.kids.push({ text: node.lname === 'textarea' ? dec(raw) : raw });
+        i = src.indexOf('>', end) + 1 || L; continue;
+      }
+      if (!VOID[node.lname] && !selfc) stack.push(node);
+    }
+    return root;
+  }
+  function getA(node, n) { for (var i = 0; i < node.attrs.length; i++) if (node.attrs[i].name === n) return node.attrs[i].value; return null; }
+
+  function resolve(path, scope) {
+    path = path.trim();
+    if (path === 'true') return true; if (path === 'false') return false; if (path === 'null') return null;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var parts = path.split('.'); var v = scope[parts[0]];
+    for (var i = 1; i < parts.length && v != null; i++) v = v[parts[i]];
+    return v;
+  }
+  var BLOBS = window.__DC_BLOBS || {};
+  function fixUrl(v) { return v.indexOf('/_blob/') < 0 ? v : v.replace(/\/_blob\/([0-9a-f]{32})/g, function (m, id) { return BLOBS[id] || m; }); }
+  function whole(str) { var m = /^\s*\{\{([^}]+)\}\}\s*$/.exec(str); return m ? m[1] : null; }
+  function interp(str, scope) { return str.replace(/\{\{([^}]+)\}\}/g, function (_, p) { var v = resolve(p, scope); return v == null ? '' : String(v); }); }
+
+  /* ---------- instances ---------- */
+  function Inst(name, props) {
+    var k = klass(name);
+    this.name = name; this.tpl = k.tpl; this.kids = {};
+    this.comp = new k.C(props); this.comp.props = props; this.mounted = false;
+  }
+  Inst.prototype.setProps = function (props) {
+    var prev = this.comp.props;
+    var same = Object.keys(props).length === Object.keys(prev).length && Object.keys(props).every(function (k) { return props[k] === prev[k]; });
+    if (same) return;
+    this.comp.props = props;
+    if (this.comp.componentDidUpdate) { try { this.comp.componentDidUpdate(prev, this.comp.state); } catch (e) { console.error(e); } }
+  };
+  Inst.prototype.build = function () {
+    var vals;
+    try { vals = this.comp.renderVals() || {}; } catch (e) { console.error(this.name, e); vals = {}; }
+    this.seen = {}; this.counter = 0;
+    var frag = document.createElement('div');
+    buildKids(this.tpl, vals, frag, this, false);
+    var self = this;
+    Object.keys(this.kids).forEach(function (k) { if (!self.seen[k]) { var c = self.kids[k]; if (c.comp.componentWillUnmount) c.comp.componentWillUnmount(); delete self.kids[k]; } });
+    return frag;
+  };
+  Inst.prototype.mountAll = function () {
+    if (!this.mounted) { this.mounted = true; if (this.comp.componentDidMount) { try { this.comp.componentDidMount(); } catch (e) { console.error(e); } } }
+    var k = this.kids; Object.keys(k).forEach(function (x) { k[x].mountAll(); });
+  };
+  Inst.prototype.unmount = function () {
+    var k = this.kids; Object.keys(k).forEach(function (x) { k[x].unmount(); });
+    if (this.comp.componentWillUnmount) { try { this.comp.componentWillUnmount(); } catch (e) { } }
+  };
+
+  function buildKids(node, scope, parent, inst, svg) {
+    for (var c = 0; c < node.kids.length; c++) buildNode(node.kids[c], scope, parent, inst, svg);
+  }
+  function buildNode(node, scope, parent, inst, svg) {
+    if (node.text !== undefined) { var t = node.text; parent.appendChild(document.createTextNode(t.indexOf('{{') >= 0 ? interp(t, scope) : t)); return; }
+    var tag = node.lname;
+    if (tag === 'sc-for') {
+      var list = resolve(whole(getA(node, 'list') || '') || '', scope) || [];
+      var as = getA(node, 'as') || 'item';
+      for (var i = 0; i < list.length; i++) { var s = Object.create(scope); s[as] = list[i]; s.$index = i; buildKids(node, s, parent, inst, svg); }
+      return;
+    }
+    if (tag === 'sc-if') { if (resolve(whole(getA(node, 'value') || '') || '', scope)) buildKids(node, scope, parent, inst, svg); return; }
+    if (tag === 'dc-import') {
+      var name = getA(node, 'name'); var props = {};
+      for (var a = 0; a < node.attrs.length; a++) {
+        var at = node.attrs[a]; if (at.name === 'name' || at.name.indexOf('hint-') === 0) continue;
+        var w = whole(at.value); props[camel(at.name)] = w ? resolve(w, scope) : interp(at.value, scope);
+      }
+      var key = name + '#' + (inst.counter++);
+      inst.seen[key] = true;
+      var child = inst.kids[key];
+      if (!child) child = inst.kids[key] = new Inst(name, props); else child.setProps(props);
+      var host = document.createElement('div'); host.setAttribute('data-dc', name); host.style.display = 'contents';
+      var built = child.build();
+      while (built.firstChild) host.appendChild(built.firstChild);
+      parent.appendChild(host); return;
+    }
+    var isSvg = svg || tag === 'svg';
+    var el = isSvg ? document.createElementNS(SVGNS, node.tag) : document.createElement(tag);
+    el.__h = {}; el.__p = {};
+    for (var j = 0; j < node.attrs.length; j++) {
+      var at2 = node.attrs[j]; var n = at2.name; var v = at2.value;
+      if (n.indexOf('hint-') === 0) continue;
+      var ln = n.toLowerCase();
+      if (EVT[ln]) { var fn = resolve(whole(v) || '', scope); if (typeof fn === 'function') el.__h[EVT[ln]] = fn; continue; }
+      var wh = whole(v);
+      if (wh !== null) {
+        var val = resolve(wh, scope);
+        if (ln === 'value' && (tag === 'input' || tag === 'textarea' || tag === 'select')) { el.__p.value = val == null ? '' : String(val); if (tag !== 'select') el.setAttribute('value', el.__p.value); continue; }
+        if (BOOL[ln] && !isSvg) { if (val && val !== 'false') { el.setAttribute(n, ''); el.__p[ln] = true; } else el.__p[ln] = false; continue; }
+        if (val === false || val == null) { if (ln.indexOf('aria-') === 0 && val === false) el.setAttribute(n, 'false'); continue; }
+        if (val === true) { el.setAttribute(n, ln.indexOf('aria-') === 0 ? 'true' : ''); continue; }
+        el.setAttribute(n, fixUrl(String(val)));
+      } else {
+        var sv = v.indexOf('{{') >= 0 ? interp(v, scope) : v;
+        if (ln === 'value' && (tag === 'input' || tag === 'textarea' || tag === 'select')) el.__p.value = sv;
+        el.setAttribute(n, fixUrl(sv));
+      }
+    }
+    if (tag === 'template') { parent.appendChild(el); return; }
+    if (tag === 'textarea') { if (el.__p.value === undefined && node.kids[0]) el.__p.value = node.kids[0].text; }
+    else buildKids(node, scope, el, inst, isSvg && tag !== 'foreignobject');
+    if (tag === 'textarea' && el.__p.value !== undefined) el.textContent = el.__p.value;
+    parent.appendChild(el);
+  }
+  function camel(n) { return n.replace(/-([a-z])/g, function (_, c) { return c.toUpperCase(); }); }
+
+  /* ---------- morph ---------- */
+  function morph(o, n) {
+    if (o.nodeType !== n.nodeType || o.nodeName !== n.nodeName || (o.nodeType === 1 && o.namespaceURI !== n.namespaceURI)) { o.parentNode.replaceChild(n, o); return n; }
+    if (o.nodeType === 3) { if (o.nodeValue !== n.nodeValue) o.nodeValue = n.nodeValue; return o; }
+    if (o.nodeType !== 1) return o;
+    var i, a;
+    for (i = o.attributes.length - 1; i >= 0; i--) { a = o.attributes[i].name; if (!n.hasAttribute(a)) o.removeAttribute(a); }
+    for (i = 0; i < n.attributes.length; i++) { a = n.attributes[i]; if (o.getAttribute(a.name) !== a.value) o.setAttribute(a.name, a.value); }
+    o.__h = n.__h; o.__p = n.__p;
+    morphKids(o, n);
+    applyProps(o);
+    return o;
+  }
+  function morphKids(o, n) {
+    var oc = o.firstChild, nc = n.firstChild;
+    while (nc) {
+      var next = nc.nextSibling;
+      if (oc) { var on = oc.nextSibling; morph(oc, nc); oc = on; }
+      else o.appendChild(nc);
+      nc = next;
+    }
+    while (oc) { var r = oc.nextSibling; o.removeChild(oc); oc = r; }
+  }
+  function applyProps(el) {
+    var p = el.__p; if (!p) return;
+    if (p.value !== undefined && el.value !== p.value) { if (document.activeElement !== el || el.tagName === 'SELECT') el.value = p.value; else if (el.value !== p.value) { var ss = el.selectionStart; el.value = p.value; try { el.setSelectionRange(ss, ss); } catch (e) { } } }
+    if (p.checked !== undefined && el.checked !== p.checked) el.checked = p.checked;
+    if (p.selected !== undefined && el.selected !== p.selected) el.selected = p.selected;
+    if (p.disabled !== undefined) el.disabled = p.disabled;
+  }
+  function applyAll(root) { var all = root.querySelectorAll('*'); for (var i = 0; i < all.length; i++) applyProps(all[i]); }
+
+  /* ---------- events (delegated) ---------- */
+  ['click', 'input', 'change', 'submit', 'keydown', 'keyup', 'dblclick'].forEach(function (type) {
+    document.addEventListener(type, function (e) {
+      var app = document.getElementById('app'); if (!app || !app.contains(e.target)) return;
+      if (type === 'click') {
+        var a = e.target.closest('a[href]');
+        if (a && app.contains(a)) {
+          var href = a.getAttribute('href');
+          var m = /^([A-Za-z0-9_]+)\.dc\.html(#.*)?$/.exec(href || '');
+          if (m && SRC[m[1]]) { e.preventDefault(); location.hash = '#/' + m[1]; } else if (m && window.__ROLE_OF && __ROLE_OF[m[1]]) { e.preventDefault(); location.href = './' + __ROLE_OF[m[1]] + '.html#/' + m[1]; }
+          else if (!href || href.charAt(0) === '#') e.preventDefault();
+        }
+      }
+      var el = e.target;
+      while (el && el !== app) {
+        if (el.__h && el.__h[type]) {
+          if (type === 'submit') e.preventDefault();
+          if (el.disabled) return;
+          try { el.__h[type].call(null, e); } catch (err) { console.error(err); }
+          if (type !== 'submit') return; else return;
+        }
+        el = el.parentNode;
+      }
+    }, type === 'submit');
+  });
+  ['mouseenter', 'mouseleave', 'focus', 'blur'].forEach(function (type) {
+    document.addEventListener(type, function (e) { var el = e.target; if (el && el.__h && el.__h[type]) { try { el.__h[type](e); } catch (err) { console.error(err); } } }, true);
+  });
+
+  function queue() { if (renderQueued) return; renderQueued = true; requestAnimationFrame(function () { renderQueued = false; paint(); }); }
+  function paint() {
+    if (!rootInst) return;
+    var app = document.getElementById('app');
+    var fresh = rootInst.build();
+    if (!app.firstChild) { while (fresh.firstChild) app.appendChild(fresh.firstChild); applyAll(app); }
+    else morphKids(app, fresh);
+    rootInst.mountAll();
+    fit();
+  }
+
+  /* ---------- viewer shell ---------- */
+  var styleTag = document.getElementById('dc-styles');
+  var loadedLinks = {};
+  function useStyles(name, acc) {
+    acc = acc || {}; if (acc[name]) return acc; acc[name] = true;
+    var s = SRC[name];
+    (s.imports || []).forEach(function (i) { useStyles(i, acc); });
+    return acc;
+  }
+  function setStyles(name) {
+    var acc = useStyles(name); var css = '';
+    Object.keys(acc).forEach(function (n) {
+      var s = SRC[n];
+      s.links.forEach(function (href) { if (!loadedLinks[href]) { loadedLinks[href] = 1; var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); } });
+      css += s.styles.join('\n') + '\n';
+    });
+    styleTag.textContent = css.replace(/(^|\})\s*body\s*\{/g, '$1 #app{');
+  }
+
+  var view = document.getElementById('view'), gal = document.getElementById('gallery');
+  var cur = null;
+  function boardOf(name) { return BOARDS.boards[name + '.dc.html'] || null; }
+  function pageName(id) { var p = BOARDS.pages.filter(function (x) { return x.id === id; })[0]; return p ? p.name : ''; }
+  function ordered() { return BOARDS.order.map(function (f) { return f.replace('.dc.html', ''); }).filter(function (n) { return SRC[n]; }); }
+
+  function parseHash() {
+    var h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
+    if (!h) return null;
+    var q = h.split('?'); var props = {};
+    if (q[1]) q[1].split('&').forEach(function (kv) { var i = kv.indexOf('='); if (i > 0) props[kv.slice(0, i)] = kv.slice(i + 1); });
+    return { name: q[0], props: props };
+  }
+  function schema(name) { var p = SRC[name].props || {}; var o = {}; Object.keys(p).forEach(function (k) { if (k.charAt(0) !== '$' && p[k] && p[k].editor) o[k] = p[k]; }); return o; }
+  function defaults(name, given) {
+    var sc = schema(name), o = {};
+    Object.keys(sc).forEach(function (k) { var d = sc[k].default; var g = given[k]; if (g !== undefined) o[k] = sc[k].editor === 'boolean' ? g === 'true' : g; else if (d !== undefined) o[k] = d; });
+    return o;
+  }
+
+  function route() {
+    var r = parseHash();
+    if (!r || !SRC[r.name]) { showGallery(); return; }
+    var props = defaults(r.name, r.props);
+    if (cur && cur.name === r.name && rootInst) {
+      document.title = titleOf(r.name) + ' — شهادات إتحاف';
+      rootInst.setProps(props); renderTweaks(r.name, props); queue(); return;
+    }
+    if (rootInst) rootInst.unmount();
+    cur = { name: r.name };
+    gal.hidden = true; view.hidden = false;
+    var app = document.getElementById('app'); app.innerHTML = '';
+    setStyles(r.name);
+    rootInst = new Inst(r.name, props);
+    var b = boardOf(r.name) || {}; var pv = (SRC[r.name].props || {}).$preview || {};
+    var w = b.w || pv.width || 1440, h = b.h || pv.height || 900;
+    cur.w = w; cur.h = h; cur.fluid = b.expand === 'fill';
+    document.getElementById('vtitle').textContent = titleOf(r.name);
+    document.getElementById('vpage').textContent = pageName(b.page) + ' · ' + w + '×' + h;
+    document.title = titleOf(r.name) + ' — شهادات إتحاف';
+    var list = ordered(); var i = list.indexOf(r.name);
+    document.getElementById('prev').onclick = function () { location.hash = '#/' + list[(i - 1 + list.length) % list.length]; };
+    document.getElementById('next').onclick = function () { location.hash = '#/' + list[(i + 1) % list.length]; };
+    renderTweaks(r.name, props);
+    window.scrollTo(0, 0);
+    paint();
+  }
+  function titleOf(name) { var b = boardOf(name); return (b && b.title) ? b.title.split(' — ')[0] : name; }
+
+  function renderTweaks(name, props) {
+    var box = document.getElementById('tweaks'); box.innerHTML = '';
+    var sc = schema(name);
+    Object.keys(sc).forEach(function (k) {
+      var d = sc[k];
+      var lab = document.createElement('label'); lab.className = 'x-tw';
+      if (d.editor === 'enum') {
+        var sel = document.createElement('select'); sel.setAttribute('aria-label', k);
+        d.options.forEach(function (o) { var op = document.createElement('option'); op.value = o; op.textContent = o; if (String(props[k]) === o) op.selected = true; sel.appendChild(op); });
+        sel.onchange = function () { setTweak(name, k, sel.value); };
+        lab.appendChild(sel);
+      } else if (d.editor === 'boolean') {
+        var cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !!props[k];
+        cb.onchange = function () { setTweak(name, k, cb.checked ? 'true' : 'false'); };
+        var sp = document.createElement('span'); sp.textContent = ({ sheet: 'إظهار اللوحة السفلية', savedSignature: 'يوجد توقيع محفوظ' })[k] || k;
+        lab.appendChild(cb); lab.appendChild(sp);
+      }
+      box.appendChild(lab);
+    });
+    box.hidden = !Object.keys(sc).length;
+  }
+  function setTweak(name, k, v) {
+    var r = parseHash() || { props: {} }; r.props[k] = v;
+    location.hash = '#/' + name + '?' + Object.keys(r.props).map(function (x) { return x + '=' + encodeURIComponent(r.props[x]); }).join('&');
+  }
+
+  function fit() {
+    if (!cur) return;
+    var stage = document.getElementById('stage'), box = document.getElementById('box'), app = document.getElementById('app');
+    var avail = stage.clientWidth - 32; stage.className = cur.fluid ? 'x-fl' : '';
+    if (cur.fluid) { box.style.width = '100%'; box.style.height = ''; app.style.transform = ''; app.style.width = '100%'; box.className = 'x-fluid'; return; }
+    box.className = 'x-fixed';
+    var s = Math.min(1, avail / cur.w);
+    app.style.width = cur.w + 'px'; app.style.transform = s < 1 ? 'scale(' + s + ')' : '';
+    var h = Math.max(cur.h, app.scrollHeight);
+    box.style.width = Math.round(cur.w * s) + 'px'; box.style.height = Math.round(h * s) + 'px';
+  }
+  window.addEventListener('resize', fit);
+
+  function showGallery() {
+    if (rootInst) { rootInst.unmount(); rootInst = null; }
+    cur = null; view.hidden = true; gal.hidden = false; document.title = 'الاختبارات — إتحاف';
+    var wrap = document.getElementById('groups'); if (wrap.childNodes.length) return;
+    var byPage = {};
+    ordered().forEach(function (n) { var b = boardOf(n) || {}; (byPage[b.page] = byPage[b.page] || []).push(n); });
+    var pageOrder = [];
+    BOARDS.pages.forEach(function (p) { if (pageOrder.indexOf(p.id) < 0) pageOrder.push(p.id); });
+    pageOrder.forEach(function (pid, gi) {
+      var items = byPage[pid]; if (!items) return;
+      var sec = document.createElement('section'); sec.className = 'x-grp';
+      var h = document.createElement('h2'); h.innerHTML = pageName(pid); sec.appendChild(h);
+      var grid = document.createElement('div'); grid.className = 'x-cards';
+      items.forEach(function (n) {
+        var b = boardOf(n) || {}; var a = document.createElement('a'); a.className = 'x-card'; a.href = '#/' + n;
+        var mobile = (b.w || 0) <= 500;
+        var parts = (b.title || n).split(' — ');
+        a.innerHTML = '<span class="x-ic x-' + (mobile ? 'm' : (b.w === 1123 ? 'c' : 'd')) + '" aria-hidden="true"></span><span class="x-tx"><b></b><small></small><em></em></span><span class="x-go" aria-hidden="true">←</span>';
+        a.querySelector('b').textContent = parts[0];
+        a.querySelector('small').textContent = parts.slice(1).join(' — ');
+        a.querySelector('em').textContent = (mobile ? 'جوال' : ((b.w === 1194 || b.w === 834) ? 'لوحي' : 'ويب')) + ' · ' + b.w + '×' + b.h + (b.is_interactive ? ' · تفاعلي' : '');
+        grid.appendChild(a);
+      });
+      sec.appendChild(grid); wrap.appendChild(sec);
+    });
+  }
+
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>
