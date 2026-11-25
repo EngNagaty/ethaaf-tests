@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>قوالب شهادات إتحاف — الإصدار المقترح</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;600;700;800&family=Lalezar&family=Reem+Kufi:wght@500;600;700&display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Cairo',sans-serif;background:#F8F8F8;color:#172B4D}
+header{background:#555942;color:#fff;padding:24px 32px}
+header h1{margin:0;font-size:26px;font-weight:800}
+header p{margin:6px 0 0;opacity:.9;font-size:15px}
+main{max-width:1280px;margin:0 auto;padding:24px 20px 64px}
+h2{font-size:20px;margin:36px 0 6px;color:#313425}
+.lead{margin:0 0 16px;color:#585345;font-size:14px}
+.panel{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:18px}
+.controls{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:flex-end;margin-bottom:16px}
+.controls label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:#585345;font-weight:600}
+.controls select,.controls input[type=text]{font-family:inherit;font-size:15px;padding:8px 10px;border:1px solid #D1D5DB;border-radius:8px;min-width:150px;color:#172B4D;background:#fff}
+.controls input[type=text]{min-width:320px}
+.check{flex-direction:row!important;align-items:center;gap:6px!important;padding-bottom:8px}
+.frame{width:100%;position:relative;overflow:hidden;background:#fff;border:1px solid #E5E7EB;border-radius:8px}
+.frame>.cert{position:absolute;top:0;right:0;width:1123px;height:794px;transform-origin:top right}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.controls input[type=text]{min-width:220px}}
+figure{margin:0}
+figcaption{font-size:13px;color:#585345;margin-top:6px}
+.notes{font-size:14px;line-height:1.8;color:#313425}
+.notes li{margin-bottom:4px}
+</style>
+</head>
+<body>
+<header>
+<h1>قوالب شهادات إتحاف — الإصدار المقترح</h1>
+<p>ثلاثة قوالب جاهزة: الكلاسيكي المهيب، والمعاصر، والاحتفالي. مقاس A4 أفقي، ولكل قالب أربعة ألوان ونسخة طباعة.</p>
+</header>
+<main>
+<h2>جرّب القالب</h2>
+<p class="lead">غيّر القالب واللون ونوع الشهادة والاسم، وشاهد النتيجة مباشرة.</p>
+<div class="panel">
+<div class="controls">
+<label>القالب<select id="c-tpl"><option value="Main">الكلاسيكي المهيب</option><option value="Modern">المعاصر</option><option value="Festive">الاحتفالي</option></select></label>
+<label>اللون<select id="c-theme"><option>زيتوني</option><option>كحلي</option><option>أخضر</option><option>عنابي</option></select></label>
+<label>نوع الشهادة<select id="c-type"><option>اجتياز</option><option>تفوق</option><option>إتمام</option><option>شكر وتقدير</option></select></label>
+<label>اسم الطالب<input type="text" id="c-name" value="عبدالله محمد العتيبي"></label>
+<label class="check"><input type="checkbox" id="c-sig2"> توقيع ثانٍ</label>
+<label class="check"><input type="checkbox" id="c-stamp" checked> الختم</label>
+<label class="check"><input type="checkbox" id="c-print"> نسخة الطباعة</label>
+</div>
+<div class="frame" id="live"></div>
+</div>
+
+<h2>١ · الكلاسيكي المهيب</h2>
+<p class="lead">للاجتياز والتفوق والمناسبات الرسمية.</p>
+<div class="grid" id="g-Main"></div>
+<h2>٢ · المعاصر</h2>
+<p class="lead">لنهاية الفصل والترشيح الخاص.</p>
+<div class="grid" id="g-Modern"></div>
+<h2>٣ · الاحتفالي</h2>
+<p class="lead">للصغار والتهنئة والمشاركة على الواتساب.</p>
+<div class="grid" id="g-Festive"></div>
+
+<h2>ملاحظات</h2>
+<div class="panel notes"><ul>
+<li>العناوين مكتوبة بخطوط مؤقتة (Aref Ruqaa، وReem Kufi، وLalezar) لتوضيح الإحساس فقط. النسخة النهائية تحتاج عنوانًا مرسومًا بالخط لكل نوع.</li>
+<li>شعار الجهة والختم والتوقيعات ورمز QR عناصر توضيحية.</li>
+<li>القوالب تستخدم حقول المصمم الحالي نفسها، ولا تحتاج حقول بيانات جديدة.</li>
+<li>الاسم الطويل يصغر خطه تلقائيًا، ثم يلتف إلى سطرين.</li>
+</ul></div>
+</main>
+<script>
+const TPL={
+Main:(v)=>`
+<div dir="rtl" style="width: 1123px; height: 794px; position: relative; overflow: hidden; box-sizing: border-box; background: ${v.bg}; font-family: 'Amiri', serif; color: #1C1E14">
+
+<div style="position: absolute; inset: 24px; border: 3px solid ${v.gold}"></div>
+<div style="position: absolute; inset: 34px; border: 1px solid ${v.gold}"></div>
+
+<svg aria-hidden="true" width="110" height="110" viewBox="0 0 110 110" style="position: absolute; top: 18px; right: 18px">
+<rect x="0" y="0" width="52" height="52" fill="${v.bg}"></rect>
+<g fill="none" stroke="${v.gold}" stroke-width="1.5">
+<rect x="10" y="10" width="32" height="32"></rect>
+<rect x="10" y="10" width="32" height="32" transform="rotate(45 26 26)"></rect>
+<circle cx="26" cy="26" r="7"></circle>
+<path d="M56 26 H104"></path>
+<path d="M26 56 V104"></path>
+</g>
+</svg>
+<svg aria-hidden="true" width="110" height="110" viewBox="0 0 110 110" style="position: absolute; top: 18px; left: 18px; transform: scaleX(-1)">
+<rect x="0" y="0" width="52" height="52" fill="${v.bg}"></rect>
+<g fill="none" stroke="${v.gold}" stroke-width="1.5">
+<rect x="10" y="10" width="32" height="32"></rect>
+<rect x="10" y="10" width="32" height="32" transform="rotate(45 26 26)"></rect>
+<circle cx="26" cy="26" r="7"></circle>
+<path d="M56 26 H104"></path>
+<path d="M26 56 V104"></path>
+</g>
+</svg>
+<svg aria-hidden="true" width="110" height="110" viewBox="0 0 110 110" style="position: absolute; bottom: 18px; right: 18px; transform: scaleY(-1)">
+<rect x="0" y="0" width="52" height="52" fill="${v.bg}"></rect>
+<g fill="none" stroke="${v.gold}" stroke-width="1.5">
+<rect x="10" y="10" width="32" height="32"></rect>
+<rect x="10" y="10" width="32" height="32" transform="rotate(45 26 26)"></rect>
+<circle cx="26" cy="26" r="7"></circle>
+<path d="M56 26 H104"></path>
+<path d="M26 56 V104"></path>
+</g>
+</svg>
+<svg aria-hidden="true" width="110" height="110" viewBox="0 0 110 110" style="position: absolute; bottom: 18px; left: 18px; transform: scale(-1, -1)">
+<rect x="0" y="0" width="52" height="52" fill="${v.bg}"></rect>
+<g fill="none" stroke="${v.gold}" stroke-width="1.5">
+<rect x="10" y="10" width="32" height="32"></rect>
+<rect x="10" y="10" width="32" height="32" transform="rotate(45 26 26)"></rect>
+<circle cx="26" cy="26" r="7"></circle>
+<path d="M56 26 H104"></path>
+<path d="M26 56 V104"></path>
+</g>
+</svg>
+
+<div style="position: absolute; top: 56px; right: 120px; left: 120px; bottom: 150px; display: flex; flex-direction: column; align-items: center; text-align: center">
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid ${v.main}; display: flex; align-items: center; justify-content: center; font-family: 'Cairo', sans-serif; font-size: 11px; line-height: 1.2; color: #585345; background: #FFFFFF">شعار<br>الجهة</div>
+<div style="font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 700; color: ${v.deep}">جامع الأميرة سارة</div>
+</div>
+<div style="font-family: 'Aref Ruqaa', serif; font-size: 68px; font-weight: 700; line-height: 1.25; color: ${v.main}; margin-top: 10px">${v.title}</div>
+<svg aria-hidden="true" width="240" height="18" viewBox="0 0 240 18" style="margin-top: 2px">
+<g fill="none" stroke="${v.gold}" stroke-width="1.5">
+<path d="M0 9 H100"></path>
+<path d="M140 9 H240"></path>
+<rect x="113" y="2" width="14" height="14"></rect>
+<rect x="113" y="2" width="14" height="14" transform="rotate(45 120 9)"></rect>
+</g>
+</svg>
+<div style="font-size: 21px; line-height: 1.6; margin-top: 14px; color: #1C1E14">يسرّ جامع الأميرة سارة أن يمنح هذه الشهادة للطالب</div>
+<div style="font-size: ${v.nameSize}px; font-weight: 700; line-height: 1.35; color: ${v.deep}; margin-top: 4px; max-width: 820px; text-wrap: balance">${v.student}</div>
+<div style="font-size: 21px; line-height: 1.6; margin-top: 6px; max-width: 760px; text-wrap: balance">${v.achievement}</div>
+<div style="display: flex; align-items: center; gap: 16px; margin-top: 14px; font-family: 'Cairo', sans-serif">
+<div style="border: 1px solid ${v.gold}; border-radius: 999px; padding: 4px 18px; font-size: 15px; font-weight: 700; color: ${v.deep}; background: #FFFFFF">بتقدير ممتاز · 95%</div>
+<div style="font-size: 14px; color: #585345">حلقة أبي بن كعب · 16 جمادى الآخرة 1448هـ الموافق 26 نوفمبر 2026م</div>
+</div>
+</div>
+
+<div style="position: absolute; right: 110px; left: 110px; bottom: 100px; display: flex; justify-content: space-between; align-items: flex-end; font-family: 'Cairo', sans-serif">
+<div style="width: 230px; display: flex; flex-direction: column; align-items: center">
+<svg aria-hidden="true" width="160" height="46" viewBox="0 0 160 46"><path d="M10 34 C30 6 44 44 60 22 S90 8 100 30 S130 40 150 14" fill="none" stroke="#1E2A5A" stroke-width="2.2" stroke-linecap="round"></path></svg>
+<div style="width: 100%; border-top: 1px solid #8F8872; margin-top: 2px"></div>
+<div style="font-size: 15px; font-weight: 700; margin-top: 6px">عبدالرحمن الدوسري</div>
+<div style="font-size: 13px; color: #585345">مدير المجمع</div>
+</div>
+${v.stamp?`
+<div style="width: 104px; height: 104px; border-radius: 50%; border: 2px solid ${v.main}; display: flex; align-items: center; justify-content: center; opacity: 0.85">
+<div style="width: 88px; height: 88px; border-radius: 50%; border: 1px dashed ${v.main}; display: flex; align-items: center; justify-content: center; font-size: 12px; color: ${v.main}; text-align: center; line-height: 1.3">ختم<br>الجهة</div>
+</div>
+`:''}
+<div style="width: 230px; display: flex; flex-direction: column; align-items: center">
+${v.secondSig?`
+<svg aria-hidden="true" width="160" height="46" viewBox="0 0 160 46"><path d="M14 30 C28 12 40 40 56 18 S82 36 98 16 S126 30 148 22" fill="none" stroke="#1E2A5A" stroke-width="2.2" stroke-linecap="round"></path></svg>
+<div style="width: 100%; border-top: 1px solid #8F8872; margin-top: 2px"></div>
+<div style="font-size: 15px; font-weight: 700; margin-top: 6px">خالد العمري</div>
+<div style="font-size: 13px; color: #585345">المشرف التعليمي</div>
+`:''}
+</div>
+</div>
+
+<div style="position: absolute; right: 64px; left: 64px; bottom: 46px; display: flex; justify-content: space-between; align-items: flex-end; font-family: 'Cairo', sans-serif">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #585345">
+<span style="font-weight: 800; color: #555942; font-size: 14px">إتحاف</span>
+<span>صادرة عبر منصة إتحاف</span>
+</div>
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="text-align: left; font-size: 12px; color: #585345; line-height: 1.4">رقم الشهادة<br><span style="font-weight: 700; color: #1C1E14; direction: ltr">AB1-1448-000221</span></div>
+<div style="width: 50px; height: 50px; padding: 3px; background: #FFFFFF; display: grid; grid-template-columns: repeat(21, minmax(0, 1fr))">
+${v.qrHtml}
+</div>
+</div>
+</div>
+
+</div>
+`,
+Modern:(v)=>`
+<div dir="rtl" style="width: 1123px; height: 794px; position: relative; overflow: hidden; box-sizing: border-box; background: #FFFFFF; font-family: 'Cairo', sans-serif; color: #1C1E14; display: flex">
+
+<div style="width: 300px; flex-shrink: 0; position: relative; background: ${v.bandBg}; border-left: ${v.bandBorder}; box-sizing: border-box">
+<svg aria-hidden="true" width="300" height="794" style="position: absolute; inset: 0">
+<defs>
+<pattern id="star-band-${v.uid}" width="64" height="64" patternUnits="userSpaceOnUse">
+<g fill="none" stroke="${v.patternColor}" stroke-width="1">
+<rect x="20" y="20" width="24" height="24"></rect>
+<rect x="20" y="20" width="24" height="24" transform="rotate(45 32 32)"></rect>
+</g>
+</pattern>
+</defs>
+<rect width="300" height="794" fill="url(#star-band-${v.uid})"></rect>
+</svg>
+<div style="position: absolute; inset: 0; padding: 56px 40px 48px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center">
+<div style="width: 104px; height: 104px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1.3; color: #585345">شعار<br>الجهة</div>
+<div style="font-size: 20px; font-weight: 800; margin-top: 18px; color: ${v.bandText}">جامع الأميرة سارة</div>
+<div style="font-size: 14px; margin-top: 4px; color: ${v.bandMuted}">حلقة أبي بن كعب</div>
+<div style="flex: 1"></div>
+<div style="width: 112px; height: 112px; padding: 8px; box-sizing: border-box; background: #FFFFFF; border-radius: 10px; border: 1px solid #E5E7EB">
+<div style="width: 100%; height: 100%; display: grid; grid-template-columns: repeat(21, minmax(0, 1fr))">
+${v.qrHtml}
+</div>
+</div>
+<div style="font-size: 12px; margin-top: 10px; color: ${v.bandMuted}">امسح للتحقق من الشهادة</div>
+<div style="font-size: 14px; font-weight: 700; margin-top: 2px; direction: ltr; color: ${v.bandText}">AB1-1448-000221</div>
+</div>
+</div>
+
+<div style="flex: 1; position: relative; padding: 64px 72px 48px 64px; box-sizing: border-box; display: flex; flex-direction: column">
+<div style="width: 56px; height: 4px; background: ${v.accent}; border-radius: 2px"></div>
+<div style="font-family: 'Reem Kufi', sans-serif; font-size: 58px; font-weight: 700; line-height: 1.3; color: ${v.main}; margin-top: 18px">${v.title}</div>
+<div style="font-size: 19px; color: #585345; margin-top: 18px">يسرّ جامع الأميرة سارة أن يمنح هذه الشهادة للطالب</div>
+<div style="font-size: ${v.nameSize}px; font-weight: 800; line-height: 1.35; color: ${v.deep}; margin-top: 8px; text-wrap: balance">${v.student}</div>
+<div style="font-size: 20px; line-height: 1.7; margin-top: 10px; max-width: 640px">${v.achievement}</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 28px; padding-top: 20px; border-top: 1px solid #E5E7EB">
+<div>
+<div style="font-size: 13px; color: #585345">التقدير</div>
+<div style="font-size: 18px; font-weight: 700; margin-top: 2px">ممتاز · 95%</div>
+</div>
+<div>
+<div style="font-size: 13px; color: #585345">تاريخ الإصدار</div>
+<div style="font-size: 18px; font-weight: 700; margin-top: 2px">16 جمادى الآخرة 1448هـ</div>
+<div style="font-size: 13px; color: #585345">26 نوفمبر 2026م</div>
+</div>
+<div>
+<div style="font-size: 13px; color: #585345">الحلقة</div>
+<div style="font-size: 18px; font-weight: 700; margin-top: 2px">أبي بن كعب</div>
+</div>
+</div>
+
+<div style="flex: 1"></div>
+
+<div style="display: flex; align-items: flex-end; gap: 48px">
+<div style="width: 210px">
+<svg aria-hidden="true" width="150" height="44" viewBox="0 0 160 46"><path d="M10 34 C30 6 44 44 60 22 S90 8 100 30 S130 40 150 14" fill="none" stroke="#1E2A5A" stroke-width="2.2" stroke-linecap="round"></path></svg>
+<div style="border-top: 1px solid #9CA3AF; margin-top: 2px"></div>
+<div style="font-size: 15px; font-weight: 700; margin-top: 6px">عبدالرحمن الدوسري</div>
+<div style="font-size: 13px; color: #585345">مدير المجمع</div>
+</div>
+${v.secondSig?`
+<div style="width: 210px">
+<svg aria-hidden="true" width="150" height="44" viewBox="0 0 160 46"><path d="M14 30 C28 12 40 40 56 18 S82 36 98 16 S126 30 148 22" fill="none" stroke="#1E2A5A" stroke-width="2.2" stroke-linecap="round"></path></svg>
+<div style="border-top: 1px solid #9CA3AF; margin-top: 2px"></div>
+<div style="font-size: 15px; font-weight: 700; margin-top: 6px">خالد العمري</div>
+<div style="font-size: 13px; color: #585345">المشرف التعليمي</div>
+</div>
+`:''}
+<div style="flex: 1"></div>
+${v.stamp?`
+<div style="width: 92px; height: 92px; border-radius: 50%; border: 2px solid ${v.main}; display: flex; align-items: center; justify-content: center; opacity: 0.85">
+<div style="width: 78px; height: 78px; border-radius: 50%; border: 1px dashed ${v.main}; display: flex; align-items: center; justify-content: center; font-size: 12px; color: ${v.main}; text-align: center; line-height: 1.3">ختم<br>الجهة</div>
+</div>
+`:''}
+</div>
+
+<div style="display: flex; align-items: center; gap: 8px; margin-top: 24px; font-size: 12px; color: #585345">
+<span style="font-weight: 800; color: #555942; font-size: 14px">إتحاف</span>
+<span>صادرة عبر منصة إتحاف</span>
+</div>
+</div>
+
+</div>
+`,
+Festive:(v)=>`
+<div dir="rtl" style="width: 1123px; height: 794px; position: relative; overflow: hidden; box-sizing: border-box; background: ${v.bg}; font-family: 'Cairo', sans-serif; color: #1C1E14">
+
+<svg aria-hidden="true" width="1123" height="794" style="position: absolute; inset: 0">
+<g fill="none" stroke="${v.gold}" stroke-width="1.5" opacity="0.8">
+<g transform="translate(70 80)"><rect x="-14" y="-14" width="28" height="28"></rect><rect x="-14" y="-14" width="28" height="28" transform="rotate(45)"></rect></g>
+<g transform="translate(130 200)"><rect x="-8" y="-8" width="16" height="16"></rect><rect x="-8" y="-8" width="16" height="16" transform="rotate(45)"></rect></g>
+<g transform="translate(60 330)"><rect x="-10" y="-10" width="20" height="20"></rect><rect x="-10" y="-10" width="20" height="20" transform="rotate(45)"></rect></g>
+<g transform="translate(1050 90)"><rect x="-14" y="-14" width="28" height="28"></rect><rect x="-14" y="-14" width="28" height="28" transform="rotate(45)"></rect></g>
+<g transform="translate(990 220)"><rect x="-8" y="-8" width="16" height="16"></rect><rect x="-8" y="-8" width="16" height="16" transform="rotate(45)"></rect></g>
+<g transform="translate(1065 350)"><rect x="-10" y="-10" width="20" height="20"></rect><rect x="-10" y="-10" width="20" height="20" transform="rotate(45)"></rect></g>
+</g>
+</svg>
+
+<svg aria-hidden="true" width="760" height="722" viewBox="0 0 760 722" style="position: absolute; top: 36px; left: 181px">
+<path d="M4 718 V300 C4 140 190 50 380 6 C570 50 756 140 756 300 V718 Z" fill="${v.archFill}" stroke="${v.main}" stroke-width="3"></path>
+<path d="M18 704 V306 C18 156 200 70 380 24 C560 70 742 156 742 306 V704 Z" fill="none" stroke="${v.gold}" stroke-width="1.5"></path>
+<g fill="none" stroke="${v.gold}" stroke-width="1.5" transform="translate(380 70)">
+<rect x="-12" y="-12" width="24" height="24"></rect><rect x="-12" y="-12" width="24" height="24" transform="rotate(45)"></rect><circle r="5"></circle>
+</g>
+</svg>
+
+<div style="position: absolute; top: 36px; left: 181px; width: 760px; height: 722px; padding: 118px 90px 44px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center">
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid ${v.main}; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 10px; line-height: 1.2; color: #585345">شعار<br>الجهة</div>
+<div style="font-size: 15px; font-weight: 700; color: ${v.deep}">جامع الأميرة سارة</div>
+</div>
+<div style="font-family: 'Lalezar', sans-serif; font-size: 58px; line-height: 1.3; color: ${v.main}; margin-top: 14px">${v.title}</div>
+<div style="font-size: 18px; color: #585345; margin-top: 6px">بكل فخر يمنح جامع الأميرة سارة هذه الشهادة للطالب</div>
+<div style="font-size: ${v.nameSize}px; font-weight: 800; line-height: 1.35; color: ${v.deep}; margin-top: 8px; text-wrap: balance">${v.student}</div>
+<div style="font-size: 19px; line-height: 1.7; margin-top: 8px; max-width: 520px; text-wrap: balance">${v.achievement}</div>
+<div style="font-size: 14px; color: #585345; margin-top: 8px">حلقة أبي بن كعب · 16 جمادى الآخرة 1448هـ · 26 نوفمبر 2026م</div>
+<div style="flex: 1"></div>
+<div style="display: flex; justify-content: center; gap: 56px; align-items: flex-end">
+<div style="width: 200px; display: flex; flex-direction: column; align-items: center">
+<svg aria-hidden="true" width="140" height="42" viewBox="0 0 160 46"><path d="M10 34 C30 6 44 44 60 22 S90 8 100 30 S130 40 150 14" fill="none" stroke="#1E2A5A" stroke-width="2.2" stroke-linecap="round"></path></svg>
+<div style="width: 100%; border-top: 1px solid #8F8872; margin-top: 2px"></div>
+<div style="font-size: 15px; font-weight: 700; margin-top: 6px">عبدالرحمن الدوسري</div>
+<div style="font-size: 13px; color: #585345">مدير المجمع</div>
+</div>
+${v.secondSig?`
+<div style="width: 200px; display: flex; flex-direction: column; align-items: center">
+<svg aria-hidden="true" width="140" height="42" viewBox="0 0 160 46"><path d="M14 30 C28 12 40 40 56 18 S82 36 98 16 S126 30 148 22" fill="none" stroke="#1E2A5A" stroke-width="2.2" stroke-linecap="round"></path></svg>
+<div style="width: 100%; border-top: 1px solid #8F8872; margin-top: 2px"></div>
+<div style="font-size: 15px; font-weight: 700; margin-top: 6px">خالد العمري</div>
+<div style="font-size: 13px; color: #585345">المشرف التعليمي</div>
+</div>
+`:''}
+</div>
+</div>
+
+<svg role="img" aria-label="وسام التقدير: ممتاز 95%" width="150" height="200" viewBox="0 0 150 200" style="position: absolute; left: 22px; bottom: 120px">
+<path d="M45 110 L28 196 L52 180 L66 198 L78 120 Z" fill="${v.main}"></path>
+<path d="M105 110 L122 196 L98 180 L84 198 L72 120 Z" fill="${v.deep}"></path>
+<circle cx="75" cy="78" r="70" fill="${v.gold}"></circle>
+<circle cx="75" cy="78" r="60" fill="${v.main}"></circle>
+<circle cx="75" cy="78" r="53" fill="none" stroke="${v.gold}" stroke-width="1.5" stroke-dasharray="3 4"></circle>
+<text x="75" y="80" text-anchor="middle" font-family="Lalezar, sans-serif" font-size="30" fill="#FFFFFF">ممتاز</text>
+<text x="75" y="108" text-anchor="middle" font-family="Cairo, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF">95%</text>
+</svg>
+
+<div style="position: absolute; right: 40px; bottom: 44px; width: 120px; display: flex; flex-direction: column; align-items: center; text-align: center">
+${v.stamp?`
+<div style="width: 84px; height: 84px; border-radius: 50%; border: 2px solid ${v.main}; display: flex; align-items: center; justify-content: center; opacity: 0.85; margin-bottom: 18px">
+<div style="width: 70px; height: 70px; border-radius: 50%; border: 1px dashed ${v.main}; display: flex; align-items: center; justify-content: center; font-size: 11px; color: ${v.main}; line-height: 1.3">ختم<br>الجهة</div>
+</div>
+`:''}
+<div style="width: 80px; height: 80px; padding: 5px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB">
+<div style="width: 100%; height: 100%; display: grid; grid-template-columns: repeat(21, minmax(0, 1fr))">
+${v.qrHtml}
+</div>
+</div>
+<div style="font-size: 12px; font-weight: 700; margin-top: 6px; direction: ltr">AB1-1448-000221</div>
+<div style="font-size: 11px; color: #585345; margin-top: 8px; line-height: 1.4"><span style="font-weight: 800; color: #555942; font-size: 13px">إتحاف</span><br>صادرة عبر منصة إتحاف</div>
+</div>
+
+</div>
+`
+};
+const ACH={'اجتياز':'لاجتيازه الاختبار المرحلي من سورة الفاتحة إلى سورة الأنعام','تفوق':'لتفوقه في اختبار القياس بنسبة 95%','إتمام':'لإتمامه الفصل الدراسي الأول لعام 1448هـ بانتظام وجد','شكر وتقدير':'تقديرًا لتميزه وجهده في الحلقة'};
+const THEMES={
+ Main:{'زيتوني':{main:'#555942',deep:'#313425',gold:'#A89F86'},'كحلي':{main:'#1F3A5F',deep:'#132640',gold:'#B39557'},'أخضر':{main:'#1F5C4A',deep:'#123A2F',gold:'#B39557'},'عنابي':{main:'#6B1F2A',deep:'#43131A',gold:'#B39557'}},
+ Modern:{'زيتوني':{main:'#555942',deep:'#313425',accent:'#A89F86'},'كحلي':{main:'#1F3A5F',deep:'#132640',accent:'#B39557'},'أخضر':{main:'#1F5C4A',deep:'#123A2F',accent:'#B39557'},'عنابي':{main:'#6B1F2A',deep:'#43131A',accent:'#B39557'}},
+ Festive:{'زيتوني':{main:'#555942',deep:'#313425',gold:'#BAB095'},'كحلي':{main:'#1F3A5F',deep:'#132640',gold:'#C9AE72'},'أخضر':{main:'#1F5C4A',deep:'#123A2F',gold:'#C9AE72'},'عنابي':{main:'#6B1F2A',deep:'#43131A',gold:'#C9AE72'}}
+};
+function qrHtml(seed){let n=21,s=seed,out='';const r=()=>{s=(s*9301+49297)%233280;return s/233280;};
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){let on;const inF=(x<7&&y<7)||(x>=n-7&&y<7)||(x<7&&y>=n-7);
+  if(inF){const fx=x<7?x:x-(n-7),fy=y<7?y:y-(n-7);const d=Math.max(Math.abs(fx-3),Math.abs(fy-3));on=(d===3||d<=1);}
+  else if((x===7&&(y<8||y>=n-8))||(y===7&&(x<8||x>=n-8))||(x===n-8&&y<8)||(y===n-8&&x<8))on=false; else on=r()>0.52;
+  out+=`<div style="background:${on?'#1C1E14':'transparent'}"></div>`;}
+ return out;}
+let UID=0;
+function sizeFor(tpl,len){const t={Main:[54,46,40,34],Modern:[56,46,40,36],Festive:[50,42,36,32]}[tpl];return len<=20?t[0]:len<=30?t[1]:len<=40?t[2]:t[3];}
+function render(tpl,o){
+ const t=THEMES[tpl][o.theme]||THEMES[tpl]['زيتوني'];const p=!!o.print;
+ const v={main:t.main,deep:t.deep,title:'شهادة '+o.type,achievement:ACH[o.type],student:o.student,nameSize:sizeFor(tpl,o.student.length),secondSig:!!o.secondSig,stamp:o.stamp!==false,uid:++UID};
+ if(tpl==='Main'){v.bg=p?'#FFFFFF':'#FBF8F3';v.gold=p?t.main:t.gold;v.qrHtml=qrHtml(7);}
+ if(tpl==='Modern'){Object.assign(v,{accent:t.accent,bandBg:p?'#FFFFFF':t.main,bandBorder:p?'2px solid '+t.main:'0',bandText:p?t.deep:'#FFFFFF',bandMuted:p?'#585345':'rgba(255,255,255,0.85)',patternColor:p?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.14)',qrHtml:qrHtml(11)});}
+ if(tpl==='Festive'){Object.assign(v,{bg:p?'#FFFFFF':'#F5F0E5',archFill:'#FFFFFF',gold:p?t.main:t.gold,qrHtml:qrHtml(23)});}
+ return TPL[tpl](v);
+}
+
+function mount(el,html){el.innerHTML='<div class="cert">'+html+'</div>';fit(el);}
+function fit(el){const c=el.firstChild;if(!c)return;const s=el.clientWidth/1123;c.style.transform='scale('+s+')';el.style.height=(794*s)+'px';}
+const LONG='عبدالرحمن عبدالعزيز بن محمد آل عبدالله القحطاني';
+const VARIANTS={
+ Main:[{cap:'زيتوني · اسم قصير · توقيع واحد',o:{theme:'زيتوني',type:'اجتياز',student:'عبدالله محمد العتيبي'}},{cap:'كحلي · أطول اسم · توقيعان',o:{theme:'كحلي',type:'تفوق',student:LONG,secondSig:true}},{cap:'نسخة الطباعة',o:{theme:'زيتوني',type:'شكر وتقدير',student:'عبدالله محمد العتيبي',print:true}}],
+ Modern:[{cap:'زيتوني · اسم قصير · توقيع واحد',o:{theme:'زيتوني',type:'إتمام',student:'عبدالله محمد العتيبي'}},{cap:'أخضر · أطول اسم · توقيعان',o:{theme:'أخضر',type:'إتمام',student:LONG,secondSig:true}},{cap:'نسخة الطباعة',o:{theme:'زيتوني',type:'إتمام',student:'عبدالله محمد العتيبي',print:true}}],
+ Festive:[{cap:'زيتوني · اسم قصير · توقيع واحد',o:{theme:'زيتوني',type:'تفوق',student:'عبدالله محمد العتيبي'}},{cap:'عنابي · أطول اسم · توقيعان',o:{theme:'عنابي',type:'تفوق',student:LONG,secondSig:true}},{cap:'نسخة الطباعة',o:{theme:'زيتوني',type:'تفوق',student:'عبدالله محمد العتيبي',print:true}}]
+};
+for(const k in VARIANTS){const g=document.getElementById('g-'+k);VARIANTS[k].forEach(x=>{const f=document.createElement('figure');const fr=document.createElement('div');fr.className='frame';f.appendChild(fr);const cp=document.createElement('figcaption');cp.textContent=x.cap;f.appendChild(cp);g.appendChild(f);mount(fr,render(k,x.o));});}
+const $=id=>document.getElementById(id);
+function live(){mount($('live'),render($('c-tpl').value,{theme:$('c-theme').value,type:$('c-type').value,student:$('c-name').value||' ',secondSig:$('c-sig2').checked,stamp:$('c-stamp').checked,print:$('c-print').checked}));}
+['c-tpl','c-theme','c-type','c-name','c-sig2','c-stamp','c-print'].forEach(id=>$(id).addEventListener('input',live));
+live();
+window.addEventListener('resize',()=>document.querySelectorAll('.frame').forEach(fit));
+</script>
+</body>
+</html>
