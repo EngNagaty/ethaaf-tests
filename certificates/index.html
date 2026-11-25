@@ -29,6 +29,11 @@ figure{margin:0}
 figcaption{font-size:13px;color:#585345;margin-top:6px}
 .notes{font-size:14px;line-height:1.8;color:#313425}
 .notes li{margin-bottom:4px}
+.ttl{-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.t-ijtiyaz{-webkit-mask-image:url(titles/title-ijtiyaz.svg);mask-image:url(titles/title-ijtiyaz.svg)}
+.t-tafawuq{-webkit-mask-image:url(titles/title-tafawuq.svg);mask-image:url(titles/title-tafawuq.svg)}
+.t-itmam{-webkit-mask-image:url(titles/title-itmam.svg);mask-image:url(titles/title-itmam.svg)}
+.t-shukr{-webkit-mask-image:url(titles/title-shukr.svg);mask-image:url(titles/title-shukr.svg)}
 </style>
 </head>
 <body>
@@ -64,8 +69,8 @@ figcaption{font-size:13px;color:#585345;margin-top:6px}
 
 <h2>ملاحظات</h2>
 <div class="panel notes"><ul>
-<li>العناوين مكتوبة بخطوط مؤقتة (Aref Ruqaa، وReem Kufi، وLalezar) لتوضيح الإحساس فقط. النسخة النهائية تحتاج عنوانًا مرسومًا بالخط لكل نوع.</li>
-<li>شعار الجهة والختم والتوقيعات ورمز QR عناصر توضيحية.</li>
+<li>عناوين الشهادات الأربعة مرسومة كأعمال خطية (SVG) بأسلوب النستعليق، وتتلون تلقائيًا بلون القالب.</li>
+<li>الشعار هو شعار مجمع حلقات جامع الأميرة سارة كمثال حقيقي. الختم والتوقيعات ورمز QR عناصر توضيحية.</li>
 <li>القوالب تستخدم حقول المصمم الحالي نفسها، ولا تحتاج حقول بيانات جديدة.</li>
 <li>الاسم الطويل يصغر خطه تلقائيًا، ثم يلتف إلى سطرين.</li>
 </ul></div>
@@ -120,11 +125,8 @@ Main:(v)=>`
 </svg>
 
 <div style="position: absolute; top: 56px; right: 120px; left: 120px; bottom: 150px; display: flex; flex-direction: column; align-items: center; text-align: center">
-<div style="display: flex; align-items: center; gap: 12px">
-<div style="width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid ${v.main}; display: flex; align-items: center; justify-content: center; font-family: 'Cairo', sans-serif; font-size: 11px; line-height: 1.2; color: #585345; background: #FFFFFF">شعار<br>الجهة</div>
-<div style="font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 700; color: ${v.deep}">جامع الأميرة سارة</div>
-</div>
-<div style="font-family: 'Aref Ruqaa', serif; font-size: 68px; font-weight: 700; line-height: 1.25; color: ${v.main}; margin-top: 10px">${v.title}</div>
+<img src="https://sara.api.ethaaf.com/tenancy/assets/landing-page/logos/sara-compressed.png" alt="شعار مجمع حلقات جامع الأميرة سارة" style="height: 72px; width: auto; display: block">
+<div class="ttl ${v.titleClass}" role="img" aria-label="${v.title}" style="width: ${v.titleW}px; height: 150px; background: ${v.main}; margin-top: 8px"></div>
 <svg aria-hidden="true" width="240" height="18" viewBox="0 0 240 18" style="margin-top: 2px">
 <g fill="none" stroke="${v.gold}" stroke-width="1.5">
 <path d="M0 9 H100"></path>
@@ -164,7 +166,7 @@ ${v.secondSig?`
 </div>
 </div>
 
-<div style="position: absolute; right: 64px; left: 64px; bottom: 46px; display: flex; justify-content: space-between; align-items: flex-end; font-family: 'Cairo', sans-serif">
+<div style="position: absolute; right: 140px; left: 140px; bottom: 44px; display: flex; justify-content: space-between; align-items: flex-end; font-family: 'Cairo', sans-serif">
 <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #585345">
 <span style="font-weight: 800; color: #555942; font-size: 14px">إتحاف</span>
 <span>صادرة عبر منصة إتحاف</span>
@@ -195,9 +197,8 @@ Modern:(v)=>`
 <rect width="300" height="794" fill="url(#star-band-${v.uid})"></rect>
 </svg>
 <div style="position: absolute; inset: 0; padding: 56px 40px 48px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center">
-<div style="width: 104px; height: 104px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1.3; color: #585345">شعار<br>الجهة</div>
-<div style="font-size: 20px; font-weight: 800; margin-top: 18px; color: ${v.bandText}">جامع الأميرة سارة</div>
-<div style="font-size: 14px; margin-top: 4px; color: ${v.bandMuted}">حلقة أبي بن كعب</div>
+<div style="width: 220px; height: 136px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: center; padding: 14px; box-sizing: border-box"><img src="https://sara.api.ethaaf.com/tenancy/assets/landing-page/logos/sara-compressed.png" alt="شعار مجمع حلقات جامع الأميرة سارة" style="max-width: 100%; max-height: 100%; display: block"></div>
+<div style="font-size: 15px; font-weight: 700; margin-top: 16px; color: ${v.bandText}">حلقة أبي بن كعب</div>
 <div style="flex: 1"></div>
 <div style="width: 112px; height: 112px; padding: 8px; box-sizing: border-box; background: #FFFFFF; border-radius: 10px; border: 1px solid #E5E7EB">
 <div style="width: 100%; height: 100%; display: grid; grid-template-columns: repeat(21, minmax(0, 1fr))">
@@ -211,7 +212,7 @@ ${v.qrHtml}
 
 <div style="flex: 1; position: relative; padding: 64px 72px 48px 64px; box-sizing: border-box; display: flex; flex-direction: column">
 <div style="width: 56px; height: 4px; background: ${v.accent}; border-radius: 2px"></div>
-<div style="font-family: 'Reem Kufi', sans-serif; font-size: 58px; font-weight: 700; line-height: 1.3; color: ${v.main}; margin-top: 18px">${v.title}</div>
+<div class="ttl ${v.titleClass}" role="img" aria-label="${v.title}" style="width: ${v.titleW}px; height: 120px; background: ${v.main}; margin-top: 18px; align-self: flex-start"></div>
 <div style="font-size: 19px; color: #585345; margin-top: 18px">يسرّ جامع الأميرة سارة أن يمنح هذه الشهادة للطالب</div>
 <div style="font-size: ${v.nameSize}px; font-weight: 800; line-height: 1.35; color: ${v.deep}; margin-top: 8px; text-wrap: balance">${v.student}</div>
 <div style="font-size: 20px; line-height: 1.7; margin-top: 10px; max-width: 640px">${v.achievement}</div>
@@ -288,11 +289,8 @@ Festive:(v)=>`
 </svg>
 
 <div style="position: absolute; top: 36px; left: 181px; width: 760px; height: 722px; padding: 118px 90px 44px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center">
-<div style="display: flex; align-items: center; gap: 10px">
-<div style="width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid ${v.main}; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 10px; line-height: 1.2; color: #585345">شعار<br>الجهة</div>
-<div style="font-size: 15px; font-weight: 700; color: ${v.deep}">جامع الأميرة سارة</div>
-</div>
-<div style="font-family: 'Lalezar', sans-serif; font-size: 58px; line-height: 1.3; color: ${v.main}; margin-top: 14px">${v.title}</div>
+<img src="https://sara.api.ethaaf.com/tenancy/assets/landing-page/logos/sara-compressed.png" alt="شعار مجمع حلقات جامع الأميرة سارة" style="height: 60px; width: auto; display: block">
+<div class="ttl ${v.titleClass}" role="img" aria-label="${v.title}" style="width: ${v.titleW}px; height: 132px; background: ${v.main}; margin-top: 10px"></div>
 <div style="font-size: 18px; color: #585345; margin-top: 6px">بكل فخر يمنح جامع الأميرة سارة هذه الشهادة للطالب</div>
 <div style="font-size: ${v.nameSize}px; font-weight: 800; line-height: 1.35; color: ${v.deep}; margin-top: 8px; text-wrap: balance">${v.student}</div>
 <div style="font-size: 19px; line-height: 1.7; margin-top: 8px; max-width: 520px; text-wrap: balance">${v.achievement}</div>
@@ -344,6 +342,8 @@ ${v.qrHtml}
 </div>
 `
 };
+const TT={'اجتياز':['t-ijtiyaz',334/354.9],'تفوق':['t-tafawuq',334/373.9],'إتمام':['t-itmam',334/409],'شكر وتقدير':['t-shukr',462.4/345.4]};
+const TH_H={Main:150,Modern:120,Festive:132};
 const ACH={'اجتياز':'لاجتيازه الاختبار المرحلي من سورة الفاتحة إلى سورة الأنعام','تفوق':'لتفوقه في اختبار القياس بنسبة 95%','إتمام':'لإتمامه الفصل الدراسي الأول لعام 1448هـ بانتظام وجد','شكر وتقدير':'تقديرًا لتميزه وجهده في الحلقة'};
 const THEMES={
  Main:{'زيتوني':{main:'#555942',deep:'#313425',gold:'#A89F86'},'كحلي':{main:'#1F3A5F',deep:'#132640',gold:'#B39557'},'أخضر':{main:'#1F5C4A',deep:'#123A2F',gold:'#B39557'},'عنابي':{main:'#6B1F2A',deep:'#43131A',gold:'#B39557'}},
@@ -360,7 +360,7 @@ let UID=0;
 function sizeFor(tpl,len){const t={Main:[54,46,40,34],Modern:[56,46,40,36],Festive:[50,42,36,32]}[tpl];return len<=20?t[0]:len<=30?t[1]:len<=40?t[2]:t[3];}
 function render(tpl,o){
  const t=THEMES[tpl][o.theme]||THEMES[tpl]['زيتوني'];const p=!!o.print;
- const v={main:t.main,deep:t.deep,title:'شهادة '+o.type,achievement:ACH[o.type],student:o.student,nameSize:sizeFor(tpl,o.student.length),secondSig:!!o.secondSig,stamp:o.stamp!==false,uid:++UID};
+ const v={main:t.main,deep:t.deep,title:'شهادة '+o.type,achievement:ACH[o.type],student:o.student,nameSize:sizeFor(tpl,o.student.length),secondSig:!!o.secondSig,stamp:o.stamp!==false,uid:++UID,titleClass:(TT[o.type]||TT['اجتياز'])[0],titleW:Math.round(TH_H[tpl]*(TT[o.type]||TT['اجتياز'])[1])};
  if(tpl==='Main'){v.bg=p?'#FFFFFF':'#FBF8F3';v.gold=p?t.main:t.gold;v.qrHtml=qrHtml(7);}
  if(tpl==='Modern'){Object.assign(v,{accent:t.accent,bandBg:p?'#FFFFFF':t.main,bandBorder:p?'2px solid '+t.main:'0',bandText:p?t.deep:'#FFFFFF',bandMuted:p?'#585345':'rgba(255,255,255,0.85)',patternColor:p?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.14)',qrHtml:qrHtml(11)});}
  if(tpl==='Festive'){Object.assign(v,{bg:p?'#FFFFFF':'#F5F0E5',archFill:'#FFFFFF',gold:p?t.main:t.gold,qrHtml:qrHtml(23)});}
