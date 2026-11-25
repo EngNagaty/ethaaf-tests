@@ -367,7 +367,8 @@ function render(tpl,o){
  return TPL[tpl](v);
 }
 
-function mount(el,html){el.innerHTML='<div class="cert">'+html+'</div>';fit(el);}
+const RO=new ResizeObserver(es=>es.forEach(e=>fit(e.target)));
+function mount(el,html){el.innerHTML='<div class="cert">'+html+'</div>';fit(el);RO.observe(el);}
 function fit(el){const c=el.firstChild;if(!c)return;const s=el.clientWidth/1123;c.style.transform='scale('+s+')';el.style.height=(794*s)+'px';}
 const LONG='عبدالرحمن عبدالعزيز بن محمد آل عبدالله القحطاني';
 const VARIANTS={
@@ -380,6 +381,7 @@ const $=id=>document.getElementById(id);
 function live(){mount($('live'),render($('c-tpl').value,{theme:$('c-theme').value,type:$('c-type').value,student:$('c-name').value||' ',secondSig:$('c-sig2').checked,stamp:$('c-stamp').checked,print:$('c-print').checked}));}
 ['c-tpl','c-theme','c-type','c-name','c-sig2','c-stamp','c-print'].forEach(id=>$(id).addEventListener('input',live));
 live();
+window.addEventListener('load',()=>document.querySelectorAll('.frame').forEach(fit));
 window.addEventListener('resize',()=>document.querySelectorAll('.frame').forEach(fit));
 </script>
 </body>
